@@ -23,8 +23,13 @@ app.set('view engine', 'pug')
 app.use('/', home)
 app.use('/docket', docket)
 
+app.use((req, res, next) => {
+    const err = new Error('Sorry, but I could not find that page.')
+    err.status = 404
+    next(err)
+})
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
     console.error(err)
     
     res.status(err.status || 500)

@@ -5,5 +5,17 @@ h1 {
 
 #main-content {
     max-width: 80%;
-    margin: 0 auto;
+    margin: 2em auto;
+}
+
+.docket-meta {
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+ .docket-documents .usa-summary-box {
+    background-color: #ecf3ec;
+    border-color: #498b49;
 }

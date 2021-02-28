@@ -15,32 +15,70 @@ block content
         h2
             a(href=`https://www.regulations.gov/docket/${docket.id}` target='_blank')= docket.id
 
-        h3 Title
-        p= docket.attributes.title
-
         - const modDate = (new Date(docket.attributes.modifyDate)).toLocaleString()
         - const effDate = (docket.attributes.effectiveDate) ? (new Date(docket.attributes.effectiveDate)).toLocaleString() : '(n/a)'
 
-        table.usa-table.usa-table--striped
-            tr
-                th(scope='row') Agency
-                td= docket.attributes.agencyId
-            tr
-                th(scope='row') Abstract
-                td= docket.attributes.dkAbstract
-            tr
-                th(scope='row') Last Modified
-                td= modDate
-            tr
-                th(scope='row') Effective Date
-                td= effDate
+        article.usa-summary-box
+            section.usa-summary-box__body
+                h3.usa-summary-box__heading= docket.attributes.title
+                main.usa-summary-box__text
+                    p= docket.attributes.dkAbstract
+                    cite.docket-meta
+                        span= `Agency ${docket.attributes.agencyId}`
+                        span= `Last Modified ${modDate}`
+                        span= `Effective ${effDate}`
+
+        section.docket-documents
+            h3 Rule Documents
+
+            each document in documents
+                - const postedDate = (new Date(document.attributes.postedDate)).toLocaleString()
+                - const modDate = (new Date(document.attributes.lastModifiedDate)).toLocaleString()
+                - const comStart = (new Date(document.attributes.commentStartDate)).toLocaleString()
+                - const comEnd = (new Date(document.attributes.commentEndDate)).toLocaleString()
+                article.usa-summary-box
+                    section.usa-summary-box__body
+                        h3.usa-summary-box__heading= document.attributes.title
+                        main.usa-summary-box__text
+                            p
+                                | This document was posted by 
+                                strong= document.attributes.agencyId
+                                |  on #{postedDate}.
+                            ul
+                                li
+                                    strong Type: 
+                                    | #{document.attributes.documentType} #{(document.attributes.subtype) ? `(${document.attributes.subtype})` : ''}
+                                li
+                                    strong Comments: 
+                                    | #{(document.attributes.openForComment) ? 'open' : 'closed'} #{(document.attributes.commentStartDate) ? '(' + comStart + ' to ' + comEnd + ')' : ''}
+                                li
+                                    strong Last Modified: 
+                                    | #{modDate}
+                            if document.commentCount
+                                div.comment-button
+                                    a.usa-button(href=`/docket/${docket.id}/documents${document.attributes.objectId}/comments`)= `View ${document.commentCount} Comments`
+                            else
+                                div.comment-button
+                                    p (No Comments)
 
 
-    //- tr
-        //-     th(scope='row') Comment Period
-        //-     -
-        //-         const start = (new Date(docket.attributes.commentStartDate)).toLocaleString()
-        //-         const end = (new Date(docket.attributes.commentEndDate)).toLocaleString()
-        //-         const period = start + ' to ' + end
-        //-     td= period
-        //-     td 
+                    //- table.usa-table.usa-table--striped
+                    //-     tr
+                    //-         th(scope='row') Agency
+                    //-         td= docket.attributes.agencyId
+                    //-     tr
+                    //-         th(scope='row') Abstract
+                    //-         td= docket.attributes.dkAbstract
+                    //-     tr
+                    //-         th(scope='row') Last Modified
+                    //-         td= modDate
+                    //-     tr
+                    //-         th(scope='row') Effective Date
+                    //-         td= effDate
+                    //-     tr
+                    //-         th(scope='row') Comment Period
+                    //-         -
+                    //-             const start = (new Date(docket.attributes.commentStartDate)).toLocaleString()
+                    //-             const end = (new Date(docket.attributes.commentEndDate)).toLocaleString()
+                    //-             const period = start + ' to ' + end
+                    //-         td= period
