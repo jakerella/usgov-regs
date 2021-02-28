@@ -3,7 +3,8 @@ const express = require('express')
 
 // All the routes
 const home = require('./routes/home')
-const docket = require('./routes/docket')
+const dockets = require('./routes/docket')
+const documents = require('./routes/document')
 
 // env vars and other config
 const PORT = process.env['PORT'] || 80
@@ -21,7 +22,8 @@ app.use(express.static('static'))
 app.set('view engine', 'pug')
 
 app.use('/', home)
-app.use('/docket', docket)
+app.use('/docket', dockets)
+app.use('/document', documents)
 
 app.use((req, res, next) => {
     const err = new Error('Sorry, but I could not find that page.')

@@ -1,0 +1,96 @@
+{
+    "data" : {
+      "id" : "EPA-HQ-OPPT-2019-0080-0001",
+      "type" : "documents",
+      "links" : {
+        "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0001"
+      },
+      "attributes" : {
+        "additionalRins" : null,
+        "allowLateComments" : false,
+        "authorDate" : null,
+        "authors" : null,
+        "cfrPart" : "40 CFR Part 751",
+        "commentEndDate" : "2019-10-29T03:59:59Z",
+        "commentStartDate" : "2019-07-29T04:00:00Z",
+        "effectiveDate" : null,
+        "exhibitLocation" : null,
+        "exhibitType" : null,
+        "frDocNum" : "2019-14022",
+        "frVolNum" : "84",
+        "implementationDate" : null,
+        "media" : null,
+        "ombApproval" : null,
+        "paperLength" : 0,
+        "paperWidth" : 0,
+        "regWriterInstruction" : null,
+        "sourceCitation" : null,
+        "startEndPage" : "36728 - 36760",
+        "subject" : null,
+        "topics" : [ "Environmental Protection", "Chemicals", "Hazardous Substances", "Reporting and Recordkeeping Requirements" ],
+        "address1" : null,
+        "address2" : null,
+        "agencyId" : "EPA",
+        "city" : null,
+        "category" : null,
+        "comment" : null,
+        "country" : null,
+        "displayProperties" : [ {
+          "name" : "pageCount",
+          "label" : "Page Count",
+          "tooltip" : "Number of pages In the content file"
+        } ],
+        "docAbstract" : "Federal Register of Monday, July 29, 2019 (84 FR 36728) [FRL-9995-76]",
+        "docketId" : "EPA-HQ-OPPT-2019-0080",
+        "documentType" : "Proposed Rule",
+        "email" : null,
+        "fax" : null,
+        "field1" : null,
+        "field2" : null,
+        "fileFormats" : [ {
+          "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0001/content.pdf",
+          "format" : "pdf",
+          "size" : 488340
+        }, {
+          "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0001/content.htm",
+          "format" : "htm",
+          "size" : 245733
+        } ],
+        "firstName" : null,
+        "govAgency" : null,
+        "govAgencyType" : null,
+        "objectId" : "0900006483dc21fd",
+        "lastName" : null,
+        "legacyId" : null,
+        "modifyDate" : "2020-07-08T01:02:33Z",
+        "organization" : null,
+        "originalDocumentId" : "EPA_FRDOC_0001-24230",
+        "pageCount" : 33,
+        "phone" : null,
+        "postedDate" : "2019-07-29T04:00:00Z",
+        "postmarkDate" : null,
+        "reasonWithdrawn" : null,
+        "receiveDate" : "2019-07-29T04:00:00Z",
+        "restrictReason" : null,
+        "restrictReasonType" : null,
+        "stateProvinceRegion" : null,
+        "submitterRep" : null,
+        "submitterRepAddress" : null,
+        "submitterRepCityState" : null,
+        "subtype" : null,
+        "title" : "Regulation of Persistent, Bioaccumulative, and Toxic Chemicals under Section 6(h) of the Toxic Substances Control Act",
+        "trackingNbr" : null,
+        "withdrawn" : false,
+        "zip" : null,
+        "openForComment" : false
+      },
+      "relationships" : {
+        "attachments" : {
+          "links" : {
+            "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0001/relationships/attachments",
+            "related" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0001/attachments"
+          }
+        }
+      }
+    }
+  }

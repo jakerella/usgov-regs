@@ -13,6 +13,7 @@ block content
                 p.usa-alert__text Sorry, but that docket ID does not seem to exist!
     else 
         h2
+            | Docket 
             a(href=`https://www.regulations.gov/docket/${docket.id}` target='_blank')= docket.id
 
         - const modDate = (new Date(docket.attributes.modifyDate)).toLocaleString()
@@ -56,29 +57,7 @@ block content
                                     | #{modDate}
                             if document.commentCount
                                 div.comment-button
-                                    a.usa-button(href=`/docket/${docket.id}/documents${document.attributes.objectId}/comments`)= `View ${document.commentCount} Comments`
+                                    a.usa-button(href=`/document/${document.id}`)= `View ${document.commentCount} Comments`
                             else
                                 div.comment-button
                                     p (No Comments)
-
-
-                    //- table.usa-table.usa-table--striped
-                    //-     tr
-                    //-         th(scope='row') Agency
-                    //-         td= docket.attributes.agencyId
-                    //-     tr
-                    //-         th(scope='row') Abstract
-                    //-         td= docket.attributes.dkAbstract
-                    //-     tr
-                    //-         th(scope='row') Last Modified
-                    //-         td= modDate
-                    //-     tr
-                    //-         th(scope='row') Effective Date
-                    //-         td= effDate
-                    //-     tr
-                    //-         th(scope='row') Comment Period
-                    //-         -
-                    //-             const start = (new Date(docket.attributes.commentStartDate)).toLocaleString()
-                    //-             const end = (new Date(docket.attributes.commentEndDate)).toLocaleString()
-                    //-             const period = start + ' to ' + end
-                    //-         td= period

@@ -14,6 +14,18 @@ const Docket = {
         }
         return (await govResp.json()).data
     },
+    getDocument: async (documentId) => {
+        console.log(`Requesting document ID ${documentId}...`)
+        if (process.env.NODE_ENV === 'development' && documentId === 'EPA-HQ-OPPT-2019-0080-0001') {
+            return require('../test-data/document.json').data
+        }
+
+        const govResp = await fetch(`https://api.regulations.gov/v4/documents/${documentId}?api_key=${process.env['API_KEY']}`)
+        if (govResp.status > 299) {
+            throw new Error(`Unable to retrieve document ${documentId} from regulations.gov API (${govResp.status})`)
+        }
+        return (await govResp.json()).data
+    },
     getDocuments: async (docketId, getCommentCount=false, docType='') => {
         console.log(`Requesting documents for docket ID ${docketId}...`)
 
@@ -38,12 +50,12 @@ const Docket = {
             throw new Error(`Unable to retrieve documents for docket ${docketId} from regulations.gov API (${err.status})`)
         }
     },
-    getCommentMetaData: async (objectId, limit=25) => {
-        console.log(`Requesting comment metadata for object ID ${objectId}...`)
+    getComments: async (objectId) => {
+        console.log(`Requesting comments for object ID ${objectId}...`)
 
-        const govResp = await fetch(`https://api.regulations.gov/v4/comments?filter[commentOnId]=${objectId}&page[size]=${limit}&api_key=${process.env['API_KEY']}`)
+        const govResp = await fetch(`https://api.regulations.gov/v4/comments?filter[commentOnId]=${objectId}&api_key=${process.env['API_KEY']}`)
         if (govResp.status > 299) {
-            throw new Error(`Unable to retrieve comment metadata for object ${objectId} from regulations.gov API (${govResp.status})`)
+            throw new Error(`Unable to retrieve comments for object ${objectId} from regulations.gov API (${govResp.status})`)
         }
         return (await govResp.json()).data
     }

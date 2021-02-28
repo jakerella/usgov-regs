@@ -19,3 +19,7 @@ h1 {
     background-color: #ecf3ec;
     border-color: #498b49;
 }
+
+h3.doctype {
+    color: #666;
+}

@@ -1,0 +1,50 @@
+extends partials/layout.pug
+
+block content
+
+    if errorMsg
+        aside.usa-aler.usa-alert--error
+            div.usa-alert__body
+                p.usa-alert__text= errorMsg
+
+    if !document.id
+        aside.usa-aler.usa-alert--warning
+            div.usa-alert__body
+                p.usa-alert__text Sorry, but that document ID does not seem to exist!
+    else 
+        h2
+            | Document 
+            a(href=`https://www.regulations.gov/document/${document.id}` target='_blank')= document.id
+
+        h3.doctype= `${document.attributes.documentType} ${(document.attributes.subtype) ? `(${document.attributes.subtype})` : ''}`
+
+        - const modDate = (new Date(document.attributes.modifyDate)).toLocaleString()
+        - const postedDate = (new Date(document.attributes.postedDate)).toLocaleString()
+
+        article.usa-summary-box
+            section.usa-summary-box__body
+                h3.usa-summary-box__heading= document.attributes.title
+                main.usa-summary-box__text
+                    p= document.attributes.docAbstract
+                    cite.docket-meta
+                        span= `Agency ${document.attributes.agencyId}`
+                        span= `Posted ${postedDate}`
+                        span= `Last Modified ${modDate}`
+
+        h3= `Comments (${comments.length})`
+
+        table.usa-table.usa-table--striped
+            thead
+                tr 
+                    th(scope='col') Author
+                    th(scope='col') Date
+                    th(scope='col') Comment
+                    th(scope='col') Attachments?
+            tbody
+                each comment in comments
+                    tr
+                        th(scope='row')= comment.attributes.title
+                        - const postedDate = (new Date(comment.attributes.postedDate)).toLocaleDateString()
+                        td= postedDate
+                        td (comment)
+                        td (attach)

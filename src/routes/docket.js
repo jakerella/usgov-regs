@@ -7,6 +7,10 @@ router.get('/', (req, res, next) => {
     loadDocket(req.query.docket, res, next)
 })
 
+router.get('/:docket', (req, res, next) => {
+    loadDocket(req.params.docket, res, next)
+})
+
 async function loadDocket(docketId, res, next) {
     let errorMsg = null
     let docket = {}
