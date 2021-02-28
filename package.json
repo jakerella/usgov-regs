@@ -1,0 +1,22 @@
+{
+  "name": "usgov-regs",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "A little app to help navigate the rules, regulations, and comments for the US Government",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakerella/usgov-regs.git"
+  },
+  "author": "Jordan Kasper",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pug": "^3.0.0",
+    "uswds": "^2.10.1"
+  }
+}
