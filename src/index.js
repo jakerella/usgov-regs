@@ -1,20 +1,28 @@
-const config = require('dotenv')
+require('dotenv').config()
 const express = require('express')
 
-const PORT = process.env['PORT'] || 80
+// All the routes
+const home = require('./routes/home')
+const docket = require('./routes/docket')
 
+// env vars and other config
+const PORT = process.env['PORT'] || 80
+const API_KEY = process.env['API_KEY']
+
+if (!API_KEY) {
+    console.error('No API key found for US Regs site')
+    process.exit(1)
+}
+
+// start it up
 const app = express()
 
 app.use(express.static('static'))
 app.set('view engine', 'pug')
 
+app.use('/', home)
+app.use('/docket', docket)
 
-app.get('/', (req, res) => {
-    res.render('index', {
-        title: 'US Government Rule and Regulation Explorer',
-        message: 'US Government Rule and Regulation Explorer'
-    })
-})
 
 app.use(function (err, req, res, next) {
     console.error(err)
@@ -26,6 +34,8 @@ app.use(function (err, req, res, next) {
     })
 })
 
+// here we go...
 app.listen(PORT, () => {
     console.log(`US Rule & Reg app listening at http://localhost:${PORT}`)
+    console.log(`Using API Key: ${API_KEY}`);
 })

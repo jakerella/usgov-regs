@@ -1,0 +1,422 @@
+{
+  "data" : [ {
+    "id" : "EPA-HQ-OPPT-2019-0080-0525",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-09-11T00:40:45Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Anonymous public comment",
+      "objectId" : "0900006483f08e4b",
+      "postedDate" : "2019-09-10T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0525"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0528",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-09-18T00:35:43Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Anonymous public comment",
+      "objectId" : "0900006483f6d96b",
+      "postedDate" : "2019-09-17T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0528"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0559",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:22:03Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by David L. Wagger, Chief Scientist, Director of Environmental Management, Institute of Scrap Recycling Industries, Inc. (ISRI)",
+      "objectId" : "0900006484103297",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0559"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0549",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:20:37Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Kathleen McGuigan, Executive Vice President & Deputy General Counsel, Retail Industry Leaders Association (RILA)",
+      "objectId" : "090000648410212e",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0549"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0556",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:22:43Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Martha Marrapese, Partner, Wiley Rein LLP",
+      "objectId" : "0900006484103035",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0556"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0544",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:19:42Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Philip Squair, Vice President, Government Relations, National Electrical Manufacturers Association (NEMA)",
+      "objectId" : "0900006484100e37",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0544"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0540",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:17:35Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Lawrence E. Culleen, Arnold & Porter on behalf of the Chemical Users Coalition (CUC)",
+      "objectId" : "09000064840fae0d",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0540"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0557",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:23:02Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Alan P. Kaufman, Senior Vice President, Technical Affairs, The Toy Association",
+      "objectId" : "090000648410303b",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0557"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0554",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:21:42Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Julia M. Rege, Senior Director, Environment & Energy, Association of Global Automakers, Inc.",
+      "objectId" : "0900006484102a38",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0554"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0545",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:20:01Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Steve Shestag, Director, Environment, Environment, Health & Safety, The Boeing Company",
+      "objectId" : "0900006484100ad7",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0545"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0539",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:24:03Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Jessica Ryman-Rasmussen, American Petroleum Institute (API)",
+      "objectId" : "09000064840fa90c",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0539"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0543",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:22:25Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Kathleen M. Roberts, Executive Director, North American Metals Council (NAMC)",
+      "objectId" : "09000064840fec58",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0543"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0538",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:15:27Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Martina Werner, Director Product Safety & Regulatory Affairs, Henkel Corporation",
+      "objectId" : "09000064840f9cc3",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0538"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0553",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:17:06Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Tanya Hernandez, Director, Government & Industry Relations, Acuity Brands, Inc.",
+      "objectId" : "0900006484102664",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0553"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0555",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:18:35Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Suzanne Hartigan, Senior Director, Regulatory and Technical Affairs, American Chemistry Council (ACC)",
+      "objectId" : "0900006484102a99",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0555"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0536",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:16:32Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Rick Brown, Product Stewardship Manager, ExxonMobil Fuels & Lubricants Company",
+      "objectId" : "09000064840f51ea",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0536"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0550",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-30T01:18:14Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by the Truck and Engine Manufacturers Association (EMA)",
+      "objectId" : "0900006484101ee8",
+      "postedDate" : "2019-10-29T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0550"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0583",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2020-10-04T11:02:39Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Daniel D. Masakowski, Director of Materials Development, RSCC",
+      "objectId" : "09000064842fdff0",
+      "postedDate" : "2020-01-29T05:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0583"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0530",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-03T00:37:58Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Susan Michaelis, Global Cabin Air Quality Executive (GCAQE)",
+      "objectId" : "0900006483fde165",
+      "postedDate" : "2019-10-02T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0530"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0533",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-23T02:19:36Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Mike Profetto, Vice President, Gold Eagle Company",
+      "objectId" : "09000064840c4f3e",
+      "postedDate" : "2019-10-22T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0533"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0572",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-11-06T01:54:50Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Dianne C. Barton, Chair, National Tribal Toxics Council (NTTC)",
+      "objectId" : "0900006484102f94",
+      "postedDate" : "2019-11-05T05:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0572"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0576",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-11-13T02:21:28Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Victoria Bogdan Tejeda, Earthjustice et al. (Part 1 of 5)",
+      "objectId" : "09000064841027b8",
+      "postedDate" : "2019-11-12T05:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0576"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0575",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-11-13T02:29:08Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by Victoria Bogdan Tejeda, Earthjustice et al.",
+      "objectId" : "09000064841027b6",
+      "postedDate" : "2019-11-12T05:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0575"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0581",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2020-01-06T17:25:35Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by James V. Mustacchio, Chief Executive Officer, NYCO America, LLC.",
+      "objectId" : "090000648418ffce",
+      "postedDate" : "2019-12-03T05:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0581"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0531",
+    "type" : "comments",
+    "attributes" : {
+      "documentType" : "Public Submission",
+      "lastModifiedDate" : "2019-10-04T00:36:53Z",
+      "highlightedContent" : "",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "title" : "Comment submitted by the European Union (EU)",
+      "objectId" : "0900006483fdfe2b",
+      "postedDate" : "2019-10-03T04:00:00Z"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0531"
+    }
+  } ],
+  "meta" : {
+    "aggregations" : {
+      "agencyId" : [ {
+        "docCount" : 58,
+        "value" : "EPA"
+      } ],
+      "postedDate" : [ ]
+    },
+    "filters" : { },
+    "hasNextPage" : true,
+    "hasPreviousPage" : false,
+    "numberOfElements" : 25,
+    "pageNumber" : 1,
+    "pageSize" : 25,
+    "totalElements" : 58,
+    "totalPages" : 3,
+    "firstPage" : true,
+    "lastPage" : false
+  }
+}

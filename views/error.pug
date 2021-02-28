@@ -1,5 +1,8 @@
-html
-  head
-    title= title
-  body
-    h1= message
+extends partials/layout.pug
+
+
+block content
+    aside.usa-alert.usa-alert--error
+        div.usa-alert__body
+            h3.usa-alert__heading Error
+            p.usa-alert__text= message

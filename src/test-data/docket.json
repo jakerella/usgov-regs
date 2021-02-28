@@ -1,0 +1,36 @@
+{
+  "data" : {
+    "id" : "EPA-HQ-OPPT-2019-0080",
+    "type" : "dockets",
+    "attributes" : {
+      "displayProperties" : [ {
+        "name" : "generic",
+        "label" : "Location",
+        "tooltip" : "Agency specific program associated with a docket (regulatory action); equivalents: Bureau, Docket Item Code, Program Area."
+      } ],
+      "keywords" : [ "TSCA, section 6(h), PBT", "Decabromodiphenyl ethers (DecaBDE)", "Hexachlorobutadiene (HCBD)", "Pentachlorothiophenol (PCTP)", "Phenol, isopropylated, phosphate (3:1)", "2,4,6-Tris(tert-butyl) phenol" ],
+      "modifyDate" : "2021-02-26T11:08:51Z",
+      "dkAbstract" : "As required under section 6(h) of the Toxic Substances Control Act (TSCA), EPA is proposing a rule under section 6(a) to address risks from and reduce exposures to the extent practicable to the five persistent, bioaccumulative, and toxic (PBT) chemicals that fit the criteria outlined in section 6(h).",
+      "agencyId" : "EPA",
+      "program" : null,
+      "shortTitle" : null,
+      "subType2" : null,
+      "title" : "Regulation of Persistent, Bioaccumulative, and Toxic Chemicals under TSCA Section 6(h)",
+      "generic" : "HQ-OPPT",
+      "field1" : null,
+      "docketType" : "Rulemaking",
+      "petitionNbr" : null,
+      "rin" : "2070-AK34",
+      "organization" : null,
+      "legacyId" : null,
+      "subType" : null,
+      "category" : null,
+      "field2" : null,
+      "effectiveDate" : null,
+      "objectId" : "0b00006483abbbd6"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/dockets/EPA-HQ-OPPT-2019-0080"
+    }
+  }
+}

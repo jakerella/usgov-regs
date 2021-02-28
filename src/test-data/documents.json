@@ -1,0 +1,700 @@
+{
+  "data" : [ {
+    "id" : "EPA-HQ-OPPT-2019-0080-0164",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:36:47Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Hexabromocyclododecane (HBCD) action plan summary",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Report",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30979"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0164"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0165",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:36:58Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Non-Confidential 2006 IUR Company/Chemical Records",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Fact/Data Sheet",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d3097a"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0165"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0168",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:37:30Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "TSCA Chemical Reporting Fact Sheet: Articles",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Fact/Data Sheet",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d3097d"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0168"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0172",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:38:13Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Guidelines for Preparing Economic Analyses",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Guidance",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30981"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0172"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0173",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:38:23Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Priority Pollutant List",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Fact/Data Sheet",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30982"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0173"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0001",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Proposed Rule",
+      "lastModifiedDate" : "2020-07-08T01:02:33Z",
+      "highlightedContent" : "",
+      "frDocNum" : "2019-14022",
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : "2019-10-29T03:59:59Z",
+      "title" : "Regulation of Persistent, Bioaccumulative, and Toxic Chemicals under Section 6(h) of the Toxic Substances Control Act",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : null,
+      "commentStartDate" : "2019-07-29T04:00:00Z",
+      "openForComment" : false,
+      "objectId" : "0900006483dc21fd"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0001"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0002",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:12:06Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "TSCA Work Plan for Chemical Assessments: 2014 Update",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Report",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d2daca"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0002"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0004",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:12:30Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Preliminary Information on Manufacturing, Processing, Distribution, Use, and Disposal: Decabromodiphenyl Ether",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Report",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d2dacc"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0004"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0007",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:13:21Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Preliminary Information on Manufacturing, Processing, Distribution, Use, and Disposal: Hexachlorobutadiene",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Report",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d2db16"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0007"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0009",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:13:46Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "TSCA Work Plan Chemicals",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Report",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d2db18"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0009"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0010",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:13:58Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Letter acknowledging receipt of request for risk evaluations under TSCA section 6(h). Wendy Cleland-Hamnett, Director, Office of Pollution Prevention and Toxics to International Flavors and Fragrances, Inc.",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Letter",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d2db19"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0010"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0011",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:14:11Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Stakeholder Comment from Auto Alliance",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Letter",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d2db1a"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0011"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0012",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:14:24Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Stakeholder Comment from iGPS",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Letter",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d2db1b"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0012"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0013",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T02:14:37Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Certain Polybrominated Diphenylethers; Significant New Use Rule and Test Rule",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Publication - Previous/Related FR Notice",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d2db1c"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0013"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0424",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:24:54Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "NASCAR sets fuel injection for '12 but keeping restrictor plates",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Publication - Copyrighted Materials",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30a94"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0424"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0425",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:25:05Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "75th Year of SAE A-6: A History of Aviation Actuation, Control and Fluid Power [PowerPoint]",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Meeting Materials",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30a95"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0425"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0426",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:25:15Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Phenol, isopropylated, phosphate (3:1), Technical Report for EPA Docket No. EPA-HQ-OPPT-2016-0730 On production, imports, use, recycling, and other exposure scenarios",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Report",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30a96"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0426"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0427",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:25:26Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "EJSCREEN Report (Version 2017) - 1 mile Ring Centered at 40.698071,-74.284097, NEW JERSEY, EPA Region 2 (Akzo Nobel - International Paint, Union, NJ)",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Report",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30a97"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0427"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0429",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:25:50Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "USEPA, Comments of Safer Chemicals Healthy Families on Persistent, Bioaccumulative, and Toxic (PBT) Chemicals Subject to Regulation under Section 6(h) of the Toxic Substances Control Act",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Letter",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30a99"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0429"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0431",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:26:12Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "EJSCREEN Report (Version 2017) - 1 mile Ring Centered at 38.772220,-82.205560, WEST VIRGINIA, EPA Region 3 (ICL-IP America, Gallipolis Ferry, WV)",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Report",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30a9b"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0431"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0432",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:26:22Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Toxic golf balls? Sporting good illustrates need for prompt action by EPA to address persistent chemical threats",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Publication - Copyrighted Materials",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30a9c"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0432"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0434",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:26:45Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Price of Eastman HALO 157",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Publication - Copyrighted Materials",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30a9e"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0434"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0435",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:26:56Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Price of TURBONYCOIL 600",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Publication - Copyrighted Materials",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30a9f"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0435"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0436",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:27:06Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Price of Castrol Braycote 3214 and Brayco 599",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : null,
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30aa3"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0436"
+    }
+  }, {
+    "id" : "EPA-HQ-OPPT-2019-0080-0439",
+    "type" : "documents",
+    "attributes" : {
+      "documentType" : "Supporting & Related Material",
+      "lastModifiedDate" : "2019-07-30T03:27:41Z",
+      "highlightedContent" : "",
+      "frDocNum" : null,
+      "withdrawn" : false,
+      "agencyId" : "EPA",
+      "commentEndDate" : null,
+      "title" : "Reproduction Study in Japanese Quail Fed Hexachlorobutadiene for 90 Days",
+      "postedDate" : "2019-07-29T04:00:00Z",
+      "docketId" : "EPA-HQ-OPPT-2019-0080",
+      "subtype" : "Publication - Copyrighted Materials",
+      "commentStartDate" : null,
+      "openForComment" : false,
+      "objectId" : "0900006483d30aa6"
+    },
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OPPT-2019-0080-0439"
+    }
+  } ],
+  "meta" : {
+    "aggregations" : {
+      "documentType" : [ {
+        "docCount" : 583,
+        "label" : "Supporting & Related Material"
+      }, {
+        "docCount" : 5,
+        "label" : "Rule"
+      }, {
+        "docCount" : 2,
+        "label" : "Proposed Rule"
+      } ],
+      "subtype" : [ {
+        "docCount" : 165,
+        "label" : "Publication - Copyrighted Materials"
+      }, {
+        "docCount" : 107,
+        "label" : "Fact/Data Sheet"
+      }, {
+        "docCount" : 96,
+        "label" : "Report"
+      }, {
+        "docCount" : 38,
+        "label" : "Meeting Materials"
+      }, {
+        "docCount" : 36,
+        "label" : "Data"
+      }, {
+        "docCount" : 23,
+        "label" : "Letter"
+      }, {
+        "docCount" : 18,
+        "label" : "Publication - Other Governmental"
+      }, {
+        "docCount" : 12,
+        "label" : "Economic Analysis"
+      }, {
+        "docCount" : 10,
+        "label" : "Publication"
+      }, {
+        "docCount" : 9,
+        "label" : "Publication - USEPA"
+      }, {
+        "docCount" : 7,
+        "label" : "Interagency Review"
+      }, {
+        "docCount" : 7,
+        "label" : "Publication - Previous/Related FR Notice"
+      }, {
+        "docCount" : 6,
+        "label" : "Analysis"
+      }, {
+        "docCount" : 5,
+        "label" : "Application"
+      }, {
+        "docCount" : 5,
+        "label" : "Final Rule"
+      }, {
+        "docCount" : 5,
+        "label" : "Guidance"
+      }, {
+        "docCount" : 3,
+        "label" : "Memorandum"
+      }, {
+        "docCount" : 2,
+        "label" : "Comment Response"
+      }, {
+        "docCount" : 2,
+        "label" : "ICR Supporting Statement"
+      }, {
+        "docCount" : 2,
+        "label" : "Permit, Registration"
+      }, {
+        "docCount" : 2,
+        "label" : "Press Release, Public Announcement/Notice"
+      }, {
+        "docCount" : 2,
+        "label" : "Study"
+      }, {
+        "docCount" : 2,
+        "label" : "Work Plan"
+      }, {
+        "docCount" : 1,
+        "label" : "E-mail"
+      }, {
+        "docCount" : 1,
+        "label" : "Evaluation"
+      }, {
+        "docCount" : 1,
+        "label" : "Exemption"
+      }, {
+        "docCount" : 1,
+        "label" : "Form"
+      }, {
+        "docCount" : 1,
+        "label" : "Technical Support Document"
+      } ],
+      "withinCommentPeriod" : [ {
+        "docCount" : 0,
+        "label" : "true"
+      }, {
+        "docCount" : 590,
+        "label" : "false"
+      } ],
+      "agencyId" : [ {
+        "docCount" : 590,
+        "value" : "EPA"
+      } ],
+      "commentEndDate" : [ ],
+      "postedDate" : [ {
+        "docCount" : 1,
+        "label" : "Last 3 Days",
+        "fromDate" : "2021-02-26 00:00:00",
+        "toDate" : "2021-02-28 23:59:59"
+      }, {
+        "docCount" : 1,
+        "label" : "Last 7 Days",
+        "fromDate" : "2021-02-22 00:00:00",
+        "toDate" : "2021-02-28 23:59:59"
+      }, {
+        "docCount" : 1,
+        "label" : "Last 15 Days",
+        "fromDate" : "2021-02-14 00:00:00",
+        "toDate" : "2021-02-28 23:59:59"
+      }, {
+        "docCount" : 1,
+        "label" : "Last 30 Days",
+        "fromDate" : "2021-01-30 00:00:00",
+        "toDate" : "2021-02-28 23:59:59"
+      }, {
+        "docCount" : 63,
+        "label" : "Last 90 Days",
+        "fromDate" : "2020-12-01 00:00:00",
+        "toDate" : "2021-02-28 23:59:59"
+      } ]
+    },
+    "filters" : { },
+    "hasNextPage" : true,
+    "hasPreviousPage" : false,
+    "numberOfElements" : 25,
+    "pageNumber" : 1,
+    "pageSize" : 25,
+    "totalElements" : 590,
+    "totalPages" : 20,
+    "firstPage" : true,
+    "lastPage" : false
+  }
+}

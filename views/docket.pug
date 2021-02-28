@@ -1,0 +1,46 @@
+extends partials/layout.pug
+
+block content
+
+    if errorMsg
+        aside.usa-aler.usa-alert--error
+            div.usa-alert__body
+                p.usa-alert__text= errorMsg
+
+    if !docket.id
+        aside.usa-aler.usa-alert--warning
+            div.usa-alert__body
+                p.usa-alert__text Sorry, but that docket ID does not seem to exist!
+    else 
+        h2
+            a(href=`https://www.regulations.gov/docket/${docket.id}` target='_blank')= docket.id
+
+        h3 Title
+        p= docket.attributes.title
+
+        - const modDate = (new Date(docket.attributes.modifyDate)).toLocaleString()
+        - const effDate = (docket.attributes.effectiveDate) ? (new Date(docket.attributes.effectiveDate)).toLocaleString() : '(n/a)'
+
+        table.usa-table.usa-table--striped
+            tr
+                th(scope='row') Agency
+                td= docket.attributes.agencyId
+            tr
+                th(scope='row') Abstract
+                td= docket.attributes.dkAbstract
+            tr
+                th(scope='row') Last Modified
+                td= modDate
+            tr
+                th(scope='row') Effective Date
+                td= effDate
+
+
+    //- tr
+        //-     th(scope='row') Comment Period
+        //-     -
+        //-         const start = (new Date(docket.attributes.commentStartDate)).toLocaleString()
+        //-         const end = (new Date(docket.attributes.commentEndDate)).toLocaleString()
+        //-         const period = start + ' to ' + end
+        //-     td= period
+        //-     td 

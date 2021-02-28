@@ -1,0 +1,14 @@
+extends partials/layout.pug
+
+
+block content
+    h2= title
+    p
+        | A little app to help navigate the rules, regulations, and comments for the US Government.
+
+    p
+        | Please enter the docket number you want to find
+    form.usa-form(action='/docket' method='get')
+        label.usa-label(for='docket') Docket Number
+        input.usa-input(id='docket' name='docket' type='text' required='required')
+        input.usa-button(type='submit' value='Gather Info')
