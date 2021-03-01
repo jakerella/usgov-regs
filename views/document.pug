@@ -21,11 +21,14 @@ block content
         - const modDate = (new Date(document.attributes.modifyDate)).toLocaleString()
         - const postedDate = (new Date(document.attributes.postedDate)).toLocaleString()
 
-        article.usa-summary-box
+        article.usa-summary-box.document(data-document-id=document.id)
             section.usa-summary-box__body
                 h3.usa-summary-box__heading= document.attributes.title
                 main.usa-summary-box__text
                     p= document.attributes.docAbstract
+                    p
+                        | This Document is part of docket: 
+                        a(href=`/docket/${document.attributes.docketId}`)= document.attributes.docketId
                     cite.docket-meta
                         span= `Agency ${document.attributes.agencyId}`
                         span= `Posted ${postedDate}`
@@ -33,18 +36,20 @@ block content
 
         h3= `Comments (${comments.length})`
 
-        table.usa-table.usa-table--striped
+        table.usa-table.usa-table--striped.comments
             thead
                 tr 
-                    th(scope='col') Author
+                    th.author(scope='col') Author
                     th(scope='col') Date
-                    th(scope='col') Comment
-                    th(scope='col') Attachments?
+                    th.comment-text(scope='col') Comment (first 100 characters)
+                    th(scope='col') Attachments
             tbody
                 each comment in comments
-                    tr
+                    tr.comment(data-comment-id=comment.id)
                         th(scope='row')= comment.attributes.title
                         - const postedDate = (new Date(comment.attributes.postedDate)).toLocaleDateString()
                         td= postedDate
-                        td (comment)
-                        td (attach)
+                        td.comment-text loading...
+                        td.attachments ?
+
+    script(src='/get-comments.js')

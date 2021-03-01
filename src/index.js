@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 
+
 // All the routes
 const home = require('./routes/home')
 const dockets = require('./routes/docket')

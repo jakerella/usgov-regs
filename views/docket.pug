@@ -39,7 +39,12 @@ block content
                 - const comEnd = (new Date(document.attributes.commentEndDate)).toLocaleString()
                 article.usa-summary-box
                     section.usa-summary-box__body
-                        h3.usa-summary-box__heading= document.attributes.title
+                        h3.usa-summary-box__heading
+                            | #{document.attributes.title} 
+                            a(href=`/document/${document.id}`)
+                                svg.usa-icon.usa-icon--size-3(aria-hidden='true' focusable='false' role='img')
+                                    use(xlink:href='/uswds/img/sprite.svg#launch')
+
                         main.usa-summary-box__text
                             p
                                 | This document was posted by 

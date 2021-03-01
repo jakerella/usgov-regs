@@ -23,3 +23,7 @@ h1 {
 h3.doctype {
     color: #666;
 }
+
+.comments .author, .comments .comment-text {
+    width: 35%;
+}
