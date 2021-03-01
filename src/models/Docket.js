@@ -2,37 +2,67 @@
 const fetch = require('node-fetch')
 const mockCommentData = require('../test-data/comment.json')
 
+const cache = {}
+
+console.log('Docket model using mocks?', process.env.NODE_ENV === 'development' && process.env.USE_MOCK === 'true');
+
+function addToCache(id, item, ttl=86400000) {
+    if (cache[id]) { delete cache[id] }
+    if (process.env.NODE_ENV === 'development') { console.log(`Adding item to cache (${id})`) }
+    cache[id] = {
+        item,
+        expires: Date.now() + ttl
+    }
+}
+
+function getFromCache(id) {
+    if (!cache[id]) { return null }
+    if (cache[id].expires < Date.now()) {
+        delete cache[id]
+        return null
+    }
+    if (process.env.NODE_ENV === 'development') { console.log(`Retrieved item from cache (${id})`) }
+    return cache[id].item
+}
+
 const Docket = {
     getDocket: async (docketId) => {
         console.log(`Requesting docket ID ${docketId}...`)
-        if (process.env.NODE_ENV === 'development' && docketId === 'EPA-HQ-OPPT-2019-0080') {
-            return require('../test-data/docket.json').data
-        }
+
+        let data = getFromCache(docketId)
+        if (data) { return data }
 
         const govResp = await fetch(`https://api.regulations.gov/v4/dockets/${docketId}?api_key=${process.env['API_KEY']}`)
         if (govResp.status > 299) {
             throw new Error(`Unable to retrieve docket ${docketId} from regulations.gov API (${govResp.status})`)
         }
-        return (await govResp.json()).data
+        data = (await govResp.json()).data
+        addToCache(docketId, data)
+        return data
     },
     getDocument: async (documentId) => {
         console.log(`Requesting document ID ${documentId}...`)
-        if (process.env.NODE_ENV === 'development' && documentId === 'EPA-HQ-OPPT-2019-0080-0001') {
-            return require('../test-data/document.json').data
-        }
+
+        let data = getFromCache(documentId)
+        if (data) { return data }
 
         const govResp = await fetch(`https://api.regulations.gov/v4/documents/${documentId}?api_key=${process.env['API_KEY']}`)
         if (govResp.status > 299) {
             throw new Error(`Unable to retrieve document ${documentId} from regulations.gov API (${govResp.status})`)
         }
-        return (await govResp.json()).data
+        data = (await govResp.json()).data
+        addToCache(documentId, data)
+        return data
     },
     getDocuments: async (docketId, getCommentCount=false, docType='') => {
         console.log(`Requesting documents for docket ID ${docketId}...`)
 
         try {
+            let data = getFromCache(`${docketId}-documents`)
+            if (data) { return data }
+
             const documents = await pagedRequest(`https://api.regulations.gov/v4/documents?filter[docketId]=${docketId}&filter[documentType]=${docType}`)
-            
+
             if (getCommentCount) {
                 for (let i=0; i<documents.length; ++i) {
                     const govResp = await fetch(`https://api.regulations.gov/v4/comments?filter[commentOnId]=${documents[i].attributes.objectId}&page[size]=5&api_key=${process.env['API_KEY']}`)
@@ -44,6 +74,7 @@ const Docket = {
                 }
             }
 
+            addToCache(`${docketId}-documents`, documents)
             return documents
 
         } catch(err) {
@@ -55,8 +86,12 @@ const Docket = {
         console.log(`Requesting comments for object ID ${objectId}...`)
 
         try {
+            let data = getFromCache(`${objectId}-comments`)
+            if (data) { return data }
+
             const comments = await pagedRequest(`https://api.regulations.gov/v4/comments?filter[commentOnId]=${objectId}&sort=postedDate`)
             
+            addToCache(`${objectId}-comments`, comments)
             return comments
 
         } catch(err) {
@@ -70,8 +105,15 @@ const Docket = {
         try {
             const comments = []
             for (let i=0; i<commentIds.length; ++i) {
+
+                let data = getFromCache(commentIds[i])
+                if (data) {
+                    comments.push(data)
+                    continue
+                }
                 
-                if (process.env.NODE_ENV === 'development') {
+                if (process.env.NODE_ENV === 'development' && process.env.USE_MOCK === 'true') {
+                    console.log(`Returning MOCK comment data for ${commentIds[i]}`)
                     const data = Object.assign({}, mockCommentData)
                     data.data = Object.assign({}, data.data, { id: commentIds[i] })
                     data.included = [Object.assign({}, data.included[0])]
@@ -92,7 +134,10 @@ const Docket = {
                 if (govResp.status > 299) {
                     throw new Error(`Unable to retrieve comment ${commentIds[i]} from regulations.gov API (${govResp.status})`)
                 }
-                comments.push(await govResp.json())
+                
+                data = await govResp.json()
+                addToCache(`${commentIds[i]}`, data)
+                comments.push(data)
             }
 
             return comments
