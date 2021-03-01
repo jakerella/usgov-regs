@@ -59,13 +59,20 @@ function updateComment(comment) {
         const attachCol = row.querySelector('.attachments')
         if (comment.included && comment.included.length) {
             attachCol.innerHTML = ''
-            comment.included.forEach((attachment) => {
-                attachCol.innerHTML += `
-                <a href="${attachment.attributes.fileFormats[0].fileUrl}" target="_blank" class="usa-tooltip" data-position="top" title="Download: ${attachment.attributes.title}">
-                    <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
-                        <use xlink:href="/uswds/img/sprite.svg#file_download"></use>
-                    </svg>
-                </a>`
+            comment.included.forEach((attachment, i) => {
+                if (!attachment.attributes.fileFormats) {
+                    attachCol.innerHTML += `<a class="usa-icon--size-3" data-position="top" title="Unable to download: ${attachment.attributes.restrictReasonType}">
+                        ${i+1}<svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+                            <use xlink:href="/uswds/img/sprite.svg#do_not_disturb"></use>
+                        </svg>
+                    </a> `
+                } else {
+                    attachCol.innerHTML += `<a href="${attachment.attributes.fileFormats[0].fileUrl}" target="_blank" class="usa-tooltip" data-position="top" title="Download: ${attachment.attributes.title}">
+                        ${i+1}<svg class="usa-icon usa-icon--size-3" aria-hidden="true" focusable="false" role="img">
+                            <use xlink:href="/uswds/img/sprite.svg#file_download"></use>
+                        </svg>
+                    </a> `
+                }
             })
         } else {
             attachCol.innerHTML = '(none)'

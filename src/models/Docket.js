@@ -74,7 +74,11 @@ const Docket = {
                 if (process.env.NODE_ENV === 'development') {
                     const data = Object.assign({}, mockCommentData)
                     data.data = Object.assign({}, data.data, { id: commentIds[i] })
+                    data.included = [Object.assign({}, data.included[0])]
                     if (Math.random() < 0.3) { delete data.included }
+                    if (Math.random() < 0.2 && data.included) {
+                        data.included.push({ attributes: { title: 'document', restrictReasonType: 'Copyright', fileFormats: null } })
+                    }
                     if (data.included) {
                         data.data.attributes.comment = 'See attached file(s)'
                     } else {
