@@ -27,3 +27,8 @@ h3.doctype {
 .comments .author, .comments .comment-text {
     width: 35%;
 }
+
+.comments .usa-tooltip__body {
+    display: block;
+    bottom: auto;
+}

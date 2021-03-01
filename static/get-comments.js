@@ -29,6 +29,32 @@ if (commentIdSets.length && commentIdSets[0].length) {
     }, forcedDelay)
 }
 
+const commentTable = document.querySelector('table.comments')
+commentTable.addEventListener('mouseover', (e) => {
+    let tooltipTrigger = findTrigger(e.target)
+    if (tooltipTrigger) {
+        commentTable.querySelector('#' + tooltipTrigger.getAttribute('aria-describedby')).classList.add('is-visible')
+    }
+})
+commentTable.addEventListener('mouseout', (e) => {
+    let tooltipTrigger = findTrigger(e.target)
+    if (tooltipTrigger) {
+        commentTable.querySelector('#' + tooltipTrigger.getAttribute('aria-describedby')).classList.remove('is-visible')
+    }
+})
+
+function findTrigger(node) {
+    let trigger = null
+    if (/usa\-tooltip/.test(node.className)) {
+        trigger = node
+    } else if (/usa\-tooltip/.test(node.parentNode.className)) {
+        trigger = node.parentNode
+    } else if (/usa\-tooltip/.test(node.parentNode.parentNode.className)) {
+        trigger = node.parentNode.parentNode
+    }
+    return trigger
+}
+
 
 function getCommentBatch(commentSet) {
     fetch(`/document/${documentId}/comments`, {
@@ -61,22 +87,32 @@ function updateComment(comment) {
             attachCol.innerHTML = ''
             comment.included.forEach((attachment, i) => {
                 if (!attachment.attributes.fileFormats) {
-                    attachCol.innerHTML += `<a class="usa-icon--size-3" data-position="top" title="Unable to download: ${attachment.attributes.restrictReasonType}">
-                        ${i+1}<svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+                    attachCol.innerHTML += `<a class="usa-tooltip" data-position="top" title="" aria-describedby="tooltip-${comment.data.id}-atachment-${i}">
+                        ${i+1}<svg class="usa-icon usa-icon--size-3" aria-hidden="true" focusable="false" role="img">
                             <use xlink:href="/uswds/img/sprite.svg#do_not_disturb"></use>
                         </svg>
-                    </a> `
+                    </a>
+                    <span class="usa-tooltip__body usa-tooltip__body--top" id="tooltip-${comment.data.id}-atachment-${i}" role="tooltip" aria-hidden="true">Unable to download: ${attachment.attributes.restrictReasonType}</span>`
                 } else {
-                    attachCol.innerHTML += `<a href="${attachment.attributes.fileFormats[0].fileUrl}" target="_blank" class="usa-tooltip" data-position="top" title="Download: ${attachment.attributes.title}">
+                    attachCol.innerHTML += `<a href="${attachment.attributes.fileFormats[0].fileUrl}" target="_blank" class="usa-tooltip" data-position="top" title="" aria-describedby="tooltip-${comment.data.id}-atachment-${i}">
                         ${i+1}<svg class="usa-icon usa-icon--size-3" aria-hidden="true" focusable="false" role="img">
                             <use xlink:href="/uswds/img/sprite.svg#file_download"></use>
                         </svg>
-                    </a> `
+                    </a>
+                    <span class="usa-tooltip__body usa-tooltip__body--top" id="tooltip-${comment.data.id}-atachment-${i}" role="tooltip" aria-hidden="true">Download: ${attachment.attributes.title}</span>`
                 }
             })
         } else {
             attachCol.innerHTML = '(none)'
         }
+
+        Array.from(row.querySelectorAll('.usa-tooltip')).forEach((trigger) => {
+            const triggerPos = trigger.getBoundingClientRect()
+            const tip = row.querySelector('#' + trigger.getAttribute('aria-describedby'))
+            tip.style.top = (trigger.offsetTop - triggerPos.height - 20) + 'px'
+            tip.style.left = (trigger.offsetLeft + (triggerPos.width / 2)) + 'px'
+        })
+
     } else {
         console.warn('Cannot update missing comment row:', comment.data.id)
     }
