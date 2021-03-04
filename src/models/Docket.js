@@ -43,6 +43,7 @@ const Docket = {
         return data
     },
     getDocuments: async (docketId, getCommentCount=false, docType='') => {
+        docketId = docketId.replace(/–/g, '-')
         console.log(`Requesting documents for docket ID ${docketId}...`)
 
         try {
