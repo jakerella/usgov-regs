@@ -1,35 +1,18 @@
 
 const fetch = require('node-fetch')
+const { cache } = require('../data.js')
 const mockCommentData = require('../test-data/comment.json')
 
-const cache = {}
-
-console.log('Docket model using mocks?', process.env.NODE_ENV === 'development' && process.env.USE_MOCK === 'true');
-
-function addToCache(id, item, ttl=86400000) {
-    if (cache[id]) { delete cache[id] }
-    if (process.env.NODE_ENV === 'development') { console.log(`Adding item to cache (${id})`) }
-    cache[id] = {
-        item,
-        expires: Date.now() + ttl
-    }
-}
-
-function getFromCache(id) {
-    if (!cache[id]) { return null }
-    if (cache[id].expires < Date.now()) {
-        delete cache[id]
-        return null
-    }
-    if (process.env.NODE_ENV === 'development') { console.log(`Retrieved item from cache (${id})`) }
-    return cache[id].item
-}
+const ONE_DAY = 86400
+const ONE_MONTH = (ONE_DAY * 30)
 
 const Docket = {
     getDocket: async (docketId) => {
+        docketId = docketId.replace(/–/g, '-')
         console.log(`Requesting docket ID ${docketId}...`)
 
-        let data = getFromCache(docketId)
+        let data
+        try { data = await cache.get(docketId) } catch(err) { /* let it goooooo */ }
         if (data) { return data }
 
         const govResp = await fetch(`https://api.regulations.gov/v4/dockets/${docketId}?api_key=${process.env['API_KEY']}`)
@@ -37,13 +20,16 @@ const Docket = {
             throw new Error(`Unable to retrieve docket ${docketId} from regulations.gov API (${govResp.status})`)
         }
         data = (await govResp.json()).data
-        addToCache(docketId, data)
+
+        try { await cache.set(docketId, data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache docket ${docketId}`, err.message) }
+
         return data
     },
     getDocument: async (documentId) => {
         console.log(`Requesting document ID ${documentId}...`)
 
-        let data = getFromCache(documentId)
+        let data
+        try { data = await cache.get(documentId) } catch(err) { /* let it goooooo */ }
         if (data) { return data }
 
         const govResp = await fetch(`https://api.regulations.gov/v4/documents/${documentId}?api_key=${process.env['API_KEY']}`)
@@ -51,14 +37,17 @@ const Docket = {
             throw new Error(`Unable to retrieve document ${documentId} from regulations.gov API (${govResp.status})`)
         }
         data = (await govResp.json()).data
-        addToCache(documentId, data)
+        
+        try { await cache.set(documentId, data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache document ${documentId}`, err.message) }
+
         return data
     },
     getDocuments: async (docketId, getCommentCount=false, docType='') => {
         console.log(`Requesting documents for docket ID ${docketId}...`)
 
         try {
-            let data = getFromCache(`${docketId}-documents`)
+            let data
+            try { data = await cache.get(`${docketId}-documents`) } catch(err) { /* let it goooooo */ }
             if (data) { return data }
 
             const documents = await pagedRequest(`https://api.regulations.gov/v4/documents?filter[docketId]=${docketId}&filter[documentType]=${docType}`)
@@ -74,7 +63,8 @@ const Docket = {
                 }
             }
 
-            addToCache(`${docketId}-documents`, documents)
+            try { await cache.set(`${docketId}-documents`, documents, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache document list for ${docketId}`, err.message) }
+
             return documents
 
         } catch(err) {
@@ -86,12 +76,13 @@ const Docket = {
         console.log(`Requesting comments for object ID ${objectId}...`)
 
         try {
-            let data = getFromCache(`${objectId}-comments`)
+            let data
+            try { data = await cache.get(`${objectId}-comments`) } catch(err) { /* let it goooooo */ }
             if (data) { return data }
 
             const comments = await pagedRequest(`https://api.regulations.gov/v4/comments?filter[commentOnId]=${objectId}&sort=postedDate`)
-            
-            addToCache(`${objectId}-comments`, comments)
+
+            try { await cache.set(`${objectId}-comments`, comments, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache comment list for ${objectId}`, err.message) }
             return comments
 
         } catch(err) {
@@ -106,7 +97,8 @@ const Docket = {
             const comments = []
             for (let i=0; i<commentIds.length; ++i) {
 
-                let data = getFromCache(commentIds[i])
+                let data
+                try { data = await cache.get(commentIds[i]) } catch(err) { /* let it goooooo */ }
                 if (data) {
                     comments.push(data)
                     continue
@@ -136,7 +128,9 @@ const Docket = {
                 }
                 
                 data = await govResp.json()
-                addToCache(`${commentIds[i]}`, data)
+
+                try { await cache.set(commentIds[i], data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache comment ${commentIds[i]}`, err.message) }
+                
                 comments.push(data)
             }
 

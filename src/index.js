@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-
+const { cache } = require('./data.js')
 
 // All the routes
 const home = require('./routes/home')
@@ -15,6 +15,10 @@ if (!API_KEY) {
     console.error('No API key found for US Regs site')
     process.exit(1)
 }
+
+cache.get('startup-test')
+    .then(() => console.log('Redis connection successful'))
+    .catch((err) => console.error('Unable to connect to Redis', err))
 
 // start it up
 const app = express()
