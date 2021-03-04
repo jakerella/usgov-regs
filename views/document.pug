@@ -46,7 +46,8 @@ block content
             tbody
                 each comment in comments
                     tr.comment(data-comment-id=comment.id)
-                        th(scope='row')= comment.attributes.title
+                        th(scope='row')
+                            a(href=`https://www.regulations.gov/comment/${comment.id}` target='_blank')= comment.attributes.title
                         - const postedDate = (new Date(comment.attributes.postedDate)).toLocaleDateString()
                         td= postedDate
                         td.comment-text loading...
