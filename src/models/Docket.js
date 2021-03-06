@@ -6,6 +6,7 @@ const mockCommentData = require('../test-data/comment.json')
 const ONE_DAY = 86400
 const ONE_MONTH = (ONE_DAY * 30)
 
+
 const Docket = {
     getDocket: async (docketId) => {
         docketId = docketId.replace(/–/g, '-')
@@ -14,12 +15,8 @@ const Docket = {
         let data
         try { data = await cache.get(docketId) } catch(err) { /* let it goooooo */ }
         if (data) { return data }
-
-        const govResp = await fetch(`https://api.regulations.gov/v4/dockets/${docketId}?api_key=${process.env['API_KEY']}`)
-        if (govResp.status > 299) {
-            throw new Error(`Unable to retrieve docket ${docketId} from regulations.gov API (${govResp.status})`)
-        }
-        data = (await govResp.json()).data
+        
+        data = (await doRequest(`/dockets/${docketId}`, null, null)).data
 
         try { await cache.set(docketId, data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache docket ${docketId}`, err.message) }
 
@@ -32,11 +29,7 @@ const Docket = {
         try { data = await cache.get(documentId) } catch(err) { /* let it goooooo */ }
         if (data) { return data }
 
-        const govResp = await fetch(`https://api.regulations.gov/v4/documents/${documentId}?api_key=${process.env['API_KEY']}`)
-        if (govResp.status > 299) {
-            throw new Error(`Unable to retrieve document ${documentId} from regulations.gov API (${govResp.status})`)
-        }
-        data = (await govResp.json()).data
+        data = (await doRequest(`/documents/${documentId}`, null, null)).data
         
         try { await cache.set(documentId, data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache document ${documentId}`, err.message) }
 
@@ -51,16 +44,11 @@ const Docket = {
             try { data = await cache.get(`${docketId}-documents`) } catch(err) { /* let it goooooo */ }
             if (data) { return data }
 
-            const documents = await pagedRequest(`https://api.regulations.gov/v4/documents?filter[docketId]=${docketId}&filter[documentType]=${docType}`)
+            const documents = await pagedRequest(`/documents?filter[docketId]=${docketId}&filter[documentType]=${docType}`)
 
             if (getCommentCount) {
                 for (let i=0; i<documents.length; ++i) {
-                    const govResp = await fetch(`https://api.regulations.gov/v4/comments?filter[commentOnId]=${documents[i].attributes.objectId}&page[size]=5&api_key=${process.env['API_KEY']}`)
-                    if (govResp.status > 299) {
-                        throw new Error(`Unable to retrieve comments for document ${documents[i].attributes.objectId} from regulations.gov API (${govResp.status})`)
-                    }
-                    commentData = await govResp.json()
-                    documents[i].commentCount = commentData.meta.totalElements
+                    documents[i].commentCount = (await doRequest(`/comments?filter[commentOnId]=${documents[i].attributes.objectId}`, 1, 5)).meta.totalElements
                 }
             }
 
@@ -81,7 +69,7 @@ const Docket = {
             try { data = await cache.get(`${objectId}-comments`) } catch(err) { /* let it goooooo */ }
             if (data) { return data }
 
-            const comments = await pagedRequest(`https://api.regulations.gov/v4/comments?filter[commentOnId]=${objectId}&sort=postedDate`)
+            const comments = await pagedRequest(`/comments?filter[commentOnId]=${objectId}&sort=postedDate`)
 
             try { await cache.set(`${objectId}-comments`, comments, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache comment list for ${objectId}`, err.message) }
             return comments
@@ -123,12 +111,7 @@ const Docket = {
                     continue;
                 }
 
-                const govResp = await fetch(`https://api.regulations.gov/v4/comments/${commentIds[i]}?include=attachments&api_key=${process.env['API_KEY']}`)
-                if (govResp.status > 299) {
-                    throw new Error(`Unable to retrieve comment ${commentIds[i]} from regulations.gov API (${govResp.status})`)
-                }
-                
-                data = await govResp.json()
+                data = (await doRequest(`/comments/${commentIds[i]}?include=attachments`, null, null))
 
                 try { await cache.set(commentIds[i], data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache comment ${commentIds[i]}`, err.message) }
                 
@@ -144,15 +127,16 @@ const Docket = {
     }
 }
 
-async function pagedRequest(baseUrl) {
+
+async function pagedRequest(path) {
     const data = []
     const limit = 250
     let page = 1
 
-    let resp = await doRequest(baseUrl, page, limit)
+    let resp = await doRequest(path, page, limit)
     data.push(...resp.data)
     while (resp.meta.hasNextPage) {
-        resp = await doRequest(baseUrl, ++page, limit)
+        resp = await doRequest(path, ++page, limit)
         data.push(...resp.data)
     }
 
@@ -160,15 +144,38 @@ async function pagedRequest(baseUrl) {
 }
 
 
-async function doRequest(baseUrl, page, limit=25) {
-    console.log('sending request to', `${baseUrl}&page[size]=${limit}&page[number]=${page}&api_key=${process.env['API_KEY']}`);
-    const govResp = await fetch(`${baseUrl}&page[size]=${limit}&page[number]=${page}&api_key=${process.env['API_KEY']}`)
+async function doRequest(path, page=1, limit=25) {
+    let url = `${process.env.API_BASE}${path}`
+    if (page !== null) { url = addParam(url, 'page[number]', page) }
+    if (limit !== null) { url = addParam(url, 'page[size]', limit) }
+
+    if (process.env.NODE_ENV === 'development') { console.log(`sending request to ${url}`) }
+
+    const govResp = await fetch(url, {
+        headers: {
+            'X-API-Key': process.env.API_KEY,
+            'X-Powered-By': 'Regs-Gov-Explorer'
+        }
+    })
     if (govResp.status > 299) {
         const err = new Error(`Unable to retrieve data from regulations.gov API (${govResp.status})`)
         err.status = govResp.status
         throw err
     }
+    if (process.env.NODE_ENV === 'development') {
+        console.log(`Rate limit & remaining: ${govResp.headers.get('X-RateLimit-Remaining')} of ${govResp.headers.get('X-RateLimit-Limit')}`)
+    }
     return await govResp.json()
+}
+
+function addParam(url, param, value) {
+    if (/\?$/.test(url)) {
+        return url += `${param}=${value}`
+    } else if (/\?.+/.test(url)) {
+        return url += `&${param}=${value}`
+    } else {
+        return url += `?${param}=${value}`
+    }
 }
 
 
