@@ -44,7 +44,7 @@ const Docket = {
             try { data = await cache.get(`${docketId}-documents`) } catch(err) { /* let it goooooo */ }
             if (data) { return data }
 
-            const documents = await pagedRequest(`/documents?filter[docketId]=${docketId}&filter[documentType]=${docType}`)
+            const documents = await pagedRequest(`/documents?filter[docketId]=${docketId}&filter[documentType]=${docType}&sort=postedDate`)
 
             if (getCommentCount) {
                 for (let i=0; i<documents.length; ++i) {

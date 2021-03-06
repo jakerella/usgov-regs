@@ -1,9 +1,9 @@
 {
   "data" : {
-    "id" : "EPA-HQ-OPPT-2019-0080-0531",
+    "id" : "EPA-HQ-OPPT-2019-0080-0573",
     "type" : "comments",
     "links" : {
-      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0531"
+      "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0573"
     },
     "attributes" : {
       "commentOn" : "0900006483dc21fd",
@@ -14,14 +14,14 @@
       "agencyId" : "EPA",
       "city" : null,
       "category" : null,
-      "comment" : "See attached file(s)",
+      "comment" : "The following documents are cited in the October 28, 2019, comments submitted by the Institute for Policy Integrity. The documents are attached so as to make them part of the record. Many of the documents cited in Policy Integritys comments were cited by the agencies and are thus already part of the record. ",
       "country" : null,
       "displayProperties" : [ {
         "name" : "pageCount",
         "label" : "Page Count",
         "tooltip" : "Number of pages In the content file"
       } ],
-      "docAbstract" : null,
+      "docAbstract" : "See OPPT-2019-0080-0551 for Main Comment.",
       "docketId" : "EPA-HQ-OPPT-2019-0080",
       "documentType" : "Public Submission",
       "email" : null,
@@ -32,18 +32,18 @@
       "firstName" : null,
       "govAgency" : null,
       "govAgencyType" : null,
-      "objectId" : "0900006483fdfe2b",
+      "objectId" : "0900006484101cc4",
       "lastName" : null,
       "legacyId" : null,
-      "modifyDate" : "2019-10-04T00:36:53Z",
+      "modifyDate" : "2019-11-06T01:55:28Z",
       "organization" : null,
       "originalDocumentId" : null,
       "pageCount" : 1,
       "phone" : null,
-      "postedDate" : "2019-10-03T04:00:00Z",
-      "postmarkDate" : "2019-09-27T04:00:00Z",
+      "postedDate" : "2019-11-05T05:00:00Z",
+      "postmarkDate" : "2019-10-28T04:00:00Z",
       "reasonWithdrawn" : null,
-      "receiveDate" : "2019-09-27T04:00:00Z",
+      "receiveDate" : "2019-10-28T04:00:00Z",
       "restrictReason" : null,
       "restrictReasonType" : null,
       "stateProvinceRegion" : null,
@@ -51,8 +51,8 @@
       "submitterRepAddress" : null,
       "submitterRepCityState" : null,
       "subtype" : "Company/Organization Comment",
-      "title" : "Comment submitted by the European Union (EU)",
-      "trackingNbr" : "1k3-9cf3-lasc",
+      "title" : "Comment submitted by Matt Butner, Bethany Davis Noll and Natalie Jacewicz, Institute for Policy Integrity, New York University (NYU) School of Law (Attachments)",
+      "trackingNbr" : "1k3-9czw-msqa",
       "withdrawn" : false,
       "zip" : null,
       "openForComment" : false
@@ -60,37 +60,492 @@
     "relationships" : {
       "attachments" : {
         "data" : [ {
-          "id" : "0900006483fdfe36",
+          "id" : "0900006484101cc5",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cc6",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cc7",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cc8",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cc9",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cca",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101ccb",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101ccc",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101ccd",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cce",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101ccf",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cd1",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cd2",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cd3",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cd4",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cd5",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cd6",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cd7",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cd8",
+          "type" : "attachments"
+        }, {
+          "id" : "0900006484101cd9",
           "type" : "attachments"
         } ],
         "links" : {
-          "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0531/relationships/attachments",
-          "related" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0531/attachments"
+          "self" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0573/relationships/attachments",
+          "related" : "https://api.regulations.gov/v4/comments/EPA-HQ-OPPT-2019-0080-0573/attachments"
         }
       }
     }
   },
   "included" : [ {
-    "id" : "0900006483fdfe36",
+    "id" : "0900006484101cc5",
     "type" : "attachments",
     "links" : {
-      "self" : "https://api.regulations.gov/v4/attachments/0900006483fdfe36"
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cc5"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "Policy Integrity Appendix Cover",
+      "docOrder" : 1,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_1.pdf",
+        "format" : "pdf",
+        "size" : 144524
+      } ],
+      "modifyDate" : "2019-11-05T20:55:21Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "References"
+    }
+  }, {
+    "id" : "0900006484101cc6",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cc6"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "NatlHomeBuilders\nNo copyright information",
+      "docOrder" : 2,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_2.pdf",
+        "format" : "pdf",
+        "size" : 202198
+      } ],
+      "modifyDate" : "2019-11-05T20:55:22Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "National Association of Home Builders verses Environmental Protection Agency"
+    }
+  }, {
+    "id" : "0900006484101cc7",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cc7"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "NetCoalition\nNo copyright information",
+      "docOrder" : 3,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_3.pdf",
+        "format" : "pdf",
+        "size" : 230485
+      } ],
+      "modifyDate" : "2019-11-05T20:55:23Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "NetCoalition verses Securities and Exchange Commission"
+    }
+  }, {
+    "id" : "0900006484101cc8",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cc8"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "UnitedTechsCorp\nNo copyright information",
+      "docOrder" : 4,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_4.pdf",
+        "format" : "pdf",
+        "size" : 192690
+      } ],
+      "modifyDate" : "2019-11-05T20:55:23Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "United Technologies Corporation verses US Department of Defense"
+    }
+  }, {
+    "id" : "0900006484101cc9",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cc9"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "Carbon Tetrachloride Health Hazards",
+      "docOrder" : 5,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_5.pdf",
+        "format" : "pdf",
+        "size" : 57411
+      } ],
+      "modifyDate" : "2019-11-05T20:55:23Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "Product Stewardship Summary\nCarbon Tetrachloride"
+    }
+  }, {
+    "id" : "0900006484101cca",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cca"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "TCEHealthHazards",
+      "docOrder" : 6,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_6.pdf",
+        "format" : "pdf",
+        "size" : 63887
+      } ],
+      "modifyDate" : "2019-11-05T20:55:20Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "Public Health Statement For Trichloroethylene"
+    }
+  }, {
+    "id" : "0900006484101ccb",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101ccb"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "PercHealthHazards",
+      "docOrder" : 7,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_7.pdf",
+        "format" : "pdf",
+        "size" : 52594
+      } ],
+      "modifyDate" : "2019-11-05T20:55:20Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "Public Health Statement for Tetrachloroethylene"
+    }
+  }, {
+    "id" : "0900006484101ccc",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101ccc"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "Please contact the EPA Docket Center, Public Reading Room to view this document.  Address: 1301 Constitution Ave, NW Room 3334, Washington, DC 20004. Telephone: 202-566-1744.  Fax: 202-566- 9744.  Email: docket-customerservice@epa.gov",
+      "docOrder" : 8,
+      "fileFormats" : null,
+      "modifyDate" : "2019-11-05T20:55:19Z",
+      "publication" : "© 2013 Worker Healthr Protection Program",
+      "restrictReason" : null,
+      "restrictReasonType" : "Copyrighted",
+      "title" : "Chlorinated Solvents"
+    }
+  }, {
+    "id" : "0900006484101ccd",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101ccd"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "FCCvFox\nNo copyright information",
+      "docOrder" : 9,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_9.pdf",
+        "format" : "pdf",
+        "size" : 199405
+      } ],
+      "modifyDate" : "2019-11-05T20:55:19Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "Federal Communications Commission et al., verses Fox Television Stations"
+    }
+  }, {
+    "id" : "0900006484101cce",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cce"
     },
     "attributes" : {
       "agencyNote" : null,
       "authors" : null,
       "docAbstract" : null,
-      "docOrder" : 1,
+      "docOrder" : 10,
       "fileFormats" : [ {
-        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0531/attachment_1.pdf",
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_10.pdf",
         "format" : "pdf",
-        "size" : 336028
+        "size" : 154646
       } ],
-      "modifyDate" : "2019-10-03T20:36:52Z",
+      "modifyDate" : "2019-11-05T20:55:19Z",
       "publication" : null,
       "restrictReason" : null,
       "restrictReasonType" : null,
-      "title" : "Comment"
+      "title" : "Risk Assessment for Carcinogenic Effects"
+    }
+  }, {
+    "id" : "0900006484101ccf",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101ccf"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "CinBellTelCo\nNo copyright information",
+      "docOrder" : 11,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_11.pdf",
+        "format" : "pdf",
+        "size" : 14513141
+      } ],
+      "modifyDate" : "2019-11-05T20:55:19Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "Cincinnati Bell Telephone Company verses Federal Communications Commission"
+    }
+  }, {
+    "id" : "0900006484101cd1",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cd1"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "Motor Vehicle Mfrs\nNo copyright information",
+      "docOrder" : 12,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_12.pdf",
+        "format" : "pdf",
+        "size" : 17731345
+      } ],
+      "modifyDate" : "2019-11-05T20:55:21Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "Motor Vehicle Manufactures Association of the United States, Inc. et al., verses State Farm Mutual Automobile Insurance Company et al."
+    }
+  }, {
+    "id" : "0900006484101cd2",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cd2"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : [ "Al McGartland et al." ],
+      "docAbstract" : "McGartlandetal.  Please contact the EPA Docket Center, Public Reading Room to view this document.  Address: 1301 Constitution Ave, NW Room 3334, Washington, DC 20004. Telephone: 202-566-1744.  Fax: 202-566- 9744.  Email: docket-customerservice@epa.gov",
+      "docOrder" : 13,
+      "fileFormats" : null,
+      "modifyDate" : "2019-11-05T20:55:22Z",
+      "publication" : "Science Magazine 357.6350 (2017): 457-458",
+      "restrictReason" : null,
+      "restrictReasonType" : "Copyrighted",
+      "title" : "Estimating the health benefits of environmental regulations"
+    }
+  }, {
+    "id" : "0900006484101cd3",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cd3"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : null,
+      "docOrder" : 14,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_14.pdf",
+        "format" : "pdf",
+        "size" : 303502
+      } ],
+      "modifyDate" : "2019-11-05T20:55:22Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "Cancer Facts & Figures 2018  American Cancer Society"
+    }
+  }, {
+    "id" : "0900006484101cd4",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cd4"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "Science and Decisions.  Please contact the EPA Docket Center, Public Reading Room to view this document.  Address: 1301 Constitution Ave, NW Room 3334, Washington, DC 20004. Telephone: 202-566-1744.  Fax: 202-566- 9744.  Email: docket-customerservice@epa.gov",
+      "docOrder" : 15,
+      "fileFormats" : null,
+      "modifyDate" : "2019-11-05T20:55:20Z",
+      "publication" : "© National Academy of Sciences. All rights reserved",
+      "restrictReason" : null,
+      "restrictReasonType" : "Copyrighted",
+      "title" : "Science and Decisions: Advancing Risk Assessment"
+    }
+  }, {
+    "id" : "0900006484101cd5",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cd5"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : null,
+      "docOrder" : 16,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_16.pdf",
+        "format" : "pdf",
+        "size" : 267518
+      } ],
+      "modifyDate" : "2019-11-05T20:55:20Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "CPI Inflation Calculator"
+    }
+  }, {
+    "id" : "0900006484101cd6",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cd6"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "CtrBioDiversity\nNo copyright information",
+      "docOrder" : 17,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_17.pdf",
+        "format" : "pdf",
+        "size" : 403469
+      } ],
+      "modifyDate" : "2019-11-05T20:55:21Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "Center for Biological Diversity verses National Highway Traffic Safety Administration"
+    }
+  }, {
+    "id" : "0900006484101cd7",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cd7"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : null,
+      "docOrder" : 18,
+      "fileFormats" : [ {
+        "fileUrl" : "https://downloads.regulations.gov/EPA-HQ-OPPT-2019-0080-0573/attachment_18.pdf",
+        "format" : "pdf",
+        "size" : 562262
+      } ],
+      "modifyDate" : "2019-11-05T20:55:21Z",
+      "publication" : null,
+      "restrictReason" : null,
+      "restrictReasonType" : null,
+      "title" : "Circular A-4"
+    }
+  }, {
+    "id" : "0900006484101cd8",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cd8"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : [ "Richard L. Revesz" ],
+      "docAbstract" : "102CalifLRev.  Please contact the EPA Docket Center, Public Reading Room to view this document.  Address: 1301 Constitution Ave, NW Room 3334, Washington, DC 20004. Telephone: 202-566-1744.  Fax: 202-566- 9744.  Email: docket-customerservice@epa.gov",
+      "docOrder" : 19,
+      "fileFormats" : null,
+      "modifyDate" : "2019-11-05T20:55:23Z",
+      "publication" : "California Law Review 102 (2014): 1423-1456",
+      "restrictReason" : null,
+      "restrictReasonType" : "Copyrighted",
+      "title" : "Quantifying Regulatory Benefits"
+    }
+  }, {
+    "id" : "0900006484101cd9",
+    "type" : "attachments",
+    "links" : {
+      "self" : "https://api.regulations.gov/v4/attachments/0900006484101cd9"
+    },
+    "attributes" : {
+      "agencyNote" : null,
+      "authors" : null,
+      "docAbstract" : "International Programme  Chemical Safety.  Please contact the EPA Docket Center, Public Reading Room to view this document. Address: 1301 Constitution Ave, NW Room 3334, Washington, DC 20004. Telephone: 202-566-1744. Fax: 202-566-9744. Email: docket-customerservice@epa.gov",
+      "docOrder" : 20,
+      "fileFormats" : null,
+      "modifyDate" : "2019-11-05T20:55:24Z",
+      "publication" : "© World Health Organization 2014",
+      "restrictReason" : null,
+      "restrictReasonType" : "Copyrighted",
+      "title" : "Guidance Document on Evaluating and Expressing Uncertainty in Hazard Characterization"
     }
   } ]
 }
