@@ -16,9 +16,7 @@ if (!API_KEY) {
     process.exit(1)
 }
 
-cache.get('startup-test')
-    .then(() => console.log('Redis connection successful'))
-    .catch((err) => console.error('Unable to connect to Redis', err))
+cache.get('startup-test').catch((err) => console.error('Unable to connect to Redis', err))
 
 // start it up
 const app = express()

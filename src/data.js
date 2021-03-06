@@ -4,9 +4,14 @@ const redis = require('redis')
 
 let _client = null
 
-const client = () => {
+const cacheClient = () => {
     if (_client) { return _client }
     
+    if (!process.env.REDIS_URL) {
+        console.warn('WARNING: No Redis URL provided, caching will not occur.')
+        return null
+    }
+
     _client = redis.createClient(process.env.REDIS_URL)
 
     _client.getAsync = promisify(_client.get).bind(_client)
@@ -31,15 +36,23 @@ const client = () => {
 
 const getCache = async (key) => {
     if (!key) { return null }
-    return JSON.parse(await client().getAsync(key))
+    
+    const cache = cacheClient()
+    if (!cache) { return null }
+
+    return JSON.parse(await cache.getAsync(key))
 }
 
 const setCache = async (key, value=null, ttl=null) => {
     if (!key) { throw new Error('No key provided for cache item') }
+    
+    const cache = cacheClient()
+    if (!cache) { return null }
+
     if (Number.isInteger(ttl) && ttl > 0) {
-        return client().setexAsync(key, ttl, JSON.stringify(value))
+        return cache.setexAsync(key, ttl, JSON.stringify(value))
     } else {
-        return client().setAsync(key, JSON.stringify(value))
+        return cahce.setAsync(key, JSON.stringify(value))
     }
 }
 
