@@ -1,6 +1,8 @@
 
 const documentId = document.querySelector('.document').getAttribute('data-document-id')
 
+const attachmentTitleLength = 45
+
 const commentIdSets = [[]]
 let index = 0
 let counter = 1
@@ -69,7 +71,7 @@ function getCommentBatch(commentSet) {
             return console.error('Problem geting comment detail:', resp)
         }
         resp.json().then((comments) => {
-            comments.forEach(updateComment)
+            comments.forEach(updateCommentInfo)
         })
     })
     .catch((err) => {
@@ -78,30 +80,39 @@ function getCommentBatch(commentSet) {
 }
 
 
-function updateComment(comment) {
+function updateCommentInfo(comment) {
     const row = document.querySelector(`[data-comment-id=${comment.data.id}]`)
     if (row) {
         row.querySelector('.comment-text').innerText = comment.data.attributes.comment.substr(0,100) + ((comment.data.attributes.comment.length > 100) ? '...' : '')
+
         const attachCol = row.querySelector('.attachments')
         if (comment.included && comment.included.length) {
             attachCol.innerHTML = ''
+            const attachmentItems = []
             comment.included.forEach((attachment, i) => {
                 if (!attachment.attributes.fileFormats) {
-                    attachCol.innerHTML += `<a class="usa-tooltip" data-position="top" title="" aria-describedby="tooltip-${comment.data.id}-atachment-${i}">
-                        ${i+1}<svg class="usa-icon usa-icon--size-3" aria-hidden="true" focusable="false" role="img">
-                            <use xlink:href="/uswds/img/sprite.svg#do_not_disturb"></use>
-                        </svg>
-                    </a>
-                    <span class="usa-tooltip__body usa-tooltip__body--top" id="tooltip-${comment.data.id}-atachment-${i}" role="tooltip" aria-hidden="true">Unable to download: ${attachment.attributes.restrictReasonType}</span>`
+                    attachmentItems.push(
+                        `<a class="usa-tooltip" data-position="top" title="" aria-describedby="tooltip-${comment.data.id}-atachment-${i}">
+                            <svg class="usa-icon usa-icon--size-3" aria-hidden="true" focusable="false" role="img">
+                                <use xlink:href="/uswds/img/sprite.svg#do_not_disturb"></use>
+                            </svg>
+                            ${attachment.attributes.title.substr(0,attachmentTitleLength)} ${((attachment.attributes.title.length > attachmentTitleLength || attachment.attributes.publication) ? '...' : '')}
+                        </a>
+                        <span class="usa-tooltip__body usa-tooltip__body--top" id="tooltip-${comment.data.id}-atachment-${i}" role="tooltip" aria-hidden="true">Download restricted: ${attachment.attributes.restrictReasonType}<br>${attachment.attributes.title}${(attachment.attributes.publication) ? `<br>${attachment.attributes.publication}` : ''}</span>`
+                    )
                 } else {
-                    attachCol.innerHTML += `<a href="${attachment.attributes.fileFormats[0].fileUrl}" target="_blank" class="usa-tooltip" data-position="top" title="" aria-describedby="tooltip-${comment.data.id}-atachment-${i}">
-                        ${i+1}<svg class="usa-icon usa-icon--size-3" aria-hidden="true" focusable="false" role="img">
-                            <use xlink:href="/uswds/img/sprite.svg#file_download"></use>
-                        </svg>
-                    </a>
-                    <span class="usa-tooltip__body usa-tooltip__body--top" id="tooltip-${comment.data.id}-atachment-${i}" role="tooltip" aria-hidden="true">Download: ${attachment.attributes.title}</span>`
+                    attachmentItems.push(
+                        `<a href="${attachment.attributes.fileFormats[0].fileUrl}" target="_blank" class="usa-tooltip" data-position="top" title="" aria-describedby="tooltip-${comment.data.id}-atachment-${i}">
+                            <svg class="usa-icon usa-icon--size-3" aria-hidden="true" focusable="false" role="img">
+                                <use xlink:href="/uswds/img/sprite.svg#file_download"></use>
+                            </svg>
+                            ${attachment.attributes.title.substr(0,attachmentTitleLength)} ${((attachment.attributes.title.length > attachmentTitleLength || attachment.attributes.publication) ? '...' : '')}
+                        </a>
+                        <span class="usa-tooltip__body usa-tooltip__body--top" id="tooltip-${comment.data.id}-atachment-${i}" role="tooltip" aria-hidden="true">${attachment.attributes.title}${(attachment.attributes.publication) ? `<br>${attachment.attributes.publication}` : ''}</span>`
+                    )
                 }
             })
+            attachCol.innerHTML = attachmentItems.join('<br>')
         } else {
             attachCol.innerHTML = '(none)'
         }

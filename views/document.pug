@@ -41,16 +41,17 @@ block content
                 tr 
                     th.author(scope='col') Author
                     th(scope='col') Date
+                    th.attachments(scope='col') Attachments
                     th.comment-text(scope='col') Comment (first 100 characters)
-                    th(scope='col') Attachments
             tbody
                 each comment in comments
                     tr.comment(data-comment-id=comment.id)
                         th(scope='row')
-                            a(href=`https://www.regulations.gov/comment/${comment.id}` target='_blank')= comment.attributes.title
+                            a(href=`https://www.regulations.gov/comment/${comment.id}` target='_blank')= comment.attributes.title.replace(/^Comment submitted by (the )?/, '')
                         - const postedDate = (new Date(comment.attributes.postedDate)).toLocaleDateString()
                         td= postedDate
-                        td.comment-text loading...
                         td.attachments ?
+                        td.comment-text loading...
+                        
 
     script(src='/get-comments.js')

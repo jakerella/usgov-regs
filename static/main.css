@@ -24,8 +24,8 @@ h3.doctype {
     color: #666;
 }
 
-.comments .author, .comments .comment-text {
-    width: 35%;
+.comments .author, .comments .attachments, .comments .comment-text {
+    width: 30%;
 }
 
 .comments .usa-tooltip__body {
