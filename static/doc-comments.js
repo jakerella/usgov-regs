@@ -3,6 +3,7 @@ const documentId = document.querySelector('.document').getAttribute('data-docume
 
 const attachmentTitleLength = 45
 
+let totalCount = 0
 const commentIdSets = [[]]
 let index = 0
 let counter = 1
@@ -15,6 +16,7 @@ Array.from(document.querySelectorAll('.comment')).forEach((node) => {
     }
     commentIdSets[index].push(node.getAttribute('data-comment-id'))
     counter++
+    totalCount++
 })
 
 const forcedDelay = (3 * 1000)
@@ -69,6 +71,8 @@ function findTrigger(node) {
     return trigger
 }
 
+const progress = document.querySelector('.comments-loaded')
+let totalLoaded = 0
 
 function getCommentBatch(commentSet) {
     fetch(`/document/${documentId}/comments`, {
@@ -84,6 +88,15 @@ function getCommentBatch(commentSet) {
         }
         resp.json().then((comments) => {
             comments.forEach(updateCommentInfo)
+            
+            totalLoaded += comments.length
+            progress.value = Math.round((totalLoaded / totalCount) * 100)
+            progress.title = `${progress.value}% of comments retrieved`
+            if (progress.value >= 100) {
+                setTimeout(() => {
+                    progress.parentNode.removeChild(progress)
+                }, 3000)
+            }
         })
     })
     .catch((err) => {

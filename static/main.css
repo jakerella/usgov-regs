@@ -19,13 +19,18 @@ h1 {
     justify-content: space-between;
 }
 
- .docket-documents .usa-summary-box {
+.docket-documents .usa-summary-box {
     background-color: #ecf3ec;
     border-color: #498b49;
 }
 
 h3.doctype {
     color: #666;
+}
+
+.comments-loaded {
+    vertical-align: middle;
+    margin-left: 1em;
 }
 
 .comments .author, .comments .attachments, .comments .comment-text {

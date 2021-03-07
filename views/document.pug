@@ -34,7 +34,9 @@ block content
                         span= `Posted ${postedDate}`
                         span= `Last Modified ${modDate}`
 
-        h3= `Comments (${comments.length})`
+        h3
+            =`Comments (${comments.length})`
+            progress.comments-loaded(max='100' value='0' title='0% of comments retrieved')
 
         nav.comment-list
             ul 
