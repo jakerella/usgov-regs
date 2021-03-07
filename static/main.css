@@ -1,4 +1,8 @@
 
+.is-hidden {
+    display: none;
+}
+
 h1 {
     font-size: 1.4em;
 }
@@ -31,4 +35,13 @@ h3.doctype {
 .comments .usa-tooltip__body {
     display: block;
     bottom: auto;
+}
+
+nav.comment-list ul {
+    list-style: none;
+    display: flex;
+    margin: 0
+}
+nav.comment-list li {
+    margin: 0 1em;
 }

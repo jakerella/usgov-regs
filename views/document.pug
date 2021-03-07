@@ -36,6 +36,15 @@ block content
 
         h3= `Comments (${comments.length})`
 
+        nav.comment-list
+            ul 
+                li.usa-checkbox
+                    input.usa-checkbox__input#hide-anonymous(type='checkbox' value='false')
+                    label.usa-checkbox__label(for='hide-anonymous') Hide Anonymous
+                li.usa-checkbox
+                    input.usa-checkbox__input#only-attachments(type='checkbox' value='false')
+                    label.usa-checkbox__label(for='only-attachments') Only Comments with Attachments
+
         table.usa-table.usa-table--striped.comments
             thead
                 tr 
@@ -46,12 +55,11 @@ block content
             tbody
                 each comment in comments
                     tr.comment(data-comment-id=comment.id)
-                        th(scope='row')
+                        th.author(scope='row')
                             a(href=`https://www.regulations.gov/comment/${comment.id}` target='_blank')= comment.attributes.title.replace(/^Comment submitted by (the )?/, '')
                         - const postedDate = (new Date(comment.attributes.postedDate)).toLocaleDateString()
-                        td= postedDate
+                        td.posted-date= postedDate
                         td.attachments ?
                         td.comment-text loading...
                         
-
-    script(src='/get-comments.js')
+    script(src='/doc-comments.js')

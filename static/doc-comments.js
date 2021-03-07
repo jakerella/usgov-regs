@@ -17,7 +17,6 @@ Array.from(document.querySelectorAll('.comment')).forEach((node) => {
     counter++
 })
 
-
 const forcedDelay = (3 * 1000)
 
 if (commentIdSets.length && commentIdSets[0].length) {
@@ -32,6 +31,7 @@ if (commentIdSets.length && commentIdSets[0].length) {
 }
 
 const commentTable = document.querySelector('table.comments')
+const allCommentRows = commentTable.querySelectorAll('tbody tr')
 commentTable.addEventListener('mouseover', (e) => {
     let tooltipTrigger = findTrigger(e.target)
     if (tooltipTrigger) {
@@ -44,6 +44,18 @@ commentTable.addEventListener('mouseout', (e) => {
         commentTable.querySelector('#' + tooltipTrigger.getAttribute('aria-describedby')).classList.remove('is-visible')
     }
 })
+
+document.querySelector('#hide-anonymous').addEventListener('change', (e) => {
+    Array.from(allCommentRows)
+        .filter((n) => n.querySelector('.author').innerText.toLowerCase().includes('anonymous public comment'))
+        .forEach((n) => { (e.target.checked) ? n.classList.add('is-hidden') : n.classList.remove('is-hidden') })
+})
+document.querySelector('#only-attachments').addEventListener('change', (e) => {
+    Array.from(allCommentRows)
+        .filter((n) => n.querySelector('.attachments').innerText.toLowerCase().includes('(none)'))
+        .forEach((n) => { (e.target.checked) ? n.classList.add('is-hidden') : n.classList.remove('is-hidden') })
+})
+
 
 function findTrigger(node) {
     let trigger = null
