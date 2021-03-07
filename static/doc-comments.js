@@ -47,7 +47,7 @@ commentTable.addEventListener('mouseout', (e) => {
 
 document.querySelector('#hide-anonymous').addEventListener('change', (e) => {
     Array.from(allCommentRows)
-        .filter((n) => n.querySelector('.author').innerText.toLowerCase().includes('anonymous public comment'))
+        .filter((n) => n.querySelector('.author').innerText.toLowerCase().includes('anonymous'))
         .forEach((n) => { (e.target.checked) ? n.classList.add('is-hidden') : n.classList.remove('is-hidden') })
 })
 document.querySelector('#only-attachments').addEventListener('change', (e) => {
@@ -95,8 +95,18 @@ function getCommentBatch(commentSet) {
 function updateCommentInfo(comment) {
     const row = document.querySelector(`[data-comment-id=${comment.data.id}]`)
     if (row) {
+        // Update the comment text now that we have it
         row.querySelector('.comment-text').innerText = comment.data.attributes.comment.substr(0,100) + ((comment.data.attributes.comment.length > 100) ? '...' : '')
 
+        // Update the comment author if we have better info.
+        if ((comment.data.attributes.firstName && comment.data.attributes.lastName) || comment.data.attributes.organization) {
+            let author = (comment.data.attributes.firstName) ? `${comment.data.attributes.firstName} ` : ''
+            author += (comment.data.attributes.lastName) ? `${comment.data.attributes.lastName}` : ''
+            author += (comment.data.attributes.organization) ? `${(author.length) ? ' of ' : ''}${comment.data.attributes.organization}` : ''
+            row.querySelector('.author a').innerText = author
+        }
+
+        // Update the comment attachments with download links
         const attachCol = row.querySelector('.attachments')
         if (comment.included && comment.included.length) {
             attachCol.innerHTML = ''

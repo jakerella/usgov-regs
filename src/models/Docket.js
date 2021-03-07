@@ -22,12 +22,14 @@ const Docket = {
 
         return data
     },
-    getDocument: async (documentId) => {
+    getDocument: async (documentId, breakCache=false) => {
         console.log(`Requesting document ID ${documentId}...`)
 
         let data
-        try { data = await cache.get(documentId) } catch(err) { /* let it goooooo */ }
-        if (data) { return data }
+        if (process.env.NODE_ENV !== 'development' || !breakCache) {
+            try { data = await cache.get(documentId) } catch(err) { /* let it goooooo */ }
+            if (data) { return data }
+        }
 
         data = (await doRequest(`/documents/${documentId}`, null, null)).data
         
@@ -63,15 +65,17 @@ const Docket = {
             throw new Error(`Unable to retrieve documents for docket ${docketId} from regulations.gov API (${err.status})`)
         }
     },
-    getComments: async (objectId) => {
+    getComments: async (objectId, breakCache=false) => {
         console.log(`Requesting comments for object ID ${objectId}...`)
 
         const path = `/comments?filter[commentOnId]=${objectId}&sort=postedDate`
 
         try {
             let data
-            try { data = await cache.get(path) } catch(err) { /* let it goooooo */ }
-            if (data) { return data }
+            if (process.env.NODE_ENV !== 'development' || !breakCache) {
+                try { data = await cache.get(path) } catch(err) { /* let it goooooo */ }
+                if (data) { return data }
+            }
 
             const comments = await pagedRequest(path)
 
@@ -83,7 +87,7 @@ const Docket = {
             throw new Error(`Unable to retrieve comments for document ${objectId} from regulations.gov API (${err.status})`)
         }
     },
-    getCommentDetail: async (commentIds) => {
+    getCommentDetail: async (commentIds, breakCache=false) => {
         console.log(`Retrieving all comment detail: ${commentIds}...`)
 
         try {
@@ -91,10 +95,12 @@ const Docket = {
             for (let i=0; i<commentIds.length; ++i) {
 
                 let data
-                try { data = await cache.get(commentIds[i]) } catch(err) { /* let it goooooo */ }
-                if (data) {
-                    comments.push(data)
-                    continue
+                if (process.env.NODE_ENV !== 'development' || !breakCache) {
+                    try { data = await cache.get(commentIds[i]) } catch(err) { /* let it goooooo */ }
+                    if (data) {
+                        comments.push(data)
+                        continue
+                    }
                 }
                 
                 if (process.env.NODE_ENV === 'development' && process.env.USE_MOCK === 'true') {

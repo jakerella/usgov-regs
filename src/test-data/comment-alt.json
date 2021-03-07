@@ -1,0 +1,100 @@
+{
+    "data" : {
+      "id" : "HHS-OS-2020-0012-0519",
+      "type" : "comments",
+      "links" : {
+        "self" : "https://api.regulations.gov/v4/comments/HHS-OS-2020-0012-0519"
+      },
+      "attributes" : {
+        "commentOn" : "090000648494a9db",
+        "commentOnDocumentId" : "HHS-OS-2020-0012-0001",
+        "duplicateComments" : 0,
+        "address1" : null,
+        "address2" : null,
+        "agencyId" : "HHS",
+        "city" : null,
+        "category" : null,
+        "comment" : "See attached",
+        "country" : null,
+        "displayProperties" : [ {
+          "name" : "pageCount",
+          "label" : "Page Count",
+          "tooltip" : "Number of pages In the content file"
+        } ],
+        "docAbstract" : null,
+        "docketId" : "HHS-OS-2020-0012",
+        "documentType" : "Public Submission",
+        "email" : null,
+        "fax" : null,
+        "field1" : null,
+        "field2" : null,
+        "fileFormats" : null,
+        "firstName" : "William",
+        "govAgency" : null,
+        "govAgencyType" : null,
+        "objectId" : "09000064849d4440",
+        "lastName" : "Feagin",
+        "legacyId" : null,
+        "modifyDate" : "2020-12-31T18:20:13Z",
+        "organization" : "SC Primary Health Care Assoc.",
+        "originalDocumentId" : null,
+        "pageCount" : 1,
+        "phone" : null,
+        "postedDate" : "2020-12-31T05:00:00Z",
+        "postmarkDate" : null,
+        "reasonWithdrawn" : null,
+        "receiveDate" : "2020-12-30T05:00:00Z",
+        "restrictReason" : null,
+        "restrictReasonType" : null,
+        "stateProvinceRegion" : null,
+        "submitterRep" : null,
+        "submitterRepAddress" : null,
+        "submitterRepCityState" : null,
+        "subtype" : "Comment(s)",
+        "title" : "Comment on FR Doc # 2020-23888",
+        "trackingNbr" : "1k4-9kxy-bdsw",
+        "withdrawn" : false,
+        "zip" : null,
+        "openForComment" : false
+      },
+      "relationships" : {
+        "attachments" : {
+          "data" : [ {
+            "id" : "09000064849d4441",
+            "type" : "attachments"
+          } ],
+          "links" : {
+            "self" : "https://api.regulations.gov/v4/comments/HHS-OS-2020-0012-0519/relationships/attachments",
+            "related" : "https://api.regulations.gov/v4/comments/HHS-OS-2020-0012-0519/attachments"
+          }
+        }
+      }
+    },
+    "included" : [ {
+      "id" : "09000064849d4441",
+      "type" : "attachments",
+      "links" : {
+        "self" : "https://api.regulations.gov/v4/attachments/09000064849d4441"
+      },
+      "attributes" : {
+        "agencyNote" : null,
+        "authors" : null,
+        "docAbstract" : null,
+        "docOrder" : 1,
+        "fileFormats" : [ {
+          "fileUrl" : "https://downloads.regulations.gov/HHS-OS-2020-0012-0519/attachment_1.docx",
+          "format" : "docx",
+          "size" : 78016
+        }, {
+          "fileUrl" : "https://downloads.regulations.gov/HHS-OS-2020-0012-0519/attachment_1.pdf",
+          "format" : "pdf",
+          "size" : 148332
+        } ],
+        "modifyDate" : "2020-12-30T17:04:08Z",
+        "publication" : null,
+        "restrictReason" : null,
+        "restrictReasonType" : null,
+        "title" : "NBPP 2022 Comment Letter"
+      }
+    } ]
+  }

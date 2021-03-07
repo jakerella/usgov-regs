@@ -7,6 +7,8 @@ const router = express.Router()
 router.get('/:document', async (req, res, next) => {
     const documentId = req.params.document
 
+    const breakCache = (req.query.breakcache === 'yesplease') ? true : false
+
     let errorMsg = null
     let document = {}
     let comments = []
@@ -15,8 +17,8 @@ router.get('/:document', async (req, res, next) => {
         errorMsg = 'No Document ID provided'
     } else {
         try {
-            document = await Docket.getDocument(documentId)
-            comments = await Docket.getComments(document.attributes.objectId)
+            document = await Docket.getDocument(documentId, breakCache)
+            comments = await Docket.getComments(document.attributes.objectId, breakCache)
         } catch(err) {
             return next(err)
         }
@@ -33,13 +35,15 @@ router.get('/:document', async (req, res, next) => {
 router.post('/:document/comments', jsonParser, async (req, res, next) => {
     const commentIds = req.body.comments || []
 
+    const breakCache = (req.query.breakcache === 'yesplease') ? true : false
+
     let comments = []
 
     if (!Array.isArray(comments)) {
         res.status(400).json({ error: 'Please provide an array of comment IDs to retrieve' })
     } else {
         try {
-            comments = await Docket.getCommentDetail(commentIds)
+            comments = await Docket.getCommentDetail(commentIds, breakCache)
         } catch(err) {
             return next(err)
         }
