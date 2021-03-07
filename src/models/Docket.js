@@ -35,16 +35,18 @@ const Docket = {
 
         return data
     },
-    getDocuments: async (docketId, getCommentCount=false, docType='') => {
+    getDocuments: async (docketId, getCommentCount=false, docType=null) => {
         docketId = docketId.replace(/–/g, '-')
         console.log(`Requesting documents for docket ID ${docketId}...`)
 
+        const path = `/documents?filter[docketId]=${docketId}&sort=postedDate${(docType) ? `&filter[documentType]=${encodeURIComponent(docType)}` : ''}`
+
         try {
             let data
-            try { data = await cache.get(`${docketId}-documents`) } catch(err) { /* let it goooooo */ }
+            try { data = await cache.get(path) } catch(err) { /* let it goooooo */ }
             if (data) { return data }
 
-            const documents = await pagedRequest(`/documents?filter[docketId]=${docketId}&filter[documentType]=${docType}&sort=postedDate`)
+            const documents = await pagedRequest(path)
 
             if (getCommentCount) {
                 for (let i=0; i<documents.length; ++i) {
@@ -52,7 +54,7 @@ const Docket = {
                 }
             }
 
-            try { await cache.set(`${docketId}-documents`, documents, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache document list for ${docketId}`, err.message) }
+            try { await cache.set(path, documents, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache document list for ${docketId}`, err.message) }
 
             return documents
 
@@ -64,14 +66,16 @@ const Docket = {
     getComments: async (objectId) => {
         console.log(`Requesting comments for object ID ${objectId}...`)
 
+        const path = `/comments?filter[commentOnId]=${objectId}&sort=postedDate`
+
         try {
             let data
-            try { data = await cache.get(`${objectId}-comments`) } catch(err) { /* let it goooooo */ }
+            try { data = await cache.get(path) } catch(err) { /* let it goooooo */ }
             if (data) { return data }
 
-            const comments = await pagedRequest(`/comments?filter[commentOnId]=${objectId}&sort=postedDate`)
+            const comments = await pagedRequest(path)
 
-            try { await cache.set(`${objectId}-comments`, comments, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache comment list for ${objectId}`, err.message) }
+            try { await cache.set(path, comments, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache comment list for ${objectId}`, err.message) }
             return comments
 
         } catch(err) {
