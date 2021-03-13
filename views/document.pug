@@ -1,7 +1,6 @@
 extends partials/layout.pug
 
 block content
-
     if errorMsg
         aside.usa-aler.usa-alert--error
             div.usa-alert__body
@@ -12,59 +11,61 @@ block content
             div.usa-alert__body
                 p.usa-alert__text Sorry, but that document ID does not seem to exist!
     else 
-        h2
-            | Document 
-            = document.id
-            a(href=`https://www.regulations.gov/document/${document.id}` target='_blank')
-                svg.usa-icon.usa-icon--size-3(aria-hidden='true' focusable='false' role='img')
-                    use(xlink:href='/uswds/img/sprite.svg#launch')
+        article.grid-container.usa-section
+            h2
+                | Document 
+                = document.id
+                a(href=`https://www.regulations.gov/document/${document.id}` target='_blank')
+                    svg.usa-icon.usa-icon--size-3(aria-hidden='true' focusable='false' role='img')
+                        use(xlink:href='/uswds/img/sprite.svg#launch')
 
-        h3.doctype= `${document.attributes.documentType} ${(document.attributes.subtype) ? `(${document.attributes.subtype})` : ''}`
+            h3.doctype= `${document.attributes.documentType} ${(document.attributes.subtype) ? `(${document.attributes.subtype})` : ''}`
 
-        - const modDate = (new Date(document.attributes.modifyDate)).toLocaleString()
-        - const postedDate = (new Date(document.attributes.postedDate)).toLocaleString()
+            - const modDate = (new Date(document.attributes.modifyDate)).toLocaleString()
+            - const postedDate = (new Date(document.attributes.postedDate)).toLocaleString()
 
-        article.usa-summary-box.document(data-document-id=document.id)
-            section.usa-summary-box__body
-                h3.usa-summary-box__heading= document.attributes.title
-                main.usa-summary-box__text
-                    p= document.attributes.docAbstract
-                    p
-                        | This Document is part of docket: 
-                        a(href=`/docket/${document.attributes.docketId}`)= document.attributes.docketId
-                    cite.docket-meta
-                        span= `Agency ${document.attributes.agencyId}`
-                        span= `Posted ${postedDate}`
-                        span= `Last Modified ${modDate}`
+            article.usa-summary-box.document(data-document-id=document.id)
+                section.usa-summary-box__body
+                    h3.usa-summary-box__heading= document.attributes.title
+                    main.usa-summary-box__text
+                        p= document.attributes.docAbstract
+                        p
+                            | This Document is part of docket: 
+                            a(href=`/docket/${document.attributes.docketId}`)= document.attributes.docketId
+                        cite.docket-meta
+                            span= `Agency ${document.attributes.agencyId}`
+                            span= `Posted ${postedDate}`
+                            span= `Last Modified ${modDate}`
 
-        h3
-            =`Comments (${comments.length})`
-            progress.comments-loaded(max='100' value='0' title='0% of comments retrieved')
+            h3
+                =`Comments (${comments.length})`
+                progress.comments-loaded(max='100' value='0' title='0% of comments retrieved')
 
-        nav.comment-list
-            ul 
-                li.usa-checkbox
-                    input.usa-checkbox__input#hide-anonymous(type='checkbox' value='false')
-                    label.usa-checkbox__label(for='hide-anonymous') Hide Anonymous
-                li.usa-checkbox
-                    input.usa-checkbox__input#only-attachments(type='checkbox' value='false')
-                    label.usa-checkbox__label(for='only-attachments') Only Comments with Attachments
+            nav.comment-list
+                ul 
+                    li.usa-checkbox
+                        input.usa-checkbox__input#hide-anonymous(type='checkbox' value='false')
+                        label.usa-checkbox__label(for='hide-anonymous') Hide Anonymous
+                    li.usa-checkbox
+                        input.usa-checkbox__input#only-attachments(type='checkbox' value='false')
+                        label.usa-checkbox__label(for='only-attachments') Only Comments with Attachments
 
-        table.usa-table.usa-table--striped.comments
-            thead
-                tr 
-                    th.author(scope='col') Author
-                    th(scope='col') Date
-                    th.attachments(scope='col') Attachments
-                    th.comment-text(scope='col') Comment (first 100 characters)
-            tbody
-                each comment in comments
-                    tr.comment(data-comment-id=comment.id)
-                        th.author(scope='row')
-                            a(href=`https://www.regulations.gov/comment/${comment.id}` target='_blank')= comment.attributes.title.replace(/^Comment submitted by (the )?/, '')
-                        - const postedDate = (new Date(comment.attributes.postedDate)).toLocaleDateString()
-                        td.posted-date= postedDate
-                        td.attachments ?
-                        td.comment-text loading...
+        article
+            table.usa-table.usa-table--striped.comments
+                thead
+                    tr 
+                        th.author(scope='col') Author
+                        th(scope='col') Date
+                        th.attachments(scope='col') Attachments
+                        th.comment-text(scope='col') Comment (first 100 characters)
+                tbody
+                    each comment in comments
+                        tr.comment(data-comment-id=comment.id)
+                            th.author(scope='row')
+                                a(href=`https://www.regulations.gov/comment/${comment.id}` target='_blank')= comment.attributes.title.replace(/^Comment submitted by (the )?/, '')
+                            - const postedDate = (new Date(comment.attributes.postedDate)).toLocaleDateString()
+                            td.posted-date= postedDate
+                            td.attachments ?
+                            td.comment-text loading...
                         
     script(src='/doc-comments.js')

@@ -167,8 +167,16 @@ async function doRequest(path, page=1, limit=25) {
             'X-Powered-By': 'Regs-Gov-Explorer'
         }
     })
+    
     if (govResp.status > 299) {
-        const err = new Error(`Unable to retrieve data from regulations.gov API (${govResp.status})`)
+        let msg = `Unable to retrieve data from regulations.gov API (${govResp.status})`
+        if (govResp.status === 429) {
+            msg = 'Sorry, but it looks like we\'ve hit the API limit on regulations.gov. Please wait an hour and try again! (Note that cached data is still accessible!)'
+        } else if (govResp.status === 404) {
+            msg = 'Sorry, but it looks like regulations.gov couldn\'t find that item. Please try again!'
+        }
+
+        const err = new Error(msg)
         err.status = govResp.status
         throw err
     }
