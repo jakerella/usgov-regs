@@ -1,0 +1,68 @@
+extends partials/layout.pug
+
+
+block content
+    article.grid-container.usa-section
+        section.grid-row.grid-gap
+            aside(class='tablet:grid-col-4')
+                h2(class='font-heading-xl margin-top-0 tablet:margin-bottom-0')
+                    | Making it easier to explore US Government Regulations
+            
+            aside(class='tablet:grid-col-8 usa-prose')
+                p
+                    | The General Services Administration (GSA) has revamped the old and unfit website used 
+                    | by many people to find and comment on regulations proposed or implemented by nearly 
+                    | every executive branch agency in the United States federal government.
+                p
+                    | The new 
+                    a(href='https://regulations.gov') regulations.gov 
+                    | looks nice, and is certainly for user friendly on the surface. However, many of the 
+                    | changes make it extremely difficult for professionals exploring those regulations 
+                    | (and specifically their comments) to do their job.
+                p
+                    | This small website attempts to make that exploration easier, catering specifically 
+                    | to the legal professional community.
+    
+    article.usa-section
+        section.grid-container
+            h3.font-heading-xl.margin-y-0 Who did this?
+            p.usa-intro
+                | Hello! My name is 
+                a(href='https://jordankasper.com' target='_blank') Jordan Kasper 
+                | and I made this website to support some legal professionals 
+                | that I am friends with. They found the new regulations.gov site to be unsuitable and needed 
+                | help. The lawyers I spoke to had 
+                em multiple people 
+                | working for 
+                em days 
+                | to research regulations and comments on those regulations that used to take one person just 
+                | a few hours.
+            
+            p.usa-intro
+                | I saw a problem that I could fix. Luckily, all of the regulation data is available on 
+                a(href='https://api.data.gov/' target='_blank') Data.gov 
+                | and they offer free API access to the public!
+            
+    article.grid-container.usa-section
+        section.grid-row.grid-gap
+            aside(class='tablet:grid-col-4')
+                h2(class='font-heading-xl margin-top-0 tablet:margin-bottom-0')
+                    | If the API is so great, why do things take so long to load?
+            
+            aside(class='tablet:grid-col-8')
+                p.usa-prose
+                    | While the data is available on Data.gov, they limit the API to 1,000 requests per hour. 
+                    | That might sound like a lot, but consider the fact that some proposed regulations can have many 
+                    em hundreds of comments 
+                    | and to get the details for each comment you have to make a separate API call. Sadly, that means 
+                    | that I can't just make a site that collects the data for you quickly and easily.
+
+                p.usa-prose
+                    | Currently, this site employs an aggressive caching mechanism to limit the number of API calls, 
+                    | but really, GSA just needs to fix this so that document and comment details can be retrieved 
+                    | in bulk versus one at a time.
+
+                p.usa-prose
+                    | Curious to see how this is built? (It's not fancy, I warn you...)
+
+                a.usa-button.usa-button--big(href='https://github.com/jakerella/usgov-regs') Explore Code on GitHub

@@ -25,6 +25,7 @@ router.get('/:document', async (req, res, next) => {
     }
 
     res.render('document', {
+        page: 'document',
         title: `${documentId || 'Unknown'} - US Government Rule and Regulation Explorer`,
         document,
         comments,

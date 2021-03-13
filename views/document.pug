@@ -14,7 +14,10 @@ block content
     else 
         h2
             | Document 
-            a(href=`https://www.regulations.gov/document/${document.id}` target='_blank')= document.id
+            = document.id
+            a(href=`https://www.regulations.gov/document/${document.id}` target='_blank')
+                svg.usa-icon.usa-icon--size-3(aria-hidden='true' focusable='false' role='img')
+                    use(xlink:href='/uswds/img/sprite.svg#launch')
 
         h3.doctype= `${document.attributes.documentType} ${(document.attributes.subtype) ? `(${document.attributes.subtype})` : ''}`
 

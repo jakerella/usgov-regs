@@ -12,10 +12,12 @@ html(lang='en-US')
                 section.usa-nav__inner
                     ul.usa-nav__primary.usa-accordion
                         li.usa-nav__primary-item
-                            a.usa-nav__link.usa-current(href='/')
+                            - var current = (page === 'home') ? 'usa-current' : ''
+                            a(class=`usa-nav__link ${current}` href='/')
                                 span Home
                         li.usa-nav__primary-item
-                            a.usa-nav__link(href='/about')
+                            - var current = (page === 'about') ? 'usa-current' : ''
+                            a(class=`usa-nav__link ${current}` href='/about')
                                 span What is this?
     
                 div.usa-nav__secondary

@@ -34,6 +34,7 @@ async function loadDocket(docketId, res, next) {
     supportingMaterials = supportingMaterials.filter(d => !d.attributes.withdrawn)
 
     res.render('docket', {
+        page: 'docket',
         title: `${docketId || 'Unknown'} - US Government Rule and Regulation Explorer`,
         docket,
         rules,

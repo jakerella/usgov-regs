@@ -14,7 +14,10 @@ block content
         else 
             h2
                 | Docket 
-                a(href=`https://www.regulations.gov/docket/${docket.id}` target='_blank')= docket.id
+                = docket.id
+                a(href=`https://www.regulations.gov/docket/${docket.id}` target='_blank')
+                    svg.usa-icon.usa-icon--size-3(aria-hidden='true' focusable='false' role='img')
+                        use(xlink:href='/uswds/img/sprite.svg#launch')
 
             - const modDate = (new Date(docket.attributes.modifyDate)).toLocaleString()
             - const effDate = (docket.attributes.effectiveDate) ? (new Date(docket.attributes.effectiveDate)).toLocaleString() : '(n/a)'
@@ -41,7 +44,7 @@ block content
                         section.usa-summary-box__body
                             h3.usa-summary-box__heading
                                 | #{document.attributes.title} 
-                                a(href=`/document/${document.id}`)
+                                a(href=`https://www.regulations.gov/document/${document.id}`)
                                     svg.usa-icon.usa-icon--size-3(aria-hidden='true' focusable='false' role='img')
                                         use(xlink:href='/uswds/img/sprite.svg#launch')
 
