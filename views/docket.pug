@@ -1,115 +1,115 @@
 extends partials/layout.pug
 
 block content
+    article.grid-container.usa-section
+        if errorMsg
+            aside.usa-aler.usa-alert--error
+                div.usa-alert__body
+                    p.usa-alert__text= errorMsg
 
-    if errorMsg
-        aside.usa-aler.usa-alert--error
-            div.usa-alert__body
-                p.usa-alert__text= errorMsg
+        if !docket.id
+            aside.usa-aler.usa-alert--warning
+                div.usa-alert__body
+                    p.usa-alert__text Sorry, but that docket ID does not seem to exist!
+        else 
+            h2
+                | Docket 
+                a(href=`https://www.regulations.gov/docket/${docket.id}` target='_blank')= docket.id
 
-    if !docket.id
-        aside.usa-aler.usa-alert--warning
-            div.usa-alert__body
-                p.usa-alert__text Sorry, but that docket ID does not seem to exist!
-    else 
-        h2
-            | Docket 
-            a(href=`https://www.regulations.gov/docket/${docket.id}` target='_blank')= docket.id
+            - const modDate = (new Date(docket.attributes.modifyDate)).toLocaleString()
+            - const effDate = (docket.attributes.effectiveDate) ? (new Date(docket.attributes.effectiveDate)).toLocaleString() : '(n/a)'
 
-        - const modDate = (new Date(docket.attributes.modifyDate)).toLocaleString()
-        - const effDate = (docket.attributes.effectiveDate) ? (new Date(docket.attributes.effectiveDate)).toLocaleString() : '(n/a)'
+            article.usa-summary-box
+                section.usa-summary-box__body
+                    h3.usa-summary-box__heading= docket.attributes.title
+                    main.usa-summary-box__text
+                        p= docket.attributes.dkAbstract
+                        cite.docket-meta
+                            span= `Agency ${docket.attributes.agencyId}`
+                            span= `Last Modified ${modDate}`
+                            span= `Effective ${effDate}`
 
-        article.usa-summary-box
-            section.usa-summary-box__body
-                h3.usa-summary-box__heading= docket.attributes.title
-                main.usa-summary-box__text
-                    p= docket.attributes.dkAbstract
-                    cite.docket-meta
-                        span= `Agency ${docket.attributes.agencyId}`
-                        span= `Last Modified ${modDate}`
-                        span= `Effective ${effDate}`
+            section.docket-documents
+                h3 Rule Documents
 
-        section.docket-documents
-            h3 Rule Documents
+                each document in rules
+                    - const postedDate = (new Date(document.attributes.postedDate)).toLocaleString()
+                    - const modDate = (new Date(document.attributes.lastModifiedDate)).toLocaleString()
+                    - const comStart = (new Date(document.attributes.commentStartDate)).toLocaleString()
+                    - const comEnd = (new Date(document.attributes.commentEndDate)).toLocaleString()
+                    article.usa-summary-box
+                        section.usa-summary-box__body
+                            h3.usa-summary-box__heading
+                                | #{document.attributes.title} 
+                                a(href=`/document/${document.id}`)
+                                    svg.usa-icon.usa-icon--size-3(aria-hidden='true' focusable='false' role='img')
+                                        use(xlink:href='/uswds/img/sprite.svg#launch')
 
-            each document in rules
-                - const postedDate = (new Date(document.attributes.postedDate)).toLocaleString()
-                - const modDate = (new Date(document.attributes.lastModifiedDate)).toLocaleString()
-                - const comStart = (new Date(document.attributes.commentStartDate)).toLocaleString()
-                - const comEnd = (new Date(document.attributes.commentEndDate)).toLocaleString()
-                article.usa-summary-box
-                    section.usa-summary-box__body
-                        h3.usa-summary-box__heading
-                            | #{document.attributes.title} 
-                            a(href=`/document/${document.id}`)
-                                svg.usa-icon.usa-icon--size-3(aria-hidden='true' focusable='false' role='img')
-                                    use(xlink:href='/uswds/img/sprite.svg#launch')
+                            main.usa-summary-box__text
+                                p
+                                    | This document was posted by 
+                                    strong= document.attributes.agencyId
+                                    |  on #{postedDate}.
+                                ul
+                                    li
+                                        strong Type: 
+                                        | #{document.attributes.documentType} #{(document.attributes.subtype) ? `(${document.attributes.subtype})` : ''}
+                                    li
+                                        strong Comments: 
+                                        | #{(document.attributes.openForComment) ? 'open' : 'closed'} #{(document.attributes.commentStartDate) ? '(' + comStart + ' to ' + comEnd + ')' : ''}
+                                    li
+                                        strong Last Modified: 
+                                        | #{modDate}
+                                if document.commentCount
+                                    div.comment-button
+                                        a.usa-button(href=`/document/${document.id}`)= `View ${document.commentCount} Comments`
+                                else
+                                    div.comment-button
+                                        p (No Comments)
+                
+                h3 Supporting Documents &amp; Other Material
 
-                        main.usa-summary-box__text
-                            p
-                                | This document was posted by 
-                                strong= document.attributes.agencyId
-                                |  on #{postedDate}.
-                            ul
-                                li
-                                    strong Type: 
-                                    | #{document.attributes.documentType} #{(document.attributes.subtype) ? `(${document.attributes.subtype})` : ''}
-                                li
-                                    strong Comments: 
-                                    | #{(document.attributes.openForComment) ? 'open' : 'closed'} #{(document.attributes.commentStartDate) ? '(' + comStart + ' to ' + comEnd + ')' : ''}
-                                li
-                                    strong Last Modified: 
-                                    | #{modDate}
-                            if document.commentCount
-                                div.comment-button
-                                    a.usa-button(href=`/document/${document.id}`)= `View ${document.commentCount} Comments`
-                            else
-                                div.comment-button
-                                    p (No Comments)
-            
-            h3 Supporting Documents &amp; Other Material
+                if supportingMaterials.length
+                    table.usa-table.usa-table--striped.supporting-documents
+                        thead
+                            tr 
+                                th.author(scope='col') Title
+                                th(scope='col') Date
+                                th(scope='col') SubType
+                                th(scope='col') Commentable?
+                        tbody
+                            each document in supportingMaterials
+                                tr.document(data-document-id=document.id)
+                                    th(scope='row')
+                                        a(href=`https://www.regulations.gov/document/${document.id}` target='_blank')= document.attributes.title
+                                    - const postedDate = (new Date(document.attributes.postedDate)).toLocaleDateString()
+                                    td= postedDate
+                                    td= document.attributes.subtype
+                                    td
+                                        if document.attributes.commentStartDate
+                                            a(href=`/document/${document.id}` title=`View comments on document ${document.id}`) Yes
+                                        else
+                                            | No
+                else
+                    aside.usa-alert.usa-alert--info
+                        div.usa-alert__body
+                            p.usa-alert__text There are no other documents associated with this docket.
+                
+                if withdrawn.length
+                    h3 Withdrawn Documents
 
-            if supportingMaterials.length
-                table.usa-table.usa-table--striped.supporting-documents
-                    thead
-                        tr 
-                            th.author(scope='col') Title
-                            th(scope='col') Date
-                            th(scope='col') SubType
-                            th(scope='col') Commentable?
-                    tbody
-                        each document in supportingMaterials
-                            tr.document(data-document-id=document.id)
-                                th(scope='row')
-                                    a(href=`https://www.regulations.gov/document/${document.id}` target='_blank')= document.attributes.title
-                                - const postedDate = (new Date(document.attributes.postedDate)).toLocaleDateString()
-                                td= postedDate
-                                td= document.attributes.subtype
-                                td
-                                    if document.attributes.commentStartDate
-                                        a(href=`/document/${document.id}` title=`View comments on document ${document.id}`) Yes
-                                    else
-                                        | No
-            else
-                aside.usa-alert.usa-alert--info
-                    div.usa-alert__body
-                        p.usa-alert__text There are no other documents associated with this docket.
-            
-            if withdrawn.length
-                h3 Withdrawn Documents
-
-                table.usa-table.usa-table--striped.withdrawn-documents
-                    thead
-                        tr 
-                            th.author(scope='col') Title
-                            th(scope='col') Date
-                            th(scope='col') SubType
-                    tbody
-                        each document in withdrawn
-                            tr.document(data-document-id=document.id)
-                                th(scope='row')
-                                    a(href=`https://www.regulations.gov/document/${document.id}` target='_blank')= document.attributes.title
-                                - const postedDate = (new Date(document.attributes.postedDate)).toLocaleDateString()
-                                td= postedDate
-                                td= document.attributes.subtype
+                    table.usa-table.usa-table--striped.withdrawn-documents
+                        thead
+                            tr 
+                                th.author(scope='col') Title
+                                th(scope='col') Date
+                                th(scope='col') SubType
+                        tbody
+                            each document in withdrawn
+                                tr.document(data-document-id=document.id)
+                                    th(scope='row')
+                                        a(href=`https://www.regulations.gov/document/${document.id}` target='_blank')= document.attributes.title
+                                    - const postedDate = (new Date(document.attributes.postedDate)).toLocaleDateString()
+                                    td= postedDate
+                                    td= document.attributes.subtype
                                 

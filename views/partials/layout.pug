@@ -1,18 +1,32 @@
 doctype html
-html
+html(lang='en-US')
     head
         include head.pug
     
     body
-        header.usa-header.usa-header--basic
-            div.usa-logo
-                em.usa-logo__text
-                    a(href='/' title='Home' aria-label='Home') GovRegs Explorer
+        header.usa-header.usa-header--extended
+            section.usa-navbar
+                aside.usa-logo
+                    h1.usa-logo__text GovRegs Explorer
+            nav.usa-nav(aria-label='Primary navigation')
+                section.usa-nav__inner
+                    ul.usa-nav__primary.usa-accordion
+                        li.usa-nav__primary-item
+                            a.usa-nav__link.usa-current(href='/')
+                                span Home
+                        li.usa-nav__primary-item
+                            a.usa-nav__link(href='/about')
+                                span What is this?
+    
+                div.usa-nav__secondary
+                    form.usa-search.usa-search--small(role='search' action='/docket' method='get')
+                        label.usa-sr-only(for='top_search_docket-id') Docket ID
+                        input.usa-input(id='top_search_docket-id' type='search' name='docket' placeholder='Docket ID')
+                        button.usa-button(type='submit')
+                            span.usa-sr-only Find Docket
 
-        main.usa-layout-docs__main#main-content
-            p
-                | A little app to help navigate the rules, regulations, and comments for the US Government.
-            
+
+        main#main-content
             block content
 
         include footer.pug

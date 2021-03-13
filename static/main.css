@@ -4,12 +4,11 @@
 }
 
 h1 {
-    font-size: 1.4em;
+    font-size: 1.1em;
 }
 
-#main-content {
-    max-width: 80%;
-    margin: 2em auto;
+.usa-hero {
+    background-image: url('/img/taking_notes.jpg')
 }
 
 .docket-meta {
@@ -50,3 +49,8 @@ nav.comment-list ul {
 nav.comment-list li {
     margin: 0 1em;
 }
+
+.social-link--github {
+    background-image:url("/uswds/img/usa-icons/github.svg"), linear-gradient(transparent, transparent);
+    background-repeat:no-repeat;
+  }

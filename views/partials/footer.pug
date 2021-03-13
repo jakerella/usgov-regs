@@ -1,7 +1,15 @@
-footer.usa-footer.usa-footer--slim
-    section.usa-footer__primary-section
-        aside.usa-footer__primary-container.grid-row
-            p 
-                | &copy; Jordan Kasper 2020
+footer.usa-footer  <!-- .usa-footer--slim -->
+    main.usa-footer__secondary-section
+        section.grid-container
+            aside.grid-row.grid-gap
+                div(class='usa-footer__logo grid-row mobile-lg:grid-col-6 mobile-lg:grid-gap-2')
+                    aside(class='mobile-lg:grid-col-auto')
+                        p.usa-footer__logo-heading US Gov Regs Explorer
+                        p &copy; Jordan Kasper 2021
+                div(class='usa-footer__contact-links mobile-lg:grid-col-6')
+                    aside.usa-footer__social-links.grid-row.grid-gap-1
+                        div.grid-col-auto
+                            a.usa-social-link.social-link--github(href='https://github.com/jakerella/usgov-regs' target='_blank' title='View this website on GitHub')
+                                span GitHub
 
 script(src='/uswds/js/uswds.min.js')
