@@ -1,7 +1,24 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/', (req, res) => {
+const User = require('../models/User.js')
+
+
+router.get('/', async (req, res) => {
+    if (/@foo\.com$/.test(req.query.email)) {
+        try {
+            const userDetail = await User.register(req.query.email, 'abc123')
+            console.log('NEW USER: ', userDetail)
+            userDetail.user.authenticate(userDetail.password, req)
+            console.log('new user logged in')
+        } catch(err) {
+            console.error('Unable to create new user:', err)
+        }
+    }
+
+    console.log('Session User?', req.session)
+
+
     res.render('home', {
         page: 'home',
         title: 'US Government Rule and Regulation Explorer',

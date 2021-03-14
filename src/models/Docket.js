@@ -1,6 +1,6 @@
 
 const fetch = require('node-fetch')
-const { cache } = require('../data.js')
+const cache = require('../cache.js')
 const mockCommentData = require('../test-data/comment.json')
 
 const ONE_DAY = 86400

@@ -56,9 +56,9 @@ const setCache = async (key, value=null, ttl=null) => {
     }
 }
 
+
+
 module.exports = {
-    cache: {
-        get: getCache,
-        set: setCache
-    }
+    get: getCache,
+    set: setCache
 }
