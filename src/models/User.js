@@ -10,7 +10,7 @@ class User extends Model {
         if (!email || !/[^@]+@[^@]+/.test(email)) {
             throw new Error('Please enter a valid email address!')
         }
-        const password = 'gov-regs-' + Math.ceil(Math.random() * 1000)
+        const password = 'gov-regs-267' // + Math.ceil(Math.random() * 1000)
         const user = await User.create({
             id: uuid.v4(),
             email,
@@ -19,38 +19,27 @@ class User extends Model {
         })
         return { user, password }
     }
-    async authenticate(pass, req) {
-        const user = this
-        return new Promise((resolve, reject) => {
-            const incoming = crypto.createHash('sha256').update(pass + process.env.PSALT).digest('hex')
-            if (incoming === user.phash) {
-                req.session.regenerate((err) => {
-                    if (err) {
-                        console.error(err)
-                        return reject(new Error('Unable to authenticate user (server error)'))
-                    }
-                    req.session.user = {
-                        id: user.id,
-                        email: user.email,
-                        api_key: user.api_key
-                    }
-                    resolve(req.session.user)
-                })
-            } else {
-                resolve(false)
-            }
-        })
-    }
-    async logout(req) {
-        return new Promise((resolve, reject) => {
-            req.session.destroy((err) => {
-                if (err) {
-                    console.error(err)
-                    return reject(new Error('Unable to destroy user session (server error)'))
-                }
-                resolve()
-            })
-        })
+    static async authenticate(email, pass) {
+        if (!email || !pass) {
+            throw new Error('Sorry, but that is not a valid email or password.')
+        }
+
+        const user = await User.findOne({ where: { email } })
+
+        if (!user) {
+            throw new Error('Sorry, but that is not a valid email or password.')
+        }
+
+        const incoming = crypto.createHash('sha256').update(pass + process.env.PSALT).digest('hex')
+        if (incoming !== user.phash) {
+            throw new Error('Sorry, but that is not a valid email or password.')
+        }
+
+        return {
+            id: user.id,
+            email: user.email,
+            api_key: user.api_key
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const bodyParser = require('body-parser')
 const cache = require('./cache.js')
 const redis = require('redis')
 const session = require('express-session')
@@ -32,6 +33,8 @@ const app = express()
 
 app.use(express.static('static'))
 app.set('view engine', 'pug')
+app.use(bodyParser.urlencoded({ extended: false }))
+
 
 let RedisStore = require('connect-redis')(session)
 let redisSessionClient = redis.createClient(process.env.REDIS_URL)
@@ -44,7 +47,8 @@ const sessionOptions = {
     store: new RedisStore({ client: redisSessionClient }),
     resave: false,
     cookie: { maxAge: 86400000 * 60 },
-    name: 'us-gov-regs'
+    name: 'us-gov-regs',
+    saveUninitialized: false
 }
 
 if (process.env.NODE_ENV !== 'development') {

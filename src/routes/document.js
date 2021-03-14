@@ -4,7 +4,15 @@ const jsonParser = require('body-parser').json()
 
 const router = express.Router()
 
-router.get('/:document', async (req, res, next) => {
+function authCheck(req, res, next) {
+    if (!req.session.user) {
+        req.session.error = 'Please log in before accessing that page!'
+        return res.redirect('/')
+    }
+    next()
+}
+
+router.get('/:document', authCheck, async (req, res, next) => {
     const documentId = req.params.document
 
     const breakCache = (req.query.breakcache === 'yesplease') ? true : false
@@ -29,11 +37,12 @@ router.get('/:document', async (req, res, next) => {
         title: `${documentId || 'Unknown'} - US Government Rule and Regulation Explorer`,
         document,
         comments,
-        error: errorMsg
+        error: errorMsg,
+        user: req.session.user || null
     })
 })
 
-router.post('/:document/comments', jsonParser, async (req, res, next) => {
+router.post('/:document/comments', authCheck, jsonParser, async (req, res, next) => {
     const commentIds = req.body.comments || []
 
     const breakCache = (req.query.breakcache === 'yesplease') ? true : false

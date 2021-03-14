@@ -21,11 +21,20 @@ html(lang='en-US')
                                 span What is this?
     
                 div.usa-nav__secondary
-                    form.usa-search.usa-search--small(role='search' action='/docket' method='get')
-                        label.usa-sr-only(for='top_search_docket-id') Docket ID
-                        input.usa-input(id='top_search_docket-id' type='search' name='docket' placeholder='Docket ID')
-                        button.usa-button(type='submit')
-                            span.usa-sr-only Find Docket
+                    if user
+                        ul.usa-nav__secondary-links
+                            li.usa-nav__secondary-item
+                                a(href='/logout') Logout
+                        form.usa-search.usa-search--small(role='search' action='/docket' method='get')
+                            label.usa-sr-only(for='top_search_docket-id') Docket ID
+                            input.usa-input(id='top_search_docket-id' type='search' name='docket' placeholder='Docket ID')
+                            button.usa-button(type='submit')
+                                span.usa-sr-only Find Docket
+                    else
+                        form.usa-form.header-form(role='login' action='/login' method='post')
+                            input.usa-input(id='email_header' name='email' type='email' required='required' placeholder='Email')
+                            input.usa-input(id='password_header' name='password' type='password' required='required' placeholder='Password')
+                            input.usa-button.usa-button--outline(type='submit' value='Login')
 
 
         main#main-content

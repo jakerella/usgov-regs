@@ -3,15 +3,26 @@ const Docket = require('../models/Docket')
 
 const router = express.Router()
 
-router.get('/', (req, res, next) => {
-    loadDocket(req.query.docket, res, next)
+function authCheck(req, res, next) {
+    if (!req.session.user) {
+        req.session.error = 'Please log in before accessing that page!'
+        return res.redirect('/')
+    }
+    next()
+}
+
+router.get('/', authCheck, (req, res, next) => {
+    if (!req.query.docket) {
+        return next(new Error('Please search for a docket to view!'))
+    }
+    loadDocket(req.query.docket, req, res, next)
 })
 
-router.get('/:docket', (req, res, next) => {
-    loadDocket(req.params.docket, res, next)
+router.get('/:docket', authCheck, (req, res, next) => {
+    loadDocket(req.params.docket, req, res, next)
 })
 
-async function loadDocket(docketId, res, next) {
+async function loadDocket(docketId, req, res, next) {
     let errorMsg = null
     let docket = {}
     let rules = []
@@ -40,7 +51,8 @@ async function loadDocket(docketId, res, next) {
         rules,
         supportingMaterials,
         withdrawn,
-        error: errorMsg
+        error: errorMsg,
+        user: req.session.user || null
     })
 }
 
