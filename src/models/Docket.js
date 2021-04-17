@@ -1,6 +1,7 @@
 
 const fetch = require('node-fetch')
 const cache = require('../cache.js')
+const AppError = require('../AppError')
 const mockCommentData = require('../test-data/comment.json')
 
 const ONE_DAY = 86400
@@ -8,7 +9,7 @@ const ONE_MONTH = (ONE_DAY * 30)
 
 
 const Docket = {
-    getDocket: async (docketId) => {
+    getDocket: async (docketId, key) => {
         docketId = docketId.replace(/–/g, '-')
         console.log(`Requesting docket ID ${docketId}...`)
 
@@ -16,13 +17,13 @@ const Docket = {
         try { data = await cache.get(docketId) } catch(err) { /* let it goooooo */ }
         if (data) { return data }
         
-        data = (await doRequest(`/dockets/${docketId}`, null, null)).data
+        data = (await doRequest(`/dockets/${docketId}`, key, null, null)).response.data
 
         try { await cache.set(docketId, data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache docket ${docketId}`, err.message) }
 
         return data
     },
-    getDocument: async (documentId, breakCache=false) => {
+    getDocument: async (documentId, key, breakCache=false) => {
         console.log(`Requesting document ID ${documentId}...`)
 
         let data
@@ -31,13 +32,13 @@ const Docket = {
             if (data) { return data }
         }
 
-        data = (await doRequest(`/documents/${documentId}`, null, null)).data
+        data = (await doRequest(`/documents/${documentId}`, key, null, null)).response.data
         
         try { await cache.set(documentId, data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache document ${documentId}`, err.message) }
 
         return data
     },
-    getDocuments: async (docketId, getCommentCount=false, docType=null) => {
+    getDocuments: async (docketId, key, getCommentCount=false, docType=null) => {
         docketId = docketId.replace(/–/g, '-')
         console.log(`Requesting documents for docket ID ${docketId}...`)
 
@@ -48,11 +49,11 @@ const Docket = {
             try { data = await cache.get(path) } catch(err) { /* let it goooooo */ }
             if (data) { return data }
 
-            const documents = await pagedRequest(path)
+            const documents = await pagedRequest(path, key)
 
             if (getCommentCount) {
                 for (let i=0; i<documents.length; ++i) {
-                    documents[i].commentCount = (await doRequest(`/comments?filter[commentOnId]=${documents[i].attributes.objectId}`, 1, 5)).meta.totalElements
+                    documents[i].commentCount = (await doRequest(`/comments?filter[commentOnId]=${documents[i].attributes.objectId}`, key, 1, 5)).response.meta.totalElements
                 }
             }
 
@@ -61,11 +62,11 @@ const Docket = {
             return documents
 
         } catch(err) {
-            console.error(err)
-            throw new Error(`Unable to retrieve documents for docket ${docketId} from regulations.gov API (${err.status})`)
+            if (!(err instanceof AppError)) { console.error(err) }
+            throw new AppError(`Unable to retrieve documents for docket ${docketId}: ${err.message}`, err.status)
         }
     },
-    getComments: async (objectId, breakCache=false) => {
+    getComments: async (objectId, key, breakCache=false) => {
         console.log(`Requesting comments for object ID ${objectId}...`)
 
         const path = `/comments?filter[commentOnId]=${objectId}&sort=postedDate`
@@ -77,17 +78,17 @@ const Docket = {
                 if (data) { return data }
             }
 
-            const comments = await pagedRequest(path)
+            const comments = await pagedRequest(path, key)
 
             try { await cache.set(path, comments, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache comment list for ${objectId}`, err.message) }
             return comments
 
         } catch(err) {
-            console.error(err)
-            throw new Error(`Unable to retrieve comments for document ${objectId} from regulations.gov API (${err.status})`)
+            if (!(err instanceof AppError)) { console.error(err) }
+            throw new AppError(`Unable to retrieve comments for document ${objectId}: ${err.message}`, err.status)
         }
     },
-    getCommentDetail: async (commentIds, breakCache=false) => {
+    getCommentDetail: async (commentIds, key, breakCache=false) => {
         console.log(`Retrieving all comment detail: ${commentIds}...`)
 
         try {
@@ -121,7 +122,7 @@ const Docket = {
                     continue;
                 }
 
-                data = (await doRequest(`/comments/${commentIds[i]}?include=attachments`, null, null))
+                data = (await doRequest(`/comments/${commentIds[i]}?include=attachments`, key, null, null)).response
 
                 try { await cache.set(commentIds[i], data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache comment ${commentIds[i]}`, err.message) }
                 
@@ -131,22 +132,22 @@ const Docket = {
             return comments
 
         } catch(err) {
-            console.error(err)
-            throw new Error(`Unable to retrieve comment from regulations.gov API (${err.status})`)
+            if (!(err instanceof AppError)) { console.error(err) }
+            throw new AppError(`Unable to retrieve comment detail: ${err.message}`, err.status)
         }
     }
 }
 
 
-async function pagedRequest(path) {
+async function pagedRequest(path, key) {
     const data = []
     const limit = 250
     let page = 1
 
-    let resp = await doRequest(path, page, limit)
+    let resp = (await doRequest(path, key, page, limit)).response
     data.push(...resp.data)
     while (resp.meta.hasNextPage) {
-        resp = await doRequest(path, ++page, limit)
+        resp = (await doRequest(path, key, ++page, limit)).response
         data.push(...resp.data)
     }
 
@@ -154,36 +155,52 @@ async function pagedRequest(path) {
 }
 
 
-async function doRequest(path, page=1, limit=25) {
+async function doRequest(path, key, page=1, limit=25) {
     let url = `${process.env.API_BASE}${path}`
     if (page !== null) { url = addParam(url, 'page[number]', page) }
     if (limit !== null) { url = addParam(url, 'page[size]', limit) }
+
+    if (!key) {
+
+    }
 
     if (process.env.NODE_ENV === 'development') { console.log(`sending request to ${url}`) }
 
     const govResp = await fetch(url, {
         headers: {
-            'X-API-Key': process.env.API_KEY,
+            'X-API-Key': key,
             'X-Powered-By': 'Regs-Gov-Explorer'
         }
     })
     
     if (govResp.status > 299) {
+        let status = govResp.status
         let msg = `Unable to retrieve data from regulations.gov API (${govResp.status})`
         if (govResp.status === 429) {
             msg = 'Sorry, but it looks like we\'ve hit the API limit on regulations.gov. Please wait an hour and try again! (Note that cached data is still accessible!)'
         } else if (govResp.status === 404) {
             msg = 'Sorry, but it looks like regulations.gov couldn\'t find that item. Please try again!'
+        } else if (govResp.status === 401 || govResp.status === 403) {
+            msg = 'Sorry, but it looks like that API key is not valid. You may need to update your key!'
+        } else if (govResp.status < 400) {
+            console.warn(`Looks like we got a ${govResp.status} from the API`)
+            status = 503
+        } else {
+            // For non-user errors, we just mash everything into 503 and ignore what the API returns for our users
+            console.error(`Looks like we got a ${govResp.status} from the API. Full text of body:`, await govResp.text())
+            status = 503
         }
 
-        const err = new Error(msg)
-        err.status = govResp.status
-        throw err
+        throw new AppError(msg, status)
     }
     if (process.env.NODE_ENV === 'development') {
         console.log(`Rate limit & remaining: ${govResp.headers.get('X-RateLimit-Remaining')} of ${govResp.headers.get('X-RateLimit-Limit')}`)
     }
-    return await govResp.json()
+    return {
+        response: await govResp.json(),
+        rateLimit: govResp.headers.get('X-RateLimit-Limit'),
+        rateLimitRemaining: govResp.headers.get('X-RateLimit-Remaining'),
+    }
 }
 
 function addParam(url, param, value) {

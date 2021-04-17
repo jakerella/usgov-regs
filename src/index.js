@@ -13,23 +13,18 @@ const documents = require('./routes/document')
 
 // env vars and other config
 const PORT = process.env['PORT'] || 80
-const API_KEY = process.env['API_KEY']
 
-if (!API_KEY) {
-    console.error('No API key found for US Regs site')
-    process.exit(1)
-}
-if (!process.env.REDIS_URL) {
-    console.error('Unable to establish Redis connection: no redis URL provided')
-    process.exit(1)
-}
 
-cache.get('startup-test').catch((err) => console.error('Unable to connect to Redis', err))
-require('./db.js').authenticate()  // this will initialize the connection and test it
+// Check our data connections
+require('./db.js').authenticate()
     .catch((err) => {
         console.error('Unable to establish DB connection:', err.message)
         process.exit(1)
     })
+cache.get('startup-test').catch((err) => {
+    console.error('Unable to establish Redis connection', err)
+    process.exit(1)
+})
 
 
 // start it up
@@ -91,6 +86,5 @@ app.use((err, req, res, next) => {
 
 // here we go...
 app.listen(PORT, () => {
-    console.log(`US Rule & Reg app listening at http://localhost:${PORT}`)
-    console.log(`Using API Key: ${API_KEY}`);
+    console.log(`US Rule & Reg Explorer app listening at http://localhost:${PORT}`)
 })

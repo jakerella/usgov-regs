@@ -25,8 +25,8 @@ router.get('/:document', authCheck, async (req, res, next) => {
         errorMsg = 'No Document ID provided'
     } else {
         try {
-            document = await Docket.getDocument(documentId, breakCache)
-            comments = await Docket.getComments(document.attributes.objectId, breakCache)
+            document = await Docket.getDocument(documentId, req.session.user.api_key, breakCache)
+            comments = await Docket.getComments(document.attributes.objectId, req.session.user.api_key, breakCache)
         } catch(err) {
             return next(err)
         }
@@ -53,7 +53,7 @@ router.post('/:document/comments', authCheck, jsonParser, async (req, res, next)
         res.status(400).json({ error: 'Please provide an array of comment IDs to retrieve' })
     } else {
         try {
-            comments = await Docket.getCommentDetail(commentIds, breakCache)
+            comments = await Docket.getCommentDetail(commentIds, req.session.user.api_key, breakCache)
         } catch(err) {
             return next(err)
         }

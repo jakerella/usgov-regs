@@ -36,7 +36,12 @@ router.post('/login', async (req, res, next) => {
         res.redirect('/')
     } catch(err) {
         req.session.user = null
-        next(err)
+        if (err.status && err.status < 500) {
+            req.session.error = err.message
+            res.redirect('/')
+        } else {
+            next(err)
+        }
     }
 })
 

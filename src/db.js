@@ -20,6 +20,7 @@ module.exports = {
         if (sequelizeInstance) { return sequelizeInstance }
 
         sequelizeInstance = new Sequelize(DATABASE_URL, {
+            logging: (process.env.NODE_ENV === 'development') ? console.log : false,
             dialectOptions: {
                 ssl: {
                     rejectUnauthorized: false

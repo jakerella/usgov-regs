@@ -31,19 +31,21 @@ class User extends Model {
         return { id: user.id, email: user.email, api_key: user.api_key }
     }
     static async authenticate(email, pass) {
+        const msg = 'Sorry, but that is not a valid email or password.'
+
         if (!email || !pass) {
-            throw new Error('Sorry, but that is not a valid email or password.')
+            throw new AppError(msg, 400)
         }
 
         const user = await User.findOne({ where: { email } })
 
         if (!user) {
-            throw new Error('Sorry, but that is not a valid email or password.')
+            throw new AppError(msg, 400)
         }
 
         const incoming = crypto.createHash('sha256').update(pass + process.env.PSALT).digest('hex')
         if (incoming !== user.phash) {
-            throw new Error('Sorry, but that is not a valid email or password.')
+            throw new AppError(msg, 400)
         }
 
         return {

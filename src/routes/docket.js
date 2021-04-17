@@ -33,9 +33,9 @@ async function loadDocket(docketId, req, res, next) {
         errorMsg = 'No Docket ID provided'
     } else {
         try {
-            docket = await Docket.getDocket(docketId)
-            rules = await Docket.getDocuments(docketId, true, 'Rule,Proposed Rule')
-            supportingMaterials = await Docket.getDocuments(docketId, false, 'Notice,Other,Supporting & Related Material')
+            docket = await Docket.getDocket(docketId, req.session.user.api_key)
+            rules = await Docket.getDocuments(docketId, req.session.user.api_key, true, 'Rule,Proposed Rule')
+            supportingMaterials = await Docket.getDocuments(docketId, req.session.user.api_key, false, 'Notice,Other,Supporting & Related Material')
         } catch(err) {
             return next(err)
         }
