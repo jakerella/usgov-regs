@@ -1,11 +1,12 @@
 const { Sequelize } = require('sequelize')
 
 let sequelizeInstance = null
+const DATABASE_URL = `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
 
 
 module.exports = {
     authenticate: async () => {
-        sequelizeInstance = new Sequelize(process.env.DATABASE_URL, {
+        sequelizeInstance = new Sequelize(DATABASE_URL, {
             dialectOptions: {
                 ssl: {
                     rejectUnauthorized: false
@@ -18,7 +19,7 @@ module.exports = {
     getConnection: () => {
         if (sequelizeInstance) { return sequelizeInstance }
 
-        sequelizeInstance = new Sequelize(process.env.DATABASE_URL, {
+        sequelizeInstance = new Sequelize(DATABASE_URL, {
             dialectOptions: {
                 ssl: {
                     rejectUnauthorized: false

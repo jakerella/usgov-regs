@@ -1,23 +1,34 @@
 const { Model, DataTypes } = require('sequelize')
 const uuid = require('uuid')
 const crypto = require('crypto')
-
 const sequelize = require('../db.js').getConnection()
+const AppError = require('../AppError.js')
 
 
 class User extends Model {
-    static async register(email, api_key=null) {
+    static async register(email, pass, api_key=null) {
+        const errors = []
         if (!email || !/[^@]+@[^@]+/.test(email)) {
-            throw new Error('Please enter a valid email address!')
+            errors.push('Please enter a valid email address.')
         }
-        const password = 'gov-regs-267' // + Math.ceil(Math.random() * 1000)
+        if (!pass || pass.length < 9) {
+            errors.push('Please enter a strong password over 8 characters long.')
+        }
+        if (!/[A-Za-z0-9]{40}/.test(`${api_key}`)) {
+            errors.push('Please enter a valid Data.gov API key to use with this account.')
+        }
+
+        if (errors.length) {
+            throw new AppError(errors.join('\n'), 400)
+        }
+
         const user = await User.create({
             id: uuid.v4(),
             email,
-            phash: crypto.createHash('sha256').update(password + process.env.PSALT).digest('hex'),
+            phash: crypto.createHash('sha256').update(pass + process.env.PSALT).digest('hex'),
             api_key
         })
-        return { user, password }
+        return { id: user.id, email: user.email, api_key: user.api_key }
     }
     static async authenticate(email, pass) {
         if (!email || !pass) {

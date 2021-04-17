@@ -19,6 +19,10 @@ if (!API_KEY) {
     console.error('No API key found for US Regs site')
     process.exit(1)
 }
+if (!process.env.REDIS_URL) {
+    console.error('Unable to establish Redis connection: no redis URL provided')
+    process.exit(1)
+}
 
 cache.get('startup-test').catch((err) => console.error('Unable to connect to Redis', err))
 require('./db.js').authenticate()  // this will initialize the connection and test it
@@ -40,6 +44,10 @@ let RedisStore = require('connect-redis')(session)
 let redisSessionClient = redis.createClient(process.env.REDIS_URL)
 redisSessionClient.on('error', (err) => {
     console.error('ERROR using Redis session client:', err.message)
+    if (/ECONNREFUSED/.test(err.message)) {
+        console.error('Unable to establish redis connection for session store, closing server')
+        process.exit(1)
+    }
 })
 
 const sessionOptions = {
@@ -56,6 +64,7 @@ if (process.env.NODE_ENV !== 'development') {
     sessionOptions.cookie.secure = true
 }
 app.use(session(sessionOptions))
+console.info('Added session options with Redis store')
 
 
 app.use('/', home)
