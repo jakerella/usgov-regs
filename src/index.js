@@ -24,6 +24,13 @@ const app = express()
 app.use(express.static('static'))
 app.set('view engine', 'pug')
 
+app.use((req, res, next) => {
+    if (/herokuapp/.test(req.header('host'))) {
+        return res.redirect(301, `https://www.fedgovregs.org${req.url}`)
+    }
+    next()
+})
+
 app.use('/', home)
 app.use('/docket', dockets)
 app.use('/document', documents)
