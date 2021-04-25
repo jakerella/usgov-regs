@@ -62,6 +62,13 @@ app.use(session(sessionOptions))
 console.info('Added session options with Redis store')
 
 
+app.use((req, res, next) => {
+    if (/herokuapp/.test(req.header('host'))) {
+        return res.redirect(301, `https://www.fedgovregs.org${req.url}`)
+    }
+    next()
+})
+
 app.use('/', home)
 app.use('/docket', dockets)
 app.use('/document', documents)
