@@ -2,7 +2,7 @@
 name: Bug report
 about: Tell us about a problem you have found in the code
 title: ''
-labels: ''
+labels: Bug
 assignees: jakerella
 
 ---
