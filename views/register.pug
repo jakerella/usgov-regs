@@ -1,0 +1,59 @@
+extends partials/layout.pug
+
+
+block content
+    if errorMsg
+        aside.usa-aler.usa-alert--error
+            div.usa-alert__body
+                p.usa-alert__text= errorMsg
+
+    article.usa-section.grid-container
+        h2.font-heading-l.margin-y-0 Register
+
+        ol.usa-process-list
+            li.usa-process-list__item
+                h3.usa-process-list__heading Why do I need to register?
+                p.usa-intro
+                    | Hello! Although this site is completely free and uses free data, the API 
+                    | keys for Data.gov (which powers the regulations.gov API) are fairly low in 
+                    | their limitations. So, we'll need you to register here and get your own
+                    | Data.gov API key. (Don't worry, we'll walk you through it.)
+            
+            li.usa-process-list__item
+                h3.usa-process-list__heading Get a Data.gov API Key
+                p.usa-intro
+                    | Click on the button below to open a 
+                    strong new window (or tab)
+                    | to the data.gv website. There you will need to register for an API key.
+                    | Once you get the API key, 
+                    strong copy the API key
+                    | and head back over here (you can input it below).
+                    br
+                    a.usa-button(href='https://api.data.gov/signup/' target='_blank') Data.gov Signup
+
+            li.usa-process-list__item
+                h3.usa-process-list__heading Register Here
+                p.usa-intro
+                    | Now that you have an API key for Data.gov, you can register for an account
+                    | here. We'll use 
+                    em your API key
+                    | only for requests made by you, while you are logged in. No one else can use 
+                    | your API key for Data.gov.
+
+                form.usa-form(action='/register' method='post')
+                    label.usa-label(for='email') Email:
+                    input.usa-input(id='email' name='email' type='email' required='required' placeholder='Email')
+                    label.usa-label(for='password') Password (minimum 8 characters):
+                    input.usa-input(id='password' name='password' type='password' required='required' placeholder='*****' minlength='8')
+
+                    label.usa-label(for='api_key') Data.gov API Key (40 characters):
+                    input.usa-input(id='api_key' name='api_key' type='text' required='required' placeholder='i.e. M9k8SNdNG44r...' pattern='[A-Za-z0-9]{40}')
+
+                    input.usa-button(type='submit' value='Register')
+            
+            li.usa-process-list__item
+                h3.usa-process-list__heading Explore Regulations Here
+                p.usa-intro
+                    | Once you have an account here, you can log in and explore all of the accessible regulations 
+                    | in a much friendlier manner. Note that YOUR API key will be used for all searches to the 
+                    | regulations.gov API!

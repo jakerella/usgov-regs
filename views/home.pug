@@ -2,17 +2,37 @@ extends partials/layout.pug
 
 
 block content
-    
+    if error
+        aside.usa-alert.usa-alert--error
+            div.usa-alert__body
+                p.usa-alert__text= error
+    if info
+        aside.usa-alert.usa-alert--info
+            div.usa-alert__body
+                p.usa-alert__text= info
+
     article.usa-hero(aria-label='Introduction')
         section.grid-container
             aside.usa-hero__callout
                 h2.usa-hero__heading Regulation Explorer
                 p
                     | Use this site to more easily explore the open data on regulations.gov!
-                form.usa-form(action='/docket' method='get')
-                    label.usa-label(for='docket') Docket Number:
-                    input.usa-input(id='docket_hero' name='docket' type='text' required='required')
-                    input.usa-button(type='submit' value='Find Docket')
+                
+                if user
+                    form.usa-form(action='/docket' method='get')
+                        label.usa-label(for='docket_hero') Docket Number:
+                        input.usa-input(id='docket_hero' name='docket' type='text' required='required')
+                        input.usa-button(type='submit' value='Find Docket')
+                else
+                    form.usa-form(action='/login' method='post')
+                        label.usa-label(for='email_hero') Email:
+                        input.usa-input(id='email_hero' name='email' type='email' required='required')
+                        label.usa-label(for='password_hero') Password:
+                        input.usa-input(id='password_hero' name='password' type='password' required='required')
+                        aside.hero-buttons
+                            input.usa-button(type='submit' value='Login')
+                            a.usa-button.usa-button--outline(href='/register') Register
+
     
     article.grid-container.usa-section
         section.grid-row.grid-gap

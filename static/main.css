@@ -7,8 +7,36 @@ h1 {
     font-size: 1.1em;
 }
 
+.header-form {
+    display: flex;
+    justify-content: right;
+    align-items: baseline;
+}
+.header-form input {
+    margin: 0 0.2em;
+}
+
 .usa-hero {
     background-image: url('/img/taking_notes.jpg')
+}
+
+a.usa-button--outline {
+    background-color: #fff;
+    text-decoration: none;
+}
+a.usa-button--outline:visited {
+    background-color: #fff;
+    text-decoration: none;
+    color: #005ea2;
+}
+a.usa-button--outline:hover {
+    background-color: #005ea2;
+    color: #fff;
+    text-decoration: none;
+}
+a.usa-button--outline:active {
+    background-color: #1a4480;
+    color: #fff;
 }
 
 .docket-meta {

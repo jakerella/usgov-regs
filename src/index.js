@@ -1,6 +1,10 @@
 require('dotenv').config()
+
 const express = require('express')
-const { cache } = require('./data.js')
+const bodyParser = require('body-parser')
+const cache = require('./cache.js')
+const redis = require('redis')
+const session = require('express-session')
 
 // All the routes
 const home = require('./routes/home')
@@ -9,20 +13,54 @@ const documents = require('./routes/document')
 
 // env vars and other config
 const PORT = process.env['PORT'] || 80
-const API_KEY = process.env['API_KEY']
 
-if (!API_KEY) {
-    console.error('No API key found for US Regs site')
+
+// Check our data connections
+require('./db.js').authenticate()
+    .catch((err) => {
+        console.error('Unable to establish DB connection:', err.message)
+        process.exit(1)
+    })
+cache.get('startup-test').catch((err) => {
+    console.error('Unable to establish Redis connection', err)
     process.exit(1)
-}
+})
 
-cache.get('startup-test').catch((err) => console.error('Unable to connect to Redis', err))
 
 // start it up
 const app = express()
 
 app.use(express.static('static'))
 app.set('view engine', 'pug')
+app.use(bodyParser.urlencoded({ extended: false }))
+
+
+let RedisStore = require('connect-redis')(session)
+let redisSessionClient = redis.createClient(process.env.REDIS_URL)
+redisSessionClient.on('error', (err) => {
+    console.error('ERROR using Redis session client:', err.message)
+    if (/ECONNREFUSED/.test(err.message)) {
+        console.error('Unable to establish redis connection for session store, closing server')
+        process.exit(1)
+    }
+})
+
+const sessionOptions = {
+    secret: process.env.SESS_SECRET,
+    store: new RedisStore({ client: redisSessionClient }),
+    resave: false,
+    cookie: { maxAge: 86400000 * 60 },
+    name: 'us-gov-regs',
+    saveUninitialized: false
+}
+
+if (process.env.NODE_ENV !== 'development') {
+    app.set('trust proxy', 1)
+    sessionOptions.cookie.secure = true
+}
+app.use(session(sessionOptions))
+console.info('Added session options with Redis store')
+
 
 app.use((req, res, next) => {
     if (/herokuapp/.test(req.header('host'))) {
@@ -55,6 +93,5 @@ app.use((err, req, res, next) => {
 
 // here we go...
 app.listen(PORT, () => {
-    console.log(`US Rule & Reg app listening at http://localhost:${PORT}`)
-    console.log(`Using API Key: ${API_KEY}`);
+    console.log(`US Rule & Reg Explorer app listening at http://localhost:${PORT}`)
 })
