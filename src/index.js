@@ -64,7 +64,10 @@ console.info('Added session options with Redis store')
 
 app.use((req, res, next) => {
     if (/herokuapp/.test(req.header('host'))) {
-        return res.redirect(301, `https://www.fedgovregs.org${req.url}`)
+        return res.redirect(301, `https://www.fedgovregs.org${req.originalUrl}`)
+    }
+    if (process.env.NODE_ENV !== 'development' && !req.secure) {
+        return res.redirect(301, `https://${req.hostname}${req.originalUrl}`)
     }
     next()
 })
