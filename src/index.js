@@ -8,6 +8,7 @@ const session = require('express-session')
 
 // All the routes
 const home = require('./routes/home')
+const about = require('./routes/about')
 const dockets = require('./routes/docket')
 const documents = require('./routes/document')
 
@@ -73,6 +74,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/', home)
+app.use('/about', about)
 app.use('/docket', dockets)
 app.use('/document', documents)
 
