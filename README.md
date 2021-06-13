@@ -23,7 +23,7 @@ Are you interested in making things better? Then by all means contribute! You ca
 
 ### Running Locally
 
-This system can be run _alomst_ entirely locally. The only piece that can't be run locally is the regulations.gov API. But you can easily [sign up for an API key](https://api.data.gov/signup/) yourself in order to hit the API. You could also create a mock API for development if you like.
+This system can be run _almost_ entirely locally. The only piece that can't be run locally is the regulations.gov API. But you can easily [sign up for an API key](https://api.data.gov/signup/) yourself in order to hit the API. You could also create a mock API for development if you like.
 
 #### Environment Setup
 
