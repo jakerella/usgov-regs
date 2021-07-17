@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cache = require('./cache.js')
@@ -96,7 +97,18 @@ app.use((err, req, res, next) => {
     })
 })
 
+
+let server = app
+if (process.env.NODE_ENV === 'development') {
+    const key = fs.readFileSync('./localcert/localhost.decrypted.key')
+    const cert = fs.readFileSync('./localcert/localhost.crt')
+
+    const https = require('https')
+    server = https.createServer({ key, cert }, app)
+}
+
+
 // here we go...
-app.listen(PORT, () => {
-    console.log(`US Rule & Reg Explorer app listening at http://localhost:${PORT}`)
+server.listen(PORT, () => {
+    console.log(`US Rule & Reg Explorer app listening at https://localhost:${PORT}`)
 })
