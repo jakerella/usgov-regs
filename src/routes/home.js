@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../models/User.js')
+const AppError = require('../AppError.js')
 
 
 router.get('/', async (req, res) => {
@@ -66,7 +67,7 @@ router.get('/register', (req, res) => {
     })
 })
 
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
     if (req.session && req.session.user) {
         req.session.error = 'Looks like you are already logged in!'
         return res.redirect('/')
@@ -84,7 +85,13 @@ router.post('/register', async (req, res) => {
                 errorMsg: err.message
             })
         } else {
-            return next(err)
+            let userErr = new AppError('There was a problem registering your user account.')
+            if (err instanceof UniqueConstraintError) {
+                userErr.status = 400
+            } else {
+                userErr.status = 500
+            }
+            return next(userErr)
         }
     }
 
