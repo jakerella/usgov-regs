@@ -67,6 +67,10 @@ h3.doctype {
 .comments .usa-tooltip__body {
     display: block;
     bottom: auto;
+    opacity: 0;
+}
+.comments .usa-tooltip__body.is-visible {
+    opacity: 1;
 }
 
 nav.comment-list ul {
