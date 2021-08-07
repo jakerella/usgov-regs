@@ -55,12 +55,22 @@ h3.doctype {
     color: #666;
 }
 
-.comments-loaded {
+.comments-loading {
     vertical-align: middle;
     margin-left: 1em;
+    width: 10em;
+}
+.comments-loading:after {
+    display: block;
+    content: ' Loading...';
+    margin-left: 10.5em;
+    font-weight: normal;
 }
 
-.comments .author, .comments .attachments, .comments .comment-text {
+.comments img {
+    width: 1em;
+}
+.comments .title, .comments .comment-text {
     width: 30%;
 }
 

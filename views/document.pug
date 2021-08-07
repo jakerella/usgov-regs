@@ -38,8 +38,10 @@ block content
                             span= `Last Modified ${modDate}`
 
             h3
-                =`Comments (${comments.length})`
-                progress.comments-loaded(max='100' value='0' title='0% of comments retrieved')
+                | Comments (
+                span.commentCount= comments.length
+                | ) 
+                progress.comments-loading(max='100' value='0' title='0% of comments retrieved')
 
             nav.comment-list
                 ul 
@@ -54,18 +56,26 @@ block content
             table.usa-table.usa-table--striped.comments
                 thead
                     tr 
+                        th.title(scope='col') Title
                         th.author(scope='col') Author
+                        th.org(scope='col') Organization
                         th(scope='col') Date
                         th.attachments(scope='col') Attachments
                         th.comment-text(scope='col') Comment (first 100 characters)
                 tbody
                     each comment in comments
                         tr.comment(data-comment-id=comment.id)
-                            th.author(scope='row')
-                                a(href=`https://www.regulations.gov/comment/${comment.id}` target='_blank')= comment.attributes.title.replace(/^Comment submitted by (the )?/, '')
                             - const postedDate = (new Date(comment.attributes.postedDate)).toLocaleDateString()
+                            th.title(scope='row')
+                                a(href=`https://www.regulations.gov/comment/${comment.id}` target='_blank')= comment.attributes.title
+                            td.author
+                                img(src='/uswds/img/loader.gif')
+                            td.org
+                                img(src='/uswds/img/loader.gif')
                             td.posted-date= postedDate
-                            td.attachments ?
-                            td.comment-text loading...
+                            td.attachments
+                                img(src='/uswds/img/loader.gif')
+                            td.comment-text
+                                img(src='/uswds/img/loader.gif')
                         
     script(src='/doc-comments.js')

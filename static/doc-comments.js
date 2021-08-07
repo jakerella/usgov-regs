@@ -49,13 +49,20 @@ commentTable.addEventListener('mouseout', (e) => {
 
 document.querySelector('#hide-anonymous').addEventListener('change', (e) => {
     Array.from(allCommentRows)
-        .filter((n) => n.querySelector('.author').innerText.toLowerCase().includes('anonymous'))
+        .filter((n) => {
+            return n.querySelector('.title').innerText.toLowerCase().includes('anonymous') || 
+                n.querySelector('.author').innerText.toLowerCase().includes('anonymous')
+        })
         .forEach((n) => { (e.target.checked) ? n.classList.add('is-hidden') : n.classList.remove('is-hidden') })
+    
+    document.querySelector('.commentCount').innerText = commentTable.querySelectorAll('.comment:not(.is-hidden)').length
 })
 document.querySelector('#only-attachments').addEventListener('change', (e) => {
     Array.from(allCommentRows)
         .filter((n) => n.querySelector('.attachments').innerText.toLowerCase().includes('(none)'))
         .forEach((n) => { (e.target.checked) ? n.classList.add('is-hidden') : n.classList.remove('is-hidden') })
+    
+    document.querySelector('.commentCount').innerText = commentTable.querySelectorAll('.comment:not(.is-hidden)').length
 })
 
 
@@ -71,7 +78,7 @@ function findTrigger(node) {
     return trigger
 }
 
-const progress = document.querySelector('.comments-loaded')
+const progress = document.querySelector('.comments-loading')
 let totalLoaded = 0
 
 function getCommentBatch(commentSet) {
@@ -111,13 +118,17 @@ function updateCommentInfo(comment) {
         // Update the comment text now that we have it
         row.querySelector('.comment-text').innerText = comment.data.attributes.comment.substr(0,100) + ((comment.data.attributes.comment.length > 100) ? '...' : '')
 
-        // Update the comment author if we have better info.
-        if ((comment.data.attributes.firstName && comment.data.attributes.lastName) || comment.data.attributes.organization) {
-            let author = (comment.data.attributes.firstName) ? `${comment.data.attributes.firstName} ` : ''
-            author += (comment.data.attributes.lastName) ? `${comment.data.attributes.lastName}` : ''
-            author += (comment.data.attributes.organization) ? `${(author.length) ? ' of ' : ''}${comment.data.attributes.organization}` : ''
-            row.querySelector('.author a').innerText = author
+        let author = ''
+        if (comment.data.attributes.firstName || comment.data.attributes.lastName) {
+            author = [comment.data.attributes.firstName || '', comment.data.attributes.lastName || ''].join(' ')
         }
+        row.querySelector('.author').innerText = author
+
+        let org = ''
+        if (comment.data.attributes.organization) {
+            org = comment.data.attributes.organization
+        }
+        row.querySelector('.org').innerText = org
 
         // Update the comment attachments with download links
         const attachCol = row.querySelector('.attachments')
@@ -149,7 +160,7 @@ function updateCommentInfo(comment) {
             })
             attachCol.innerHTML = attachmentItems.join('<br>')
         } else {
-            attachCol.innerHTML = '(none)'
+            attachCol.innerText = '(none)'
         }
 
         Array.from(row.querySelectorAll('.usa-tooltip')).forEach((trigger) => {
