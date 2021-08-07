@@ -94,6 +94,7 @@ function getCommentBatch(commentSet) {
             return console.error('Problem geting comment detail:', resp)
         }
         resp.json().then((comments) => {
+            prepareCommentMetadata(comments)
             comments.forEach(updateCommentInfo)
             
             totalLoaded += comments.length
@@ -102,6 +103,7 @@ function getCommentBatch(commentSet) {
             if (progress.value >= 100) {
                 setTimeout(() => {
                     progress.parentNode.removeChild(progress)
+                    document.querySelector('.downloadAll').classList.remove('is-hidden')
                 }, 3000)
             }
         })
@@ -110,6 +112,36 @@ function getCommentBatch(commentSet) {
         return console.error('Problem geting comment detail:', err)
     })
 }
+
+const allComments = []
+function prepareCommentMetadata(comments) {
+    allComments.push(...comments.map((comment) => {
+        return comment.data.attributes.objectId + ',' +
+            `"${comment.data.attributes.title.replace('"', '\'')}",` +
+            `"${comment.data.attributes.firstName || ''}",` +
+            `"${comment.data.attributes.lastName || ''}",` +
+            `"${(comment.data.attributes.organization && comment.data.attributes.organization.replace('"', '\'')) || ''}",` +
+            `${comment.data.attributes.postedDate},` +
+            `${comment.data.attributes.withdrawn},` +
+            comment.data.relationships.attachments.data.length
+    }))
+}
+
+document.querySelector('.downloadAll').addEventListener('click', (e) => {
+    e.preventDefault()
+
+    const csvContent = `data:text/csv;charset=utf-8,id,title,firstName,lastName,organization,postedDate,withdrawn,attachments\n${allComments.join('\n')}`
+
+    const encodedUri = encodeURI(csvContent)
+    const downloadLink = document.createElement('a')
+    downloadLink.setAttribute('href', encodedUri)
+    downloadLink.setAttribute('download', `comments__${documentId}__${(new Date()).toISOString().split('T')[0]}.csv`)
+    downloadLink.classList.add('is-hidden')
+    document.body.appendChild(downloadLink)
+    downloadLink.click()
+
+    return false
+})
 
 
 function updateCommentInfo(comment) {
@@ -176,8 +208,8 @@ function updateCommentInfo(comment) {
 }
 
 document.querySelector('.jump-to-top a').addEventListener('click', (e) => {
-    e.preventDefault();
+    e.preventDefault()
     window.scrollTo({ top: 0 })
-    return false;
+    return false
 })
 
