@@ -92,6 +92,25 @@ nav.comment-list li {
     margin: 0 1em;
 }
 
+.jump-to-top {
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    padding: 0.5em;
+    background: #005ea299;
+    border-radius: 0.5em;
+}
+.jump-to-top:hover {
+    background: #005ea2;
+}
+.jump-to-top a:link, .jump-to-top a:hover, .jump-to-top a:active, .jump-to-top a:visited {
+    color: #000;
+    text-decoration: none;
+}
+.jump-to-top a:hover {
+    color: #fff;
+}
+
 .social-link--github {
     background-image:url("/uswds/img/usa-icons/github.svg"), linear-gradient(transparent, transparent);
     background-repeat:no-repeat;

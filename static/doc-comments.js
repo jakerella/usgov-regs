@@ -174,3 +174,10 @@ function updateCommentInfo(comment) {
         console.warn('Cannot update missing comment row:', comment.data.id)
     }
 }
+
+document.querySelector('.jump-to-top a').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0 })
+    return false;
+})
+
