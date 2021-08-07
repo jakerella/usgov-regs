@@ -9,7 +9,8 @@
     "main": "src/index.js",
     "scripts": {
         "postinstall": "cp -r node_modules/uswds/dist static/uswds",
-        "start": "node ."
+        "start": "node .",
+        "watch": "./node_modules/nodemon/bin/nodemon.js -e js,pug,json ."
     },
     "repository": {
         "type": "git",
@@ -18,7 +19,6 @@
     "author": "Jordan Kasper",
     "license": "MIT",
     "dependencies": {
-        "body-parser": "^1.19.0",
         "connect-redis": "^5.1.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
@@ -30,5 +30,8 @@
         "sequelize": "^6.5.0",
         "uswds": "^2.12.0",
         "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.12"
     }
 }

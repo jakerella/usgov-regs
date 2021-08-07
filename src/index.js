@@ -2,7 +2,6 @@ require('dotenv').config()
 
 const fs = require('fs')
 const express = require('express')
-const bodyParser = require('body-parser')
 const cache = require('./cache.js')
 const redis = require('redis')
 const session = require('express-session')
@@ -34,7 +33,7 @@ const app = express()
 
 app.use(express.static('static'))
 app.set('view engine', 'pug')
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }))
 
 
 let RedisStore = require('connect-redis')(session)
