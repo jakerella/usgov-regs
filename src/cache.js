@@ -15,6 +15,7 @@ const cacheClient = () => {
     _client = redis.createClient(process.env.REDIS_URL)
 
     _client.getAsync = promisify(_client.get).bind(_client)
+    _client.delAsync = promisify(_client.del).bind(_client)
     _client.setAsync = promisify(_client.set).bind(_client)
     _client.setexAsync = promisify(_client.setex).bind(_client)
 
@@ -43,6 +44,15 @@ const getCache = async (key) => {
     return JSON.parse(await cache.getAsync(key))
 }
 
+const delCache = async (key) => {
+    if (!key) { return null }
+    
+    const cache = cacheClient()
+    if (!cache) { return null }
+
+    return JSON.parse(await cache.delAsync(key))
+}
+
 const setCache = async (key, value=null, ttl=null) => {
     if (!key) { throw new Error('No key provided for cache item') }
     
@@ -60,5 +70,6 @@ const setCache = async (key, value=null, ttl=null) => {
 
 module.exports = {
     get: getCache,
-    set: setCache
+    set: setCache,
+    del: delCache
 }

@@ -1,35 +1,46 @@
-
 const documentId = document.querySelector('.document').getAttribute('data-document-id')
 
 const attachmentTitleLength = 45
+const commentRequestDelay = (3 * 1000)
+const commentBatchSize = 5
 
-let totalCount = 0
-const commentIdSets = [[]]
-let index = 0
-let counter = 1
-let max = 5
-Array.from(document.querySelectorAll('.comment')).forEach((node) => {
-    if (counter > max) {
-        commentIdSets.push([])
-        index++
-        counter = 1
-    }
-    commentIdSets[index].push(node.getAttribute('data-comment-id'))
-    counter++
-    totalCount++
+const commentIds = Array.from(document.querySelectorAll('.comment')).map((node) => {
+    return node.getAttribute('data-comment-id')
 })
+const totalCount = commentIds.length
+let totalLoaded = 0
 
-const forcedDelay = (3 * 1000)
 
-if (commentIdSets.length && commentIdSets[0].length) {
-    getCommentBatch(commentIdSets.shift())
-    const commentTimer = setInterval(() => {
-        if (commentIdSets.length) {
-            getCommentBatch(commentIdSets.shift())
-        } else {
-            clearInterval(commentTimer)
+if (commentIds.length) {
+    ;(async () => {
+        let commentDetails = []
+        try {
+            // see if we have these cached...
+            commentDetails = await loadCommentBatch(commentIds, true)
+        } catch(err) {
+            return displayError(err)
         }
-    }, forcedDelay)
+        
+        // If we don't (or we had partial caching), request the rest
+        if (commentDetails.length < commentIds.length) {
+            const cachedIds = commentDetails.map((comment) => comment.data.id)
+            const requestIds = commentIds.filter((id) => !cachedIds.includes(id))
+            console.log(`Not all comments cached, requesting ${requestIds.length} comments`)
+            
+            const commentTimer = setInterval(async () => {
+                try {
+                    if (requestIds.length) {
+                        await loadCommentBatch(requestIds.splice(0, commentBatchSize))
+                    } else {
+                        clearInterval(commentTimer)
+                    }
+                } catch(err) {
+                    clearInterval(commentTimer)
+                    displayError(err)
+                }
+            }, commentRequestDelay)
+        }
+    })()
 }
 
 const commentTable = document.querySelector('table.comments')
@@ -78,40 +89,53 @@ function findTrigger(node) {
     return trigger
 }
 
-const progress = document.querySelector('.comments-loading')
-let totalLoaded = 0
 
-function getCommentBatch(commentSet) {
-    fetch(`/document/${documentId}/comments`, {
+const progress = document.querySelector('.comments-loading')
+
+async function loadCommentBatch(commentSet, cacheOnly=false) {
+    return fetch(`/document/${documentId}/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ comments: commentSet })
+        body: JSON.stringify({ comments: commentSet, cacheOnly })
 
-    }).then((resp) => {
+    }).then(async (resp) => {
         if (resp.status !== 200) {
-            return console.error('Problem geting comment detail:', resp)
+            const respText = await resp.text()
+            throw new Error(`Problem geting comment detail (${resp.status}): ${respText}`)
         }
-        resp.json().then((comments) => {
-            prepareCommentMetadata(comments)
-            comments.forEach(updateCommentInfo)
-            
-            totalLoaded += comments.length
-            progress.value = Math.round((totalLoaded / totalCount) * 100)
-            progress.title = `${progress.value}% of comments retrieved`
-            if (progress.value >= 100) {
-                setTimeout(() => {
-                    progress.parentNode.removeChild(progress)
-                    document.querySelector('.downloadAll').classList.remove('is-hidden')
-                }, 3000)
-            }
-        })
-    })
-    .catch((err) => {
-        return console.error('Problem geting comment detail:', err)
+        return resp.json()
+
+    }).then((comments) => {
+        prepareCommentMetadata(comments)
+        comments.forEach(updateCommentInfo)
+        
+        totalLoaded += comments.length
+        progress.value = Math.round((totalLoaded / totalCount) * 100)
+        progress.title = `${progress.value}% of comments retrieved`
+        if (progress.value >= 100) {
+            setTimeout(() => {
+                progress.parentNode.removeChild(progress)
+                document.querySelector('.downloadAll').classList.remove('is-hidden')
+            }, 1000)
+        }
+        return comments
     })
 }
+
+
+function displayError(err) {
+    console.error('Problem geting comment detail:', err)
+    const errMessage = document.createElement('aside')
+    errMessage.className = 'usa-alert usa-alert--error'
+    errMessage.innerHTML = 
+    `<div class='usa-alert__body'><p class='usa-alert__text'>
+        Sorry, but there was a problem retrieving comment details. You may want to try again later.
+    </p></div>`
+    document.getElementById('main-content').prepend(errMessage)
+}
+
 
 const allComments = []
 function prepareCommentMetadata(comments) {

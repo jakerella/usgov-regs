@@ -2,12 +2,12 @@ extends partials/layout.pug
 
 block content
     if errorMsg
-        aside.usa-aler.usa-alert--error
+        aside.usa-alert.usa-alert--error
             div.usa-alert__body
                 p.usa-alert__text= errorMsg
 
     if !document.id
-        aside.usa-aler.usa-alert--warning
+        aside.usa-alert.usa-alert--warning
             div.usa-alert__body
                 p.usa-alert__text Sorry, but that document ID does not seem to exist!
     else 

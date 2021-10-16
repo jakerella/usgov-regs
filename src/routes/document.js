@@ -44,7 +44,7 @@ router.get('/:document', authCheck, async (req, res, next) => {
 
 router.post('/:document/comments', authCheck, jsonParser, async (req, res, next) => {
     const commentIds = req.body.comments || []
-
+    const cacheOnly = (req.body.cacheOnly === true) || false
     const breakCache = (req.query.breakcache === 'yesplease') ? true : false
 
     let comments = []
@@ -53,7 +53,7 @@ router.post('/:document/comments', authCheck, jsonParser, async (req, res, next)
         res.status(400).json({ error: 'Please provide an array of comment IDs to retrieve' })
     } else {
         try {
-            comments = await Docket.getCommentDetail(commentIds, req.session.user.api_key, breakCache)
+            comments = await Docket.getCommentDetail(commentIds, req.session.user.api_key, breakCache, cacheOnly)
         } catch(err) {
             return next(err)
         }

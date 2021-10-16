@@ -88,20 +88,45 @@ const Docket = {
             throw new AppError(`Unable to retrieve comments for document ${objectId}: ${err.message}`, err.status)
         }
     },
-    getCommentDetail: async (commentIds, key, breakCache=false) => {
+    getCommentDetail: async (commentIds, key, breakCache=false, cacheOnly=false) => {
         console.log(`Retrieving all comment detail: ${commentIds}...`)
+        
+        if (breakCache && process.env.NODE_ENV === 'development') {
+            try {
+                console.log(`Removing cache on ${commentIds.length} comments`)
+                await cache.del(commentIds)
+            } catch(err) {
+                console.warn('Problem removing cached comments:', err)
+                /* let it gooooo */
+            }
+
+
+            // REMOVE ME
+            return []
+            // REMOVE ME
+
+
+        }
 
         try {
             const comments = []
             for (let i=0; i<commentIds.length; ++i) {
 
                 let data
-                if (process.env.NODE_ENV !== 'development' || !breakCache) {
+                
+
+                if (!breakCache) {
                     try { data = await cache.get(commentIds[i]) } catch(err) { /* let it goooooo */ }
                     if (data) {
+                        if (process.env.NODE_ENV === 'development') { console.debug(`Used cache for comment ${commentIds[i]}`) }
                         comments.push(data)
                         continue
                     }
+                }
+
+                if (cacheOnly) {
+                    if (process.env.NODE_ENV === 'development') { console.debug('Returning only cached comment items') }
+                    return comments
                 }
                 
                 if (process.env.NODE_ENV === 'development' && process.env.USE_MOCK === 'true') {
@@ -122,6 +147,7 @@ const Docket = {
                     continue;
                 }
 
+                if (process.env.NODE_ENV === 'development') { console.debug(`Making API request for comment ${commentIds[i]}`) }
                 data = (await doRequest(`/comments/${commentIds[i]}?include=attachments`, key, null, null)).response
 
                 try { await cache.set(commentIds[i], data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache comment ${commentIds[i]}`, err.message) }
