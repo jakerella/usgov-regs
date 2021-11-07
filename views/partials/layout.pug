@@ -32,10 +32,12 @@ html(lang='en-US')
                                 span.usa-sr-only Find Docket
                     else
                         form.usa-form.header-form(role='login' action='/login' method='post')
-                            input.usa-input(id='email_header' name='email' type='email' required='required' placeholder='Email')
-                            input.usa-input(id='password_header' name='password' type='password' required='required' placeholder='Password')
-                            input.usa-button.usa-button--outline(type='submit' value='Login')
-
+                            section
+                                input.usa-input(id='email_header' name='email' type='email' required='required' placeholder='Email')
+                                input.usa-input(id='password_header' name='password' type='password' required='required' placeholder='Password')
+                                input.usa-button.usa-button--outline(type='submit' value='Login')
+                            aside.reset-password
+                                <a href='/reset-password'>Forgot your password?</a>
 
         main#main-content
             block content

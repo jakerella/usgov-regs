@@ -7,13 +7,34 @@ h1 {
     font-size: 1.1em;
 }
 
-.header-form {
+.header-form section {
     display: flex;
     justify-content: right;
     align-items: baseline;
 }
 .header-form input {
     margin: 0 0.2em;
+}
+
+.reset-password {
+    text-align: right;
+    margin-top: 0.5em;
+    font-size: 0.9em;
+}
+
+.reset-password a:link, .reset-password a:visited {
+    color: #005ea2
+}
+.reset-password a:hover, .reset-password a:active {
+    color: #2483c7;
+    text-decoration: none; 
+}
+
+.usa-hero .reset-password a:link, .usa-hero .reset-password a:visited {
+    color: #fff;
+}
+.usa-hero .reset-password a:hover, .usa-hero .reset-password a:active {
+    color: #ddd;
 }
 
 .usa-hero {

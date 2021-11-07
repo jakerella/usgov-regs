@@ -95,10 +95,84 @@ router.post('/register', async (req, res, next) => {
         }
     }
 
-    console.log(`[${(new Date()).toISOString()}]  User registration: ${user.id} (${user.email})`);
+    console.log(`[${(new Date()).toISOString()}]  User registration: ${user.id} (${user.email})`)
     req.session.user = user
     req.session.info = 'Thank you for registering! You are now logged in.'
     res.redirect('/')
 })
+
+
+router.get('/reset-password', (req, res) => {
+    if (req.session && req.session.user) {
+        req.session.error = 'Looks like you are already logged in!'
+        return res.redirect('/')
+    }
+
+    res.render('reset-password', {
+        page: 'reset-password',
+        title: 'Reset Password - US Gov Regs Explorer',
+        user: null
+    })
+})
+
+router.post('/reset-password', async (req, res, next) => {
+    if (req.session && req.session.user) {
+        req.session.error = 'Looks like you are already logged in!'
+        return res.redirect('/')
+    }
+
+    const email = req.body.email
+    const user = await User.findOne({ where: { email } })
+
+    if (user) {
+        await user.addResetToken(req.ip)
+    } else {
+        console.warn(`[${(new Date()).toISOString()}][${req.ip}]  Password reset attempt for non-existent email: ${email}`)
+    }
+
+    req.session.user = null
+    req.session.info = `Thank you, we've sent an email to allow the user to reset their password.`
+    res.redirect('/')
+})
+
+
+router.get('/new-password', (req, res) => {
+    if (req.session && req.session.user) {
+        req.session.error = 'Looks like you are already logged in!'
+        return res.redirect('/')
+    }
+    if (!req.query.t) {
+        req.session.error = 'Sorry, but there was no password reset token in the URL. Be sure to click on the link in your email to reset your password!'
+        return res.redirect('/')
+    }
+
+    res.render('new-password', {
+        page: 'new-password',
+        title: 'Reset Password - US Gov Regs Explorer',
+        resetToken: req.query.t.replace(/[^a-z0-9\-]/g, ''),
+        user: null
+    })
+})
+
+router.post('/new-password', async (req, res, next) => {
+    if (req.session && req.session.user) {
+        req.session.error = 'Looks like you are already logged in!'
+        return res.redirect('/')
+    }
+
+    try {
+        await User.resetPassword(req.body.email, req.body.password, req.body.token)
+    } catch(err) {
+        req.session.error = err.message
+        return res.redirect('/')
+    }
+
+    console.info(`[${(new Date()).toISOString()}][${req.ip}]  User password was reset for account: ${req.body.email}`)
+
+    req.session.user = null
+    req.session.info = 'Your password has been reset! Please log in with the new password.'
+    res.redirect('/')
+})
+
 
 module.exports = router
