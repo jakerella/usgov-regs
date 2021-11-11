@@ -2,6 +2,9 @@
 const { promisify } = require('util')
 const redis = require('redis')
 
+const DISABLE_CACHE = process.env.DISABLE_CACHE === 'true'
+if (DISABLE_CACHE) { console.log('CACHE DISABLED') }
+
 let _client = null
 
 const cacheClient = () => {
@@ -37,6 +40,8 @@ const cacheClient = () => {
 
 const getCache = async (key) => {
     if (!key) { return null }
+
+    if (DISABLE_CACHE) { return null }
     
     const cache = cacheClient()
     if (!cache) { return null }
@@ -46,9 +51,12 @@ const getCache = async (key) => {
 
 const delCache = async (key) => {
     if (!key) { return null }
+
+    if (DISABLE_CACHE) { return null }
     
     const cache = cacheClient()
-    if (!cache) { return null }
+    
+    if (DISABLE_CACHE) { return true }
 
     return JSON.parse(await cache.delAsync(key))
 }
@@ -58,6 +66,8 @@ const setCache = async (key, value=null, ttl=null) => {
     
     const cache = cacheClient()
     if (!cache) { return null }
+
+    if (DISABLE_CACHE) { return true }
 
     if (Number.isInteger(ttl) && ttl > 0) {
         return cache.setexAsync(key, ttl, JSON.stringify(value))
