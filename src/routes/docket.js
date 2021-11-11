@@ -26,16 +26,20 @@ async function loadDocket(docketId, req, res, next) {
     let errorMsg = null
     let docket = {}
     let rules = []
+    let supportingMaterialResp
     let supportingMaterials = []
     let withdrawn = []
+    const user = req.session.user || null
 
     if (!docketId) {
         errorMsg = 'No Docket ID provided'
     } else {
         try {
-            docket = await Docket.getDocket(docketId, req.session.user.api_key)
-            rules = await Docket.getDocuments(docketId, req.session.user.api_key, true, 'Rule,Proposed Rule')
-            supportingMaterials = await Docket.getDocuments(docketId, req.session.user.api_key, false, 'Notice,Other,Supporting & Related Material')
+            docket = (await Docket.getDocket(docketId, req.session.user.api_key)).data
+            rules = (await Docket.getDocuments(docketId, req.session.user.api_key, true, 'Rule,Proposed Rule')).data
+            supportingMaterialResp = await Docket.getDocuments(docketId, req.session.user.api_key, false, 'Notice,Other,Supporting & Related Material')
+            supportingMaterials = supportingMaterialResp.data
+            if (user && supportingMaterialResp.rateLimitRemaining !== null) { user.rateLimitRemaining = supportingMaterialResp.rateLimitRemaining }
         } catch(err) {
             return next(err)
         }
@@ -52,7 +56,7 @@ async function loadDocket(docketId, req, res, next) {
         supportingMaterials,
         withdrawn,
         error: errorMsg,
-        user: req.session.user || null
+        user
     })
 }
 

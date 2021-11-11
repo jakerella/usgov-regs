@@ -23,6 +23,10 @@ html(lang='en-US')
                 div.usa-nav__secondary
                     if user
                         ul.usa-nav__secondary-links
+                            li.usa-nav__secondary-item.rate-limit-display
+                                span.rate-limit-count
+                                    = user.rateLimitRemaining || '0'
+                                |  API calls remaining
                             li.usa-nav__secondary-item
                                 a(href='/logout') Logout
                         form.usa-search.usa-search--small(role='search' action='/docket' method='get')

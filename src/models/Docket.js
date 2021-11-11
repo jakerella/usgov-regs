@@ -9,35 +9,46 @@ const ONE_MONTH = (ONE_DAY * 30)
 
 
 const Docket = {
+    
     getDocket: async (docketId, key) => {
         docketId = docketId.replace(/–/g, '-')
         console.log(`Requesting docket ID ${docketId}...`)
 
         let data
         try { data = await cache.get(docketId) } catch(err) { /* let it goooooo */ }
-        if (data) { return data }
+        if (data) {
+            return { data, rateLimitRemaining: null }
+        }
         
-        data = (await doRequest(`/dockets/${docketId}`, key, null, null)).response.data
+        const apiResp = await doRequest(`/dockets/${docketId}`, key, null, null)
+        data = apiResp.response.data
+        const rateLimitRemaining = apiResp.rateLimitRemaining
 
         try { await cache.set(docketId, data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache docket ${docketId}`, err.message) }
 
-        return data
+        return { data, rateLimitRemaining }
     },
+
     getDocument: async (documentId, key, breakCache=false) => {
         console.log(`Requesting document ID ${documentId}...`)
 
         let data
         if (process.env.NODE_ENV !== 'development' || !breakCache) {
             try { data = await cache.get(documentId) } catch(err) { /* let it goooooo */ }
-            if (data) { return data }
+            if (data) {
+                return { data, rateLimitRemaining: null }
+            }
         }
 
-        data = (await doRequest(`/documents/${documentId}`, key, null, null)).response.data
+        const apiResp = await doRequest(`/documents/${documentId}`, key, null, null)
+        data = apiResp.response.data
+        const rateLimitRemaining = apiResp.rateLimitRemaining
         
         try { await cache.set(documentId, data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache document ${documentId}`, err.message) }
 
-        return data
+        return { data, rateLimitRemaining }
     },
+    
     getDocuments: async (docketId, key, getCommentCount=false, docType=null) => {
         docketId = docketId.replace(/–/g, '-')
         console.log(`Requesting documents for docket ID ${docketId}...`)
@@ -47,25 +58,32 @@ const Docket = {
         try {
             let data
             try { data = await cache.get(path) } catch(err) { /* let it goooooo */ }
-            if (data) { return data }
+            if (data) {
+                return { data, rateLimitRemaining: null }
+            }
 
-            const documents = await pagedRequest(path, key)
+            const docResponse = await pagedRequest(path, key)
+            const documents = docResponse.data
+            let rateLimitRemaining = docResponse.rateLimitRemaining
 
             if (getCommentCount) {
                 for (let i=0; i<documents.length; ++i) {
-                    documents[i].commentCount = (await doRequest(`/comments?filter[commentOnId]=${documents[i].attributes.objectId}`, key, 1, 5)).response.meta.totalElements
+                    const commentResp = await doRequest(`/comments?filter[commentOnId]=${documents[i].attributes.objectId}`, key, 1, 5)
+                    documents[i].commentCount = commentResp.response.meta.totalElements
+                    rateLimitRemaining = commentResp.rateLimitRemaining
                 }
             }
 
             try { await cache.set(path, documents, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache document list for ${docketId}`, err.message) }
 
-            return documents
+            return { data: documents, rateLimitRemaining }
 
         } catch(err) {
             if (!(err instanceof AppError)) { console.error(err) }
             throw new AppError(`Unable to retrieve documents for docket ${docketId}: ${err.message}`, err.status)
         }
     },
+
     getComments: async (objectId, key, breakCache=false) => {
         console.log(`Requesting comments for object ID ${objectId}...`)
 
@@ -75,19 +93,24 @@ const Docket = {
             let data
             if (process.env.NODE_ENV !== 'development' || !breakCache) {
                 try { data = await cache.get(path) } catch(err) { /* let it goooooo */ }
-                if (data) { return data }
+                if (data) {
+                    return { data, rateLimitRemaining: null }
+                }
             }
 
-            const comments = await pagedRequest(path, key)
+            const commentResponse = await pagedRequest(path, key)
+            const comments = commentResponse.data
+            const rateLimitRemaining = commentResponse.rateLimitRemaining
 
             try { await cache.set(path, comments, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache comment list for ${objectId}`, err.message) }
-            return comments
+            return { data: comments, rateLimitRemaining }
 
         } catch(err) {
             if (!(err instanceof AppError)) { console.error(err) }
             throw new AppError(`Unable to retrieve comments for document ${objectId}: ${err.message}`, err.status)
         }
     },
+
     getCommentDetail: async (commentIds, key, breakCache=false, cacheOnly=false) => {
         console.log(`Retrieving all comment detail: ${commentIds}...`)
         
@@ -99,22 +122,15 @@ const Docket = {
                 console.warn('Problem removing cached comments:', err)
                 /* let it gooooo */
             }
-
-
-            // REMOVE ME
-            return []
-            // REMOVE ME
-
-
         }
 
         try {
             const comments = []
+            let rateLimitRemaining = null
             for (let i=0; i<commentIds.length; ++i) {
 
                 let data
                 
-
                 if (!breakCache) {
                     try { data = await cache.get(commentIds[i]) } catch(err) { /* let it goooooo */ }
                     if (data) {
@@ -126,7 +142,7 @@ const Docket = {
 
                 if (cacheOnly) {
                     if (process.env.NODE_ENV === 'development') { console.debug('Returning only cached comment items') }
-                    return comments
+                    return { data: comments, rateLimitRemaining: null }
                 }
                 
                 if (process.env.NODE_ENV === 'development' && process.env.USE_MOCK === 'true') {
@@ -148,14 +164,16 @@ const Docket = {
                 }
 
                 if (process.env.NODE_ENV === 'development') { console.debug(`Making API request for comment ${commentIds[i]}`) }
-                data = (await doRequest(`/comments/${commentIds[i]}?include=attachments`, key, null, null)).response
+                const commentResp = await doRequest(`/comments/${commentIds[i]}?include=attachments`, key, null, null)
+                data = commentResp.response
+                rateLimitRemaining = commentResp.rateLimitRemaining
 
                 try { await cache.set(commentIds[i], data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache comment ${commentIds[i]}`, err.message) }
                 
                 comments.push(data)
             }
 
-            return comments
+            return { data: comments, rateLimitRemaining }
 
         } catch(err) {
             if (!(err instanceof AppError)) { console.error(err) }
@@ -170,14 +188,16 @@ async function pagedRequest(path, key) {
     const limit = 250
     let page = 1
 
-    let resp = (await doRequest(path, key, page, limit)).response
-    data.push(...resp.data)
-    while (resp.meta.hasNextPage) {
-        resp = (await doRequest(path, key, ++page, limit)).response
-        data.push(...resp.data)
+    let apiResp = await doRequest(path, key, page, limit)
+    // let resp = (await doRequest(path, key, page, limit)).response
+    data.push(...apiResp.response.data)
+    while (apiResp.response.meta.hasNextPage) {
+        apiResp = await doRequest(path, key, ++page, limit)
+        data.push(...apiResp.response.data)
     }
+    const rateLimitRemaining = apiResp.rateLimitRemaining
 
-    return data
+    return { data, rateLimitRemaining }
 }
 
 
@@ -185,10 +205,6 @@ async function doRequest(path, key, page=1, limit=25) {
     let url = `${process.env.API_BASE}${path}`
     if (page !== null) { url = addParam(url, 'page[number]', page) }
     if (limit !== null) { url = addParam(url, 'page[size]', limit) }
-
-    if (!key) {
-
-    }
 
     if (process.env.NODE_ENV === 'development') { console.log(`sending request to ${url}`) }
 

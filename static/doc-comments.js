@@ -10,6 +10,7 @@ const commentIds = Array.from(document.querySelectorAll('.comment')).map((node) 
 const totalCount = commentIds.length
 let totalLoaded = 0
 
+const rateLimitNode = document.querySelector('.rate-limit-count')
 
 if (commentIds.length) {
     ;(async () => {
@@ -107,7 +108,8 @@ async function loadCommentBatch(commentSet, cacheOnly=false) {
         }
         return resp.json()
 
-    }).then((comments) => {
+    }).then((data) => {
+        const comments = data.comments
         prepareCommentMetadata(comments)
         comments.forEach(updateCommentInfo)
         
@@ -120,6 +122,11 @@ async function loadCommentBatch(commentSet, cacheOnly=false) {
                 document.querySelector('.downloadAll').classList.remove('is-hidden')
             }, 1000)
         }
+
+        if (data.rateLimitRemaining !== null) {
+            rateLimitNode.innerText = data.rateLimitRemaining
+        }
+
         return comments
     })
 }

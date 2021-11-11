@@ -18,6 +18,7 @@ router.get('/:document', authCheck, async (req, res, next) => {
     const breakCache = (req.query.breakcache === 'yesplease') ? true : false
 
     let errorMsg = null
+    const user = req.session.user || null
     let document = {}
     let comments = []
 
@@ -25,8 +26,11 @@ router.get('/:document', authCheck, async (req, res, next) => {
         errorMsg = 'No Document ID provided'
     } else {
         try {
-            document = await Docket.getDocument(documentId, req.session.user.api_key, breakCache)
-            comments = await Docket.getComments(document.attributes.objectId, req.session.user.api_key, breakCache)
+            document = (await Docket.getDocument(documentId, req.session.user.api_key, breakCache)).data
+            const commentResponse = await Docket.getComments(document.attributes.objectId, req.session.user.api_key, breakCache)
+            comments = commentResponse.data
+            if (user && commentResponse.rateLimitRemaining !== null) { user.rateLimitRemaining = commentResponse.rateLimitRemaining }
+            
         } catch(err) {
             return next(err)
         }
@@ -38,7 +42,7 @@ router.get('/:document', authCheck, async (req, res, next) => {
         document,
         comments,
         error: errorMsg,
-        user: req.session.user || null
+        user
     })
 })
 
@@ -47,19 +51,24 @@ router.post('/:document/comments', authCheck, jsonParser, async (req, res, next)
     const cacheOnly = (req.body.cacheOnly === true) || false
     const breakCache = (req.query.breakcache === 'yesplease') ? true : false
 
+    let commentResponse
     let comments = []
 
     if (!Array.isArray(comments)) {
         res.status(400).json({ error: 'Please provide an array of comment IDs to retrieve' })
     } else {
         try {
-            comments = await Docket.getCommentDetail(commentIds, req.session.user.api_key, breakCache, cacheOnly)
+            commentResponse = await Docket.getCommentDetail(commentIds, req.session.user.api_key, breakCache, cacheOnly)
+            comments = commentResponse.data
+            if (req.session.user && commentResponse.rateLimitRemaining !== null) {
+                req.session.user.rateLimitRemaining = commentResponse.rateLimitRemaining
+            }
         } catch(err) {
             return next(err)
         }
     }
 
-    res.json(comments)
+    res.json({ comments, rateLimitRemaining: commentResponse.rateLimitRemaining })
 })
 
 
