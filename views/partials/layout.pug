@@ -25,7 +25,7 @@ html(lang='en-US')
                         ul.usa-nav__secondary-links
                             li.usa-nav__secondary-item.rate-limit-display
                                 span.rate-limit-count
-                                    = user.rateLimitRemaining || '0'
+                                    = user.rateLimitRemaining || 'Unknown'
                                 |  API calls remaining
                             li.usa-nav__secondary-item
                                 a(href='/logout') Logout
