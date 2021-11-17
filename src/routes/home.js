@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../models/User.js')
-const AppError = require('../AppError.js')
+const AppError = require('../util/AppError.js')
 
 
 router.get('/', async (req, res) => {

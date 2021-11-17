@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const fs = require('fs')
 const express = require('express')
-const cache = require('./cache.js')
+const cache = require('./util/cache.js')
 const redis = require('redis')
 const session = require('express-session')
 
@@ -17,7 +17,7 @@ const PORT = process.env['PORT'] || 80
 
 
 // Check our data connections
-require('./db.js').authenticate()
+require('./util/db.js').authenticate()
     .catch((err) => {
         console.error('Unable to establish DB connection:', err.message)
         process.exit(1)

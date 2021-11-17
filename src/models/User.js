@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize')
 const uuid = require('uuid')
 const crypto = require('crypto')
-const sequelize = require('../db.js').getConnection()
-const AppError = require('../AppError.js')
-const Email = require('./Email.js')
+const sequelize = require('../util/db.js').getConnection()
+const AppError = require('../util/AppError.js')
+const Email = require('../util/Email.js')
 
 
 class User extends Model {

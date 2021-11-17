@@ -1,8 +1,7 @@
 
 const fetch = require('node-fetch')
-const cache = require('../cache.js')
-const AppError = require('../AppError')
-const mockCommentData = require('../test-data/comment.json')
+const cache = require('../util/cache.js')
+const AppError = require('../util/AppError')
 
 const ONE_DAY = 86400
 const ONE_MONTH = (ONE_DAY * 30)
@@ -143,24 +142,6 @@ const Docket = {
                 if (cacheOnly) {
                     if (process.env.NODE_ENV === 'development') { console.debug('Returning only cached comment items') }
                     return { data: comments, rateLimitRemaining: null }
-                }
-                
-                if (process.env.NODE_ENV === 'development' && process.env.USE_MOCK === 'true') {
-                    console.log(`Returning MOCK comment data for ${commentIds[i]}`)
-                    const data = Object.assign({}, mockCommentData)
-                    data.data = Object.assign({}, data.data, { id: commentIds[i] })
-                    data.included = [Object.assign({}, data.included[0])]
-                    if (Math.random() < 0.3) { delete data.included }
-                    if (Math.random() < 0.2 && data.included) {
-                        data.included.push({ attributes: { title: 'document', restrictReasonType: 'Copyright', fileFormats: null } })
-                    }
-                    if (data.included) {
-                        data.data.attributes.comment = 'See attached file(s)'
-                    } else {
-                        data.data.attributes = Object.assign({}, data.data.attributes, { comment: 'This is my comment which is really long and completely fake, but you MUST pay attention to me because I am a tax paying citizen!' })
-                    }
-                    comments.push(data)
-                    continue;
                 }
 
                 if (process.env.NODE_ENV === 'development') { console.debug(`Making API request for comment ${commentIds[i]}`) }
