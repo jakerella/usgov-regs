@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-const User = require('../models/User.js')
-const AppError = require('../util/AppError.js')
+const User = require('../models/User')
+const AppError = require('../util/AppError')
+const logger = require('../util/logger')()
 
 
 router.get('/', async (req, res) => {
@@ -31,8 +32,8 @@ router.get('/about', (req, res) => {
 
 router.post('/login', async (req, res, next) => {
     try {
-        const sessUser = await User.authenticate(req.body.email, req.body.password);
-        console.log(`[${(new Date()).toISOString()}]  User login by ${sessUser.id}`);
+        const sessUser = await User.authenticate(req.body.email, req.body.password)
+        logger.info(`User login by ${sessUser.id}`, req)
         req.session.user = sessUser
         res.redirect('/')
     } catch(err) {
@@ -49,7 +50,7 @@ router.post('/login', async (req, res, next) => {
 router.get('/logout', (req, res) => {
     req.session.user = null
     req.session.destroy((err) => {
-        if (err) { console.error('Problem logging user out:', err) }
+        if (err) { logger.error('Problem logging user out: %s', err) }
         res.redirect('/')
     })
 })
@@ -95,7 +96,7 @@ router.post('/register', async (req, res, next) => {
         }
     }
 
-    console.log(`[${(new Date()).toISOString()}]  User registration: ${user.id} (${user.email})`)
+    logger.info(`New User registration: ${user.id} (${user.email})`, req)
     req.session.user = user
     req.session.info = 'Thank you for registering! You are now logged in.'
     res.redirect('/')
@@ -127,7 +128,7 @@ router.post('/reset-password', async (req, res, next) => {
     if (user) {
         await user.addResetToken(req.ip)
     } else {
-        console.warn(`[${(new Date()).toISOString()}][${req.ip}]  Password reset attempt for non-existent email: ${email}`)
+        logger.warn(`Password reset attempt for non-existent email: ${email}`, req)
     }
 
     req.session.user = null
@@ -167,7 +168,7 @@ router.post('/new-password', async (req, res, next) => {
         return res.redirect('/')
     }
 
-    console.info(`[${(new Date()).toISOString()}][${req.ip}]  User password was reset for account: ${req.body.email}`)
+    logger.info(`User password was reset for account: ${req.body.email}`, req)
 
     req.session.user = null
     req.session.info = 'Your password has been reset! Please log in with the new password.'

@@ -2,6 +2,7 @@
 const fetch = require('node-fetch')
 const cache = require('../util/cache.js')
 const AppError = require('../util/AppError')
+const logger = require('../util/logger')()
 
 const ONE_DAY = 86400
 const ONE_MONTH = (ONE_DAY * 30)
@@ -11,7 +12,7 @@ const Docket = {
     
     getDocket: async (docketId, key) => {
         docketId = docketId.replace(/–/g, '-')
-        console.log(`Requesting docket ID ${docketId}...`)
+        logger.debug(`Requesting docket ID ${docketId}...`)
 
         let data
         try { data = await cache.get(docketId) } catch(err) { /* let it goooooo */ }
@@ -23,13 +24,13 @@ const Docket = {
         data = apiResp.response.data
         const rateLimitRemaining = apiResp.rateLimitRemaining
 
-        try { await cache.set(docketId, data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache docket ${docketId}`, err.message) }
+        try { await cache.set(docketId, data, ONE_MONTH) } catch(err) { logger.error(`WARNING: unable to cache docket ${docketId}: %s`, err) }
 
         return { data, rateLimitRemaining }
     },
 
     getDocument: async (documentId, key, breakCache=false) => {
-        console.log(`Requesting document ID ${documentId}...`)
+        logger.debug(`Requesting document ID ${documentId}...`)
 
         let data
         if (process.env.NODE_ENV !== 'development' || !breakCache) {
@@ -43,14 +44,14 @@ const Docket = {
         data = apiResp.response.data
         const rateLimitRemaining = apiResp.rateLimitRemaining
         
-        try { await cache.set(documentId, data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache document ${documentId}`, err.message) }
+        try { await cache.set(documentId, data, ONE_MONTH) } catch(err) { logger.error(`WARNING: unable to cache document ${documentId}: %s`, err) }
 
         return { data, rateLimitRemaining }
     },
     
     getDocuments: async (docketId, key, getCommentCount=false, docType=null) => {
         docketId = docketId.replace(/–/g, '-')
-        console.log(`Requesting documents for docket ID ${docketId}...`)
+        logger.debug(`Requesting documents for docket ID ${docketId}...`)
 
         const path = `/documents?filter[docketId]=${docketId}&sort=postedDate${(docType) ? `&filter[documentType]=${encodeURIComponent(docType)}` : ''}`
 
@@ -73,18 +74,18 @@ const Docket = {
                 }
             }
 
-            try { await cache.set(path, documents, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache document list for ${docketId}`, err.message) }
+            try { await cache.set(path, documents, ONE_DAY) } catch(err) { logger.error(`WARNING: unable to cache document list for ${docketId}: %s`, err) }
 
             return { data: documents, rateLimitRemaining }
 
         } catch(err) {
-            if (!(err instanceof AppError)) { console.error(err) }
+            if (!(err instanceof AppError)) { logger.error(err) }
             throw new AppError(`Unable to retrieve documents for docket ${docketId}: ${err.message}`, err.status)
         }
     },
 
     getComments: async (objectId, key, breakCache=false) => {
-        console.log(`Requesting comments for object ID ${objectId}...`)
+        logger.debug(`Requesting comments for object ID ${objectId}...`)
 
         const path = `/comments?filter[commentOnId]=${objectId}&sort=postedDate`
 
@@ -101,24 +102,24 @@ const Docket = {
             const comments = commentResponse.data
             const rateLimitRemaining = commentResponse.rateLimitRemaining
 
-            try { await cache.set(path, comments, ONE_DAY) } catch(err) { console.error(`WARNING: unable to cache comment list for ${objectId}`, err.message) }
+            try { await cache.set(path, comments, ONE_DAY) } catch(err) { logger.error(`WARNING: unable to cache comment list for ${objectId}: %s`, err) }
             return { data: comments, rateLimitRemaining }
 
         } catch(err) {
-            if (!(err instanceof AppError)) { console.error(err) }
+            if (!(err instanceof AppError)) { logger.error(err) }
             throw new AppError(`Unable to retrieve comments for document ${objectId}: ${err.message}`, err.status)
         }
     },
 
     getCommentDetail: async (commentIds, key, breakCache=false, cacheOnly=false) => {
-        console.log(`Retrieving all comment detail: ${commentIds}...`)
+        logger.debug(`Retrieving all comment detail: ${commentIds}...`)
         
         if (breakCache && process.env.NODE_ENV === 'development') {
             try {
-                console.log(`Removing cache on ${commentIds.length} comments`)
+                logger.info(`Removing cache on ${commentIds.length} comments`)
                 await cache.del(commentIds)
             } catch(err) {
-                console.warn('Problem removing cached comments:', err)
+                logger.warn('Problem removing cached comments: %s', err)
                 /* let it gooooo */
             }
         }
@@ -133,23 +134,23 @@ const Docket = {
                 if (!breakCache) {
                     try { data = await cache.get(commentIds[i]) } catch(err) { /* let it goooooo */ }
                     if (data) {
-                        if (process.env.NODE_ENV === 'development') { console.debug(`Used cache for comment ${commentIds[i]}`) }
+                        logger.debug(`Used cache for comment ${commentIds[i]}`)
                         comments.push(data)
                         continue
                     }
                 }
 
                 if (cacheOnly) {
-                    if (process.env.NODE_ENV === 'development') { console.debug('Returning only cached comment items') }
+                    logger.debug('Returning only cached comment items')
                     return { data: comments, rateLimitRemaining: null }
                 }
 
-                if (process.env.NODE_ENV === 'development') { console.debug(`Making API request for comment ${commentIds[i]}`) }
+                logger.debug(`Making API request for comment ${commentIds[i]}`)
                 const commentResp = await doRequest(`/comments/${commentIds[i]}?include=attachments`, key, null, null)
                 data = commentResp.response
                 rateLimitRemaining = commentResp.rateLimitRemaining
 
-                try { await cache.set(commentIds[i], data, ONE_MONTH) } catch(err) { console.error(`WARNING: unable to cache comment ${commentIds[i]}`, err.message) }
+                try { await cache.set(commentIds[i], data, ONE_MONTH) } catch(err) { logger.error(`WARNING: unable to cache comment ${commentIds[i]}: %s`, err) }
                 
                 comments.push(data)
             }
@@ -157,7 +158,7 @@ const Docket = {
             return { data: comments, rateLimitRemaining }
 
         } catch(err) {
-            if (!(err instanceof AppError)) { console.error(err) }
+            if (!(err instanceof AppError)) { logger.error(err) }
             throw new AppError(`Unable to retrieve comment detail: ${err.message}`, err.status)
         }
     }
@@ -187,7 +188,7 @@ async function doRequest(path, key, page=1, limit=25) {
     if (page !== null) { url = addParam(url, 'page[number]', page) }
     if (limit !== null) { url = addParam(url, 'page[size]', limit) }
 
-    if (process.env.NODE_ENV === 'development') { console.log(`sending request to ${url}`) }
+    logger.debug(`sending request to ${url}`)
 
     const govResp = await fetch(url, {
         headers: {
@@ -206,19 +207,19 @@ async function doRequest(path, key, page=1, limit=25) {
         } else if (govResp.status === 401 || govResp.status === 403) {
             msg = 'Sorry, but it looks like that API key is not valid. You may need to update your key!'
         } else if (govResp.status < 400) {
-            console.warn(`Looks like we got a ${govResp.status} from the API`)
+            logger.warn(`Looks like we got a ${govResp.status} from the API`)
             status = 503
         } else {
             // For non-user errors, we just mash everything into 503 and ignore what the API returns for our users
-            console.error(`Looks like we got a ${govResp.status} from the API. Full text of body:`, await govResp.text())
+            logger.error(`Looks like we got a ${govResp.status} from the API. Full text of body:`, await govResp.text())
             status = 503
         }
 
         throw new AppError(msg, status)
     }
-    if (process.env.NODE_ENV === 'development') {
-        console.log(`Rate limit & remaining: ${govResp.headers.get('X-RateLimit-Remaining')} of ${govResp.headers.get('X-RateLimit-Limit')}`)
-    }
+    
+    logger.debug(`Rate limit & remaining: ${govResp.headers.get('X-RateLimit-Remaining')} of ${govResp.headers.get('X-RateLimit-Limit')}`)
+    
     return {
         response: await govResp.json(),
         rateLimit: govResp.headers.get('X-RateLimit-Limit'),

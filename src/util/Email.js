@@ -15,6 +15,7 @@
 
 
 const mailgun = new (require('mailgun.js'))(require('form-data'))
+const logger = require('./logger')()
 
 let mailgunClient = null
 let MAILGUN_DOMAIN = null
@@ -26,13 +27,13 @@ if (process.env.MAILGUN_API_KEY && process.env.MAILGUN_DOMAIN) {
         mailgunClient = mailgun.client({ username: 'api', key: process.env.MAILGUN_API_KEY })
     } catch(err) {
         mailgunClient = null
-        console.warn(`Unable to create Mailgun client: ${err.message}`)
+        logger.warn(`Unable to create Mailgun client: ${err.message}`)
         if (process.env.NODE_ENV === 'development') {
-            console.warn(err)
+            logger.warn(err)
         }
     }
 } else {
-    console.warn('No Mailgun API key or domain present, emails will not be sent.')
+    logger.warn('No Mailgun API key or domain present, emails will not be sent.')
 }
 
 
@@ -42,7 +43,7 @@ const Email = {
         if (!mailgunClient) { return false }
 
         if (!textContent && !htmlContent) {
-            console.warn(`Empty email body provided, will not send. Subject: ${subject}`)
+            logger.warn(`Empty email body provided, will not send. Subject: ${subject}`)
             return false
         }
 
@@ -55,52 +56,16 @@ const Email = {
                 text: textContent || null
             })
             
-            console.debug(`Sent email to <${recipients}> with subject "${subject}" (ID: ${mgMessage.id})`)
+            logger.debug(`Sent email to <${recipients}> with subject "${subject}" (ID: ${mgMessage.id})`)
             return true
 
         } catch(err) {
-            console.warn(`Unable to send message to <${recipients}> with subject "${subject}": ${err.message}`)
+            logger.warn(`Unable to send message to <${recipients}> with subject "${subject}": ${err.message}`)
             if (process.env.NODE_ENV === 'development') {
-                console.warn(err)
+                logger.warn(err)
             }
             return false
         }
-        
-
-        // OLD WAY WITH HTTP API
-
-        // const mailGunUrl = `https://api.mailgun.net/v3/${API_DOMAIN}/messages`
-
-        // if (!/[^@]+@[^@]+/.test(recipient)) {
-        //     console.warn(`Invalid recipient for email: ${recipient}`)
-        //     return false
-        // }
-        
-        // var emailContents = [
-        //     `from=${encodeURIComponent('FedGovRegs Automaton <no-reply@fedgovregs.org>')}`,
-        //     `to=${encodeURIComponent(recipient)}`,
-        //     `subject=${encodeURIComponent('[FedGovRegs] ' + subject)}`,
-        //     `text=${encodeURIComponent(content)}`
-        // ]
-
-        // const mailGunResp = await fetch(mailGunUrl, {
-        //     method: 'post',
-        //     headers: {
-        //         'Authorization': `Basic ${Buffer.from('api:' + API_KEY).toString('base64')}`,
-        //         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        //     },
-        //     body: emailContents.join('&')
-        // })
-
-        // if (mailGunResp.status > 299) {
-        //     console.warn(`Bad response from Mailgun: ${mailGunResp.status}`, await mailGunResp.text())
-        //     return false
-        // }
-
-        // const mailGunInfo = mailGunResp.json()
-
-        // console.debug(`Sent email to <${recipient}> with subject "${subject}" (ID: ${'id'})`)
-        // return true
     }
 
 }

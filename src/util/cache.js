@@ -1,9 +1,10 @@
 
 const { promisify } = require('util')
 const redis = require('redis')
+const logger = require('./logger')()
 
 const DISABLE_CACHE = process.env.DISABLE_CACHE === 'true'
-if (DISABLE_CACHE) { console.log('CACHE DISABLED') }
+if (DISABLE_CACHE) { logger.warn('CACHE DISABLED') }
 
 let _client = null
 
@@ -11,7 +12,7 @@ const cacheClient = () => {
     if (_client) { return _client }
     
     if (!process.env.REDIS_URL) {
-        console.warn('WARNING: No Redis URL provided, caching will not occur.')
+        logger.warn('WARNING: No Redis URL provided, caching will not occur.')
         return null
     }
 
@@ -22,16 +23,16 @@ const cacheClient = () => {
     _client.setAsync = promisify(_client.set).bind(_client)
     _client.setexAsync = promisify(_client.setex).bind(_client)
 
-    _client.on('error', function(error) {
-        console.error('ERROR from Redis:', error)
+    _client.on('error', function(err) {
+        logger.error('ERROR from Redis: %s', err)
     })
 
     _client.on('ready', function() {
-        console.log('New client connection to Redis server established.')
+        logger.info('New client connection to Redis server established.')
     })
 
-    _client.on('end', function(error) {
-        console.log('Client connection to redis server closed.')
+    _client.on('end', function(err) {
+        logger.info('Client connection to redis server closed. %s', err)
         _client = null
     })
 

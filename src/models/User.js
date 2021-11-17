@@ -4,6 +4,7 @@ const crypto = require('crypto')
 const sequelize = require('../util/db.js').getConnection()
 const AppError = require('../util/AppError.js')
 const Email = require('../util/Email.js')
+const logger = require('../util/logger')()
 
 
 class User extends Model {
@@ -15,7 +16,7 @@ class User extends Model {
         this.reset_timeout = timeout
         await this.save()
 
-        console.info(`[${(new Date()).toISOString()}][${ip}]  Added reset token to user ID ${this.id}`)
+        logger.info(`Added reset token to user ID ${this.id}`)
 
         const resetMessage = `
             <p>

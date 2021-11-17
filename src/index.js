@@ -2,9 +2,10 @@ require('dotenv').config()
 
 const fs = require('fs')
 const express = require('express')
-const cache = require('./util/cache.js')
+const cache = require('./util/cache')
 const redis = require('redis')
 const session = require('express-session')
+const logger = require('./util/logger')()
 
 // All the routes
 const home = require('./routes/home')
@@ -19,11 +20,11 @@ const PORT = process.env['PORT'] || 80
 // Check our data connections
 require('./util/db.js').authenticate()
     .catch((err) => {
-        console.error('Unable to establish DB connection:', err.message)
+        logger.error('Unable to establish DB connection: %s', err)
         process.exit(1)
     })
 cache.get('startup-test').catch((err) => {
-    console.error('Unable to establish Redis connection', err)
+    logger.error('Unable to establish Redis connection: %s', err)
     process.exit(1)
 })
 
@@ -39,9 +40,9 @@ app.use(express.urlencoded({ extended: false }))
 let RedisStore = require('connect-redis')(session)
 let redisSessionClient = redis.createClient(process.env.REDIS_URL)
 redisSessionClient.on('error', (err) => {
-    console.error('ERROR using Redis session client:', err.message)
+    logger.error('ERROR using Redis session client: %s', err)
     if (/ECONNREFUSED/.test(err.message)) {
-        console.error('Unable to establish redis connection for session store, closing server')
+        logger.error('Unable to establish redis connection for session store, closing server')
         process.exit(1)
     }
 })
@@ -60,7 +61,7 @@ if (process.env.NODE_ENV !== 'development') {
     sessionOptions.cookie.secure = true
 }
 app.use(session(sessionOptions))
-console.info('Added session options with Redis store')
+logger.info('Added session options with Redis store')
 
 
 app.use((req, res, next) => {
@@ -86,7 +87,7 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
     if (!err.status || err.status > 499) {
-        console.error(err)
+        logger.error(err)
     }
     
     res.status(err.status || 500)
@@ -109,5 +110,5 @@ if (process.env.NODE_ENV === 'development') {
 
 // here we go...
 server.listen(PORT, () => {
-    console.log(`US Rule & Reg Explorer app listening at https://localhost:${PORT}`)
+    logger.info(`US Rule & Reg Explorer app listening at https://localhost:%s`, PORT)
 })
