@@ -1,10 +1,6 @@
 extends partials/layout.pug
 
 block content
-    if errorMsg
-        aside.usa-alert.usa-alert--error
-            div.usa-alert__body
-                p.usa-alert__text= errorMsg
 
     if !document.id
         aside.usa-alert.usa-alert--warning

@@ -36,12 +36,26 @@ async function loadDocket(docketId, req, res, next) {
     } else {
         try {
             docket = (await Docket.getDocket(docketId, req.session.user.api_key)).data
+        } catch(err) {
+            if (err.status === 400 || err.status === 404) {
+                req.session.error = err.message
+                return res.redirect('/')
+            } else {
+                return next(err)
+            }
+        }
+
+        try {
             rules = (await Docket.getDocuments(docketId, req.session.user.api_key, true, 'Rule,Proposed Rule')).data
             supportingMaterialResp = await Docket.getDocuments(docketId, req.session.user.api_key, false, 'Notice,Other,Supporting & Related Material')
             supportingMaterials = supportingMaterialResp.data
             if (user && supportingMaterialResp.rateLimitRemaining !== null) { user.rateLimitRemaining = supportingMaterialResp.rateLimitRemaining }
         } catch(err) {
-            return next(err)
+            if (err.status === 400 || err.status === 404) {
+                errorMsg = 'Sorry, but we had problems retrieving all of the data from regulations.gov, you may want to try again later.'
+            } else {
+                return next(err)
+            }
         }
     }
 

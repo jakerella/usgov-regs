@@ -44,6 +44,14 @@ html(lang='en-US')
                                 <a href='/reset-password'>Forgot your password?</a>
 
         main#main-content
+            if error
+                aside.usa-alert.usa-alert--error
+                    div.usa-alert__body
+                        p.usa-alert__text= error
+            if info
+                aside.usa-alert.usa-alert--info
+                    div.usa-alert__body
+                        p.usa-alert__text= info
             block content
 
         include footer.pug

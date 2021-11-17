@@ -202,13 +202,12 @@ async function doRequest(path, key, page=1, limit=25) {
         let msg = `Unable to retrieve data from regulations.gov API (${govResp.status})`
         if (govResp.status === 429) {
             msg = 'Sorry, but it looks like we\'ve hit the API limit on regulations.gov. Please wait an hour and try again! (Note that cached data is still accessible!)'
+        } else if (govResp.status === 400) {
+            msg = 'Sorry, but it looks like regulations.gov had a problem retreiving that item. Can you try again?'
         } else if (govResp.status === 404) {
-            msg = 'Sorry, but it looks like regulations.gov couldn\'t find that item. Please try again!'
+            msg = 'Sorry, but it looks like regulations.gov had a problem finding that item. Can you try again?'
         } else if (govResp.status === 401 || govResp.status === 403) {
             msg = 'Sorry, but it looks like that API key is not valid. You may need to update your key!'
-        } else if (govResp.status < 400) {
-            logger.warn(`Looks like we got a ${govResp.status} from the API`)
-            status = 503
         } else {
             // For non-user errors, we just mash everything into 503 and ignore what the API returns for our users
             logger.error(`Looks like we got a ${govResp.status} from the API. Full text of body:`, await govResp.text())

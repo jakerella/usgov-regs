@@ -1,12 +1,8 @@
 extends partials/layout.pug
 
 block content
-    article.grid-container.usa-section
-        if errorMsg
-            aside.usa-aler.usa-alert--error
-                div.usa-alert__body
-                    p.usa-alert__text= errorMsg
 
+    article.grid-container.usa-section
         if !docket.id
             aside.usa-aler.usa-alert--warning
                 div.usa-alert__body

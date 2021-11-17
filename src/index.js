@@ -92,8 +92,10 @@ app.use((err, req, res, next) => {
     
     res.status(err.status || 500)
     res.render('error', {
+        page: 'error',
         title: 'US Government Rule and Regulation Explorer - Error',
-        message: (err.status === 500) ? 'Sorry, we ran into a problem.' : err.message
+        message: (err.status === 500) ? 'Sorry, we ran into a problem.' : err.message,
+        user: req.session.user || null
     })
 })
 
