@@ -5,7 +5,7 @@ const jsonParser = require('body-parser').json()
 const router = express.Router()
 
 function authCheck(req, res, next) {
-    if (!req.session.user) {
+    if (!req.session || !req.session.user) {
         req.session.error = 'Please log in before accessing that page!'
         return res.redirect('/')
     }

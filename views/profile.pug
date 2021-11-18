@@ -1,0 +1,41 @@
+extends partials/layout.pug
+
+
+block content
+
+    article.usa-section.grid-container
+        h2.font-heading-l.margin-y-0 User Profile
+
+        p
+            | This is your user profile for FedGovRegs (this site). If any of the 
+            | information is incorrect, you can update it here.
+        
+        p
+            | If you are having trouble logging in, you can submit an issue report
+            | on our 
+            a(href='https://github.com/jakerella/usgov-regs/issues') GitHub issue tracker
+            | . We'll reach out to try to fix the problem.
+        
+        form.usa-form.profile-data(action='/profile' method='post')
+            input(name='id' type='hidden' value=user.id)
+            label.usa-label(for='email') Email address:
+            input.usa-input(id='email' name='email' type='email' required='required' placeholder='Your Email' value=user.email)
+            label.usa-label(for='key') Regulations.gov API key (40 characters):
+            input.usa-input(id='api_key' name='api_key' type='text' required='required' placeholder='i.e. M9k8SNdNG44r...' pattern='[A-Za-z0-9]{40}' value=user.api_key)
+            p
+                em Please be sure your API key is accurate, otherwise we will be unable to retrieve data from regulations.gov on your behalf!
+            input.usa-button(type='submit' value='Update Information')
+
+
+        h3.font-heading-3 Change Password
+        p
+            | If you need to change your password, you can do so here by first entering
+            | your <em>current</em> password, then the <em>new</em> password you want.
+
+        form.usa-form.change-password(action='/change-password' method='post')
+            input(name='id' type='hidden' value=user.id)
+            label.usa-label(for='current_password') Current Password:
+            input.usa-input(id='current_password' name='current_password' type='password' required='required' placeholder='*****' minlength='8')
+            label.usa-label(for='new_password') New Password (minimum 8 characters):
+            input.usa-input(id='new_password' name='new_password' type='password' required='required' placeholder='*****' minlength='8')
+            input.usa-button(type='submit' value='Change Password')

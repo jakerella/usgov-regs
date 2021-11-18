@@ -20,6 +20,14 @@ h1 {
     margin: 0 0.2em;
 }
 
+form.profile-data {
+    max-width: none;
+}
+
+form.profile-data input[type='email'], form.profile-data input[type='text'] {
+    width: 25em;
+}
+
 .reset-password {
     text-align: right;
     margin-top: 0.5em;

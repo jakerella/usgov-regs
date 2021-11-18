@@ -28,6 +28,8 @@ html(lang='en-US')
                                     = user.rateLimitRemaining || 'Unknown'
                                 |  API calls remaining
                             li.usa-nav__secondary-item
+                                a(href='/profile') Profile
+                            li.usa-nav__secondary-item
                                 a(href='/logout') Logout
                         form.usa-search.usa-search--small(role='search' action='/docket' method='get')
                             label.usa-sr-only(for='top_search_docket-id') Docket ID

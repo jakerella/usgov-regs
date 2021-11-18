@@ -134,6 +134,55 @@ class User extends Model {
         
         await user.save()
     }
+
+    static async updateProfile(id, email, api_key) {
+        const errors = []
+        if (!email || !/[^@]+@[^@]+/.test(email)) {
+            errors.push('Please enter a valid email address.')
+        }
+        if (!/[A-Za-z0-9]{40}/.test(`${api_key}`)) {
+            errors.push('Please enter a valid Data.gov API key to use with this account.')
+        }
+
+        if (errors.length) {
+            throw new AppError(errors.join('\n'), 400)
+        }
+
+        const user = await User.findOne({ where: { id } })
+        if (!user) {
+            throw new AppError('Sorry, there was a problem updating your profile. Please try again.', 400)
+        }
+
+        user.email = email
+        user.api_key = api_key
+        await user.save()
+
+        return { id: user.id, email: user.email, api_key: user.api_key }
+    }
+
+    static async changePassword(id, currPass, newPass) {
+        if (!newPass || newPass.length < 9) {
+            throw new AppError('Please enter a strong password over 8 characters long.', 400)
+        }
+
+        const user = await User.findOne({ where: { id } })
+
+        if (!user) {
+            throw new AppError('Sorry, there was a problem changing your password. Please try again.', 400)
+        }
+
+        const oldHash = crypto.createHash('sha256').update(currPass + process.env.PSALT).digest('hex')
+        if (oldHash !== user.phash) {
+            throw new AppError('Sorry, but that is not your current password.', 400)
+        }
+
+        const incoming = crypto.createHash('sha256').update(newPass + process.env.PSALT).digest('hex')
+        user.phash = incoming
+        user.reset_token = null
+        user.reset_timeout = null
+
+        await user.save()
+    }
 }
 
 User.init({

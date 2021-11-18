@@ -83,7 +83,7 @@ router.post('/register', async (req, res, next) => {
                 page: 'register',
                 title: 'Register - US Gov Regs Explorer',
                 user: null,
-                errorMsg: err.message
+                error: err.message
             })
         } else {
             let userErr = new AppError('There was a problem registering your user account.')
@@ -136,6 +136,72 @@ router.post('/reset-password', async (req, res, next) => {
     res.redirect('/')
 })
 
+router.get(['/profile', '/change-password'], (req, res) => {
+    if (!req.session.user) {
+        req.session.error = 'Please log in before accessing your profile page.'
+        return res.redirect('/')
+    }
+
+    res.render('profile', {
+        page: 'user-profile',
+        title: 'User Profile - US Gov Regs Explorer',
+        user: req.session.user
+    })
+})
+
+router.post('/profile', async (req, res, next) => {
+    if (!req.session.user) {
+        req.session.error = 'Please log in before updating your profile.'
+        return res.redirect('/')
+    }
+    if (req.session.user.id !== req.body.id) {
+        return showProfileError(res, req.session.user, 'Sorry, there was a problem updating your profile. Please try again.')
+    }
+
+    let user
+    try {
+        user = await User.updateProfile(req.session.user.id, req.body.email, req.body.api_key)
+    } catch(err) {
+        return showProfileError(res, req.session.user, err.message)
+    }
+
+    logger.info(`User profile updated for: ${user.id}`, req)
+
+    req.session.user = user
+    req.session.info = 'Your profile has been updated!'
+    res.redirect('/')
+})
+
+router.post('/change-password', async (req, res, next) => {
+    if (!req.session.user) {
+        req.session.error = 'Please log in before changing your password.'
+        return res.redirect('/')
+    }
+    if (req.session.user.id !== req.body.id) {
+        return showProfileError(res, req.session.user, 'Sorry, there was a problem changing your password. Please try again.')
+    }
+
+    try {
+        await User.changePassword(req.session.user.id, req.body.current_password, req.body.new_password)
+    } catch(err) {
+        return showProfileError(res, req.session.user, err.message)
+    }
+
+    logger.info(`User password updated for: ${req.session.user.id}`, req)
+
+    req.session.user = null
+    req.session.info = 'Your password has been changed. Please log in again!'
+    res.redirect('/')
+})
+
+function showProfileError(res, user, errorMessage) {
+    res.render('profile', {
+        page: 'user-profile',
+        title: 'User Profile - US Gov Regs Explorer',
+        user: user,
+        error: errorMessage
+    })
+}
 
 router.get('/new-password', (req, res) => {
     if (req.session && req.session.user) {
