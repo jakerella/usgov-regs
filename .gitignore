@@ -1,6 +1,6 @@
 # custom
 static/uswds
-localcert/*.*
+localcert/**/*.*
 test-data/
 
 # Logs
