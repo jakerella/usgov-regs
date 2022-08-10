@@ -27,16 +27,15 @@ This system can be run _almost_ entirely locally. The only piece that can't be r
 
 #### Environment Setup
 
-1. [Create an SSL certificate for `localhost`](https://www.section.io/engineering-education/how-to-get-ssl-https-for-localhost/) since Chrome/Firefox force you there. Put the key and crt in the `localcert` directory.
+1. [Create an SSL certificate for `localhost`](https://www.section.io/engineering-education/how-to-get-ssl-https-for-localhost/) since Chrome/Firefox force you there. Put the decrypted key and crt in a `localcert` directory inside this project.
 2. [Install Node.js](https://nodejs.org/en/download/) (check the `package.json` file to see what version the site runs on)
-3. [Install and run Postgres](https://www.postgresql.org/download/) for the user database
-4. Create a Postgres user and database, then create the `user` table using the `schema/user.sql` file
+3. [Install and run Postgres](https://www.postgresql.org/download/)
+4. Create a Postgres user and database, then create the `user` table using the `schema/user.sql` file to create the table(s)
 5. [Install and run Redis](https://redis.io/topics/quickstart) for session and document caching
-6. Clone this repo locally: `git clone https://github.com/jakerella/usgov-regs.git` (or use the git ssh version)
-7. Install the dependencies with `npm install`
-8. Configure your environment variables by copying `.env.example` and renaming it to `.env`, then change the values to match your local environment!
+6. Install the dependencies with `npm install`
+7. Configure your environment variables by copying `.env.example` and renaming it to `.env`, then change the values to match your local environment!
 
-Now you should be ready to run the application locally with `node .`
+Now you should be ready to run the application locally with `node .` (or use `npm run watch` to continuously watch for file changes and restart the app).
 
 ### Submitting a Pull Request
 
