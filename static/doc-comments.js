@@ -179,7 +179,11 @@ function updateCommentInfo(comment) {
     const row = document.querySelector(`[data-comment-id=${comment.data.id}]`)
     if (row) {
         // Update the comment text now that we have it
-        row.querySelector('.comment-text').innerText = comment.data.attributes.comment.substr(0,100) + ((comment.data.attributes.comment.length > 100) ? '...' : '')
+        if (comment.data.attributes.comment) {
+            row.querySelector('.comment-text').innerText = comment.data.attributes.comment.substr(0,100) + ((comment.data.attributes.comment.length > 100) ? '...' : '')
+        } else {
+            row.querySelector('.comment-text').innerText = '(none)'
+        }
 
         let author = ''
         if (comment.data.attributes.firstName || comment.data.attributes.lastName) {

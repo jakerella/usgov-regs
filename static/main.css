@@ -147,4 +147,9 @@ nav.comment-list li {
 .social-link--github {
     background-image:url("/uswds/img/usa-icons/github.svg"), linear-gradient(transparent, transparent);
     background-repeat:no-repeat;
-  }
+}
+
+.usa-social-link span {
+    position: absolute;
+    left: -99999px;
+}
