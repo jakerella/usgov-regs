@@ -86,12 +86,9 @@ router.post('/register', async (req, res, next) => {
                 error: err.message
             })
         } else {
+            logger.warn(err.message)
             let userErr = new AppError('There was a problem registering your user account.')
-            if (err instanceof UniqueConstraintError) {
-                userErr.status = 400
-            } else {
-                userErr.status = 500
-            }
+            userErr.status = 500
             return next(userErr)
         }
     }
