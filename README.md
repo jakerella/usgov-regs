@@ -4,7 +4,7 @@ This is a little web app to help navigate the rules, regulations, and comments f
 
 **This site and code have no connection to the U.S. Government!**
 
-Check it out at: [usgov-regs.herokuapp.com](https://usgov-regs.herokuapp.com)
+Check it out at: [fedgovregs.org](https://www.fedgovregs.org)
 
 
 ## Why did you build this?
