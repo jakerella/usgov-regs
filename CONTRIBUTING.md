@@ -7,6 +7,39 @@ Are you interested in making things better? Then by all means contribute! You ca
 * Create your own application on top of the [regulations.gov API](https://open.gsa.gov/api/regulationsgov/) so we can show them what can be done.
 * Or you could contribute code to this application! Information on how to run this app locally and submit a PR are located below.
 
+## System Diagram
+
+```mermaid
+flowchart LR
+    APP["Node App"]
+    DM["Docket Model"]
+    UM["User Model"]
+    R["Redis Cache"]
+    PG["Postgres DB"]
+    API["Regulations.gov API"]
+    
+    subgraph UI Layer
+    Views -- Incorporates --> Partials
+    Views -- Loads --> Styles
+    Views -- Loads --> JavaScript
+    end
+    
+    subgraph Node Server
+    APP -- implements --> Routes
+    Routes -- calls --> UM
+    Routes -- calls --> DM
+    end
+    
+    subgraph Data Layer
+    UM -- reads/writes --> PG
+    APP -- stores user sessions --> R
+    DM -- caches API data --> R
+    end
+    
+    JavaScript -- sends requests --> APP
+    DM -- calls --> API
+```
+
 ## Running Locally
 
 This system can be run _almost_ entirely locally. The only piece that can't be run locally is the regulations.gov API. But you can easily [sign up for an API key](https://api.data.gov/signup/) yourself in order to hit the API. You could also create a mock API for development if you like.
